@@ -1,11 +1,3 @@
----
-name: 'Android Issue : Feature Request'
-about: Suggest an idea for this project.
-title: ''
-labels: ''
-assignees: ''
-
----
 
 <!--
 ✅ 어떤 기능인지 구체적으로 설명해주세요.
