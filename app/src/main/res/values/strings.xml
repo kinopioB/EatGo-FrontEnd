@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EatGo</string>
+    <string name="qr">코드스캔</string>
 </resources>
