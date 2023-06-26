@@ -1,11 +1,16 @@
 package com.kinopio.eatgo.store
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
 import com.naver.maps.geometry.LatLng
@@ -20,22 +25,7 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import java.util.Locale
 
-//class NaverMapActivity : AppCompatActivity(), OnMapReadyCallback {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val binding = ActivityNaverMapBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
-//            ?: MapFragment.newInstance().also {
-//                supportFragmentManager.beginTransaction().add(R.id.map, it).commit()
-//            }
-//        mapFragment.getMapAsync(this)
-//    }
-//    override fun onMapReady(naverMap: NaverMap) {
-//        Toast.makeText(this, "지도 준비 완료", Toast.LENGTH_SHORT).show()
-//    }
-//}
+
 
 class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
     private lateinit var locationSource: FusedLocationSource
@@ -45,7 +35,6 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val binding = ActivityNaverMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val fm = supportFragmentManager
@@ -95,30 +84,34 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
         // 위치를 추적하면서 카메라도 따라 움직인다.
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-//        naverMap.addOnLocationChangeListener { location ->
-//            Toast.makeText(this, "${location.latitude}, ${location.longitude}",
-//                Toast.LENGTH_SHORT).show()
-//        }
-        // 빨간색 표시 마커 (네이버맵 현재 가운데에 항상 위치)
-
         val marker = Marker()
+        marker.position = LatLng(
+            naverMap.cameraPosition.target.latitude,
+            naverMap.cameraPosition.target.longitude
+        )
         marker.icon = OverlayImage.fromResource(R.mipmap.marker)
-        naverMap.addOnLocationChangeListener { location ->
-            val cameraPosition: CameraPosition = naverMap.cameraPosition
-//            val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition)
-//            naverMap.moveCamera(cameraUpdate)
-//            val cameraUpdate = CameraUpdate.scrollTo(LatLng(location.latitude, location.longitude))
-//            naverMap.moveCamera(cameraUpdate)
-            marker.position = LatLng(
-                cameraPosition.target.latitude,
-                cameraPosition.target.longitude
-            )
+        marker.map = naverMap
 
-            marker.map = naverMap
-//            Log.d("hong", "$cameraPosition")
-            getAddress(cameraPosition.target.latitude, cameraPosition.target.longitude)
+        naverMap.addOnCameraChangeListener { reason, animated ->
+            Log.i("NaverMap", "카메라 변경 - reson: $reason, animated: $animated")
+            Log.d("aaa", "${naverMap.cameraPosition.target.latitude}, ${naverMap.cameraPosition.target.longitude}")
+            marker.position = LatLng(
+                // 현재 보이는 네이버맵의 정중앙 가운데로 마커 이동
+                naverMap.cameraPosition.target.latitude,
+                naverMap.cameraPosition.target.longitude
+            )
+//            getAddress(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude)
+            binding.selectKoreaAddress.text = "이동중..."
         }
 
+        naverMap.addOnCameraIdleListener {
+            marker.position = LatLng(
+                naverMap.cameraPosition.target.latitude,
+                naverMap.cameraPosition.target.longitude
+            )
+            // 좌표 -> 주소 변환 텍스트 세팅, 버튼 활성화
+            getAddress(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude)
+        }
 
     }
 
@@ -138,18 +131,12 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
             ) { address ->
                 if (address.size != 0) {
                     // 반환 값에서 전체 주소만 사용한다.
-                    // getAddressLine(0)
-//                    toast(address[0].getAddressLine(0))
-//                    Log.d("hong", "${address[0].getAddressLine(0)}")
                     binding.selectKoreaAddress.text = "${address[0].getAddressLine(0)}"
-//                    binding.selectKoreaAddress.width = "wrap_content"
                 }
             }
         } else { // API 레벨이 33 미만인 경우
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null) {
-//                toast(addresses[0].getAddressLine(0))
-//                Log.d("hong", "${addresses[0].getAddressLine(0)}")
                 binding.selectKoreaAddress.text = "${addresses[0].getAddressLine(0)}"
 
             }
