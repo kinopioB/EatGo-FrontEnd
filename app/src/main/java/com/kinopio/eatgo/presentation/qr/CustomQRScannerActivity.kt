@@ -1,4 +1,4 @@
-package com.kinopio.eatgo.qr
+package com.kinopio.eatgo.presentation.qr
 
 import android.os.Bundle
 import android.util.Log

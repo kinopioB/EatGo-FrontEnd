@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:weightSum="10"
     android:padding="20dp"
-    tools:context=".store.CreateStoreActivity">
+    tools:context=".presentation.store.CreateStoreActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

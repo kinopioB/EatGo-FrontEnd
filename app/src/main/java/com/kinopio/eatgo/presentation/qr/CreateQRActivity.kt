@@ -1,4 +1,4 @@
-package com.kinopio.eatgo.qr
+package com.kinopio.eatgo.presentation.qr
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

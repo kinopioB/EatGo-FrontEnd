@@ -1,4 +1,4 @@
-package com.kinopio.eatgo.main
+package com.kinopio.eatgo.presentation.templates
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
