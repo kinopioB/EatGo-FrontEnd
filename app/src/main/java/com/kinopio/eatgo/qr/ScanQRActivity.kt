@@ -2,7 +2,9 @@ package com.kinopio.eatgo.qr
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -79,6 +81,13 @@ class ScanQRActivity : AppCompatActivity() {
 
         binding.btnScan.setOnClickListener {
             onScanButtonClicked()
+        }
+
+        val btnCustomScan : Button = binding.btnCustomScan
+        // Custom Scan 버튼 클릭
+        btnCustomScan.setOnClickListener {
+            Log.d("qr", "커스텀 스캔 클릭")
+            onCustomScanButtonClicked()
         }
     }
 }
