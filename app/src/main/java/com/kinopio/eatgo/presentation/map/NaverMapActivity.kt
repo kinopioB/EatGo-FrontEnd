@@ -1,21 +1,14 @@
-package com.kinopio.eatgo.store
+package com.kinopio.eatgo.presentation.map
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraPosition
-import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap

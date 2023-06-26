@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal|center_vertical"
-    tools:context=".qr.MainQRActivity">
+    tools:context=".presentation.qr.MainQRActivity">
 
     <Button
         android:id="@+id/btnCreate"

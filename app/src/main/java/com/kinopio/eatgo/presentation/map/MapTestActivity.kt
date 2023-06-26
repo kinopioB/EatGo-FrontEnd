@@ -1,4 +1,4 @@
-package com.kinopio.eatgo.store
+package com.kinopio.eatgo.presentation.map
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

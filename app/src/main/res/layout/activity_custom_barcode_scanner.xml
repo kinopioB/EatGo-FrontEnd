@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="qr.CustomQRScannerActivity">
+    tools:context=".presentation.qr.CustomQRScannerActivity">
 
     <!--액션 바 넣기-->
     <LinearLayout

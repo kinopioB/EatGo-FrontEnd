@@ -37,33 +37,29 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".main.SplashActivity"
+            android:name=".presentation.templates.SplashActivity"
             android:exported="false" />
-        <activity android:name=".qr.CustomQRScannerActivity"
+        <activity android:name=".presentation.qr.CustomQRScannerActivity"
             android:exported="false"
-            android:parentActivityName=".qr.ScanQRActivity"
+            android:parentActivityName=".presentation.qr.ScanQRActivity"
             />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".qr.ScanQRActivity"
+            android:name=".presentation.qr.ScanQRActivity"
             android:exported="false" />
         <activity
-            android:name=".qr.CreateQRActivity"
+            android:name=".presentation.qr.CreateQRActivity"
             android:exported="false" />
         <activity
-            android:name=".qr.MainQRActivity"
+            android:name=".presentation.qr.MainQRActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".store.NaverMapActivity"
+            android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
 
 <!--            <intent-filter>-->
@@ -77,7 +73,7 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="@string/naver_map_client_id" />
         <activity
-            android:name=".store.MapTestActivity"
+            android:name=".presentation.map.MapTestActivity"
             android:exported="true">
         </activity>
         <meta-data
