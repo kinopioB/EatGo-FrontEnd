@@ -1,10 +1,9 @@
 package com.kinopio.eatgo.qr
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
@@ -24,6 +23,10 @@ class CustomQRScannerActivity : AppCompatActivity() {
 
         val binding = ActivityCustomBarcodeScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val ab = supportActionBar
+        ab!!.title = "코드 스캔"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         decoratedBarcodeView = binding.decoratedBarcodeView
