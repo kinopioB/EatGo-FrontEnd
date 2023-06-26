@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="qr.CustomQRScannerActivity">
+
+    <Button
+        android:layout_margin="10dp"
+        android:layout_gravity="left"
+        android:id="@+id/btnFlash"
+        android:text="Flash ON"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:text="QR 코드를 스캔하여 주세요."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:layout_gravity="center"
+        android:id="@+id/decoratedBarcodeView"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:zxing_scanner_layout = "@layout/custom_barcode_scanner"
+        />
+
+</LinearLayout>
