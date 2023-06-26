@@ -95,6 +95,7 @@ proguard/
 # Log Files
 
 # Android Studio
+
 /*/build/
 /*/local.properties
 /*/out
@@ -151,6 +152,7 @@ obj/
 atlassian-ide-plugin.xml
 
 # Mongo Explorer plugin
+
 .idea/mongoSettings.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
@@ -166,3 +168,4 @@ fabric.properties
 app/src/main/res/values/naver_key.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin,macos
+.idea
