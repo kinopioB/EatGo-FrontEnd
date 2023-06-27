@@ -21,7 +21,6 @@
         app:zxing_viewfinder_mask="@color/zxing_custom_viewfinder_mask"
         />
 
-
     <!-- mask 영역에 적혀 있는 스캔 안내 문구 영역 -->
     <TextView
         android:id="@+id/zxing_status_view"
@@ -42,7 +41,4 @@
         android:src="@drawable/flash"
         app:fabSize="normal"
         app:elevation="6dp" />
-
-
-
 </merge>
