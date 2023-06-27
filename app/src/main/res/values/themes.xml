@@ -9,4 +9,8 @@
     <style name="CustomQRScannerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">@drawable/review_border</item>
+    </style>
 </resources>
