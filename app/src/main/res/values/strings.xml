@@ -2,6 +2,8 @@
     <string name="app_name">EatGo</string>
     <string name="qr">코드스캔</string>
 
+    <string name="social_login_info_naver_client_name">네이버아이디 로그인</string>
+
     <string name="monday">월</string>
     <string name="tuesday">화</string>
     <string name="wednesday">수</string>

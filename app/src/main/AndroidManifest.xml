@@ -39,7 +39,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".presentation.store.FirebaseTest"
+            android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,23 +67,21 @@
             android:exported="false" />
         <activity
             android:name=".presentation.qr.MainQRActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
 
         </activity>
-
-        <activity
-            android:name=".presentation.map.NaverMapActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -101,12 +99,37 @@
             android:name=".MainActivity"
             android:exported="true">
 
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
+
+
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
+
+
         </activity>
         <activity
             android:name=".presentation.store.CreateStoreActivity"
             android:exported="true">
-    
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
         </activity>
+
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="@string/naver_map_client_id" />
+
+
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="bcf7f6fbbc6d13fa2ee8f3a673083550" />
+
+
+
     </application>
 
 </manifest>
