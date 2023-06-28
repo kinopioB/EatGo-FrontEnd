@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.kinopio.eatgo.R
+import com.google.firebase.ktx.Firebase
 import com.kinopio.eatgo.databinding.ActivityQrBinding
 import com.kinopio.eatgo.presentation.store.ReviewFragment
 
