@@ -5,4 +5,23 @@
     <color name="search_stoke_color">#F4F4F4</color>
     <color name="main_color">#F7B82E</color>
 
+    <color name="colorPrimary">#F3A2A9</color>
+    <color name="colorPrimaryDark">#EE624C</color>
+    <color name="colorAccent">#EE624C</color>
+    <color name="colorOnPrimary">#E5E5E5</color>
+    <color name="color_green">#00c667</color>
+    <color name="color_green_opa10">#1a00c667</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_kakao">#F7E317</color>
+    <color name="color_gray1">#C8C8C8</color>
+
+    <color name="dark_blue">#155263</color>
+    <color name="color_FFA1AA">#FFA1AA</color>
+    <color name="color_FF5C43">#FF5C43</color>
+    <color name="color_33FF5C43">#33FF5C43</color>
+
+    <color name="color_yellow">#ffc93c</color>
+
+
+
 </resources>

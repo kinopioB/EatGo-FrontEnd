@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -36,6 +37,7 @@
         android:theme="@style/Theme.AppCompat.DayNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".presentation.store.FirebaseTest"
             android:exported="true">
@@ -51,6 +53,7 @@
         <activity
             android:name=".presentation.qr.CustomQRScannerActivity"
             android:exported="false"
+            android:parentActivityName=".presentation.qr.ScanQRActivity"
             android:theme="@style/CustomQRScannerTheme" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -64,15 +67,20 @@
             android:exported="false" />
         <activity
             android:name=".presentation.qr.MainQRActivity"
-            android:exported="false">
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"></activity>
+        <activity
+            android:name=".presentation.map.NaverMapActivity"
+            android:exported="true">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
         </activity>
+
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true" />
@@ -93,13 +101,11 @@
             android:name=".MainActivity"
             android:exported="true">
 
-            <!--
-            intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+        </activity>
+        <activity
+            android:name=".presentation.store.CreateStoreActivity"
+            android:exported="true">
+    
         </activity>
     </application>
 

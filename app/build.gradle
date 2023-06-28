@@ -45,7 +45,10 @@ android {
     viewBinding{
         enabled=true
     }
-    buildFeatures{
+    dataBinding {
+        enabled true
+    }
+    buildFeatures {
         dataBinding true
     }
 }
@@ -83,6 +86,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     // fap
     implementation 'com.google.android.material:material:1.4.0'
+
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
