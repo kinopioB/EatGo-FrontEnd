@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     }
     private lateinit var markerList : List<StoreLocationDto>;
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -54,14 +53,10 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         binding.customCurLocationBtn.setOnClickListener {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        val baseURL = "http://10.0.2.2:8080"
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseURL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val storeLocationService = retrofit.create(StoreLocationService::class.java)
+        val retrofit = RetrofitClient.getRetrofit()
+        val storeLocationService = retrofit?.create(StoreLocationService::class.java)
 
-        storeLocationService.getStores().enqueue(object : Callback<StoreLocationListDto> {
+        storeLocationService?.getStores()?.enqueue(object : Callback<StoreLocationListDto> {
             override fun onFailure(call: Call<StoreLocationListDto>, t: Throwable) {
                 Log.d("fail", "실패")
                 Log.d("fail", "$t")
@@ -97,8 +92,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-
-//        var markerList = arrayOf(doubleArrayOf(37.58360643235775, 127.00287162295791), doubleArrayOf(37.57634704780042, 127.00014662083021), doubleArrayOf(37.57437921990977, 127.00597769025228), doubleArrayOf(37.57545705952983, 127.00408207401604))
 
         for (i in 0 .. markerList.size - 1) {
             val marker = Marker()

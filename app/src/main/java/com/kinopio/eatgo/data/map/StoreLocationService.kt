@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface StoreLocationService {
-    @GET("/eatgo/stores/locations")
+    @GET("stores/locations")
     fun getStores() :Call<StoreLocationListDto>
 }
