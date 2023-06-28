@@ -2,15 +2,29 @@ package com.kinopio.eatgo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.UiThread
+import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.ActivityMainBinding
+import com.kinopio.eatgo.domain.map.StoreLocationDto
+import com.kinopio.eatgo.domain.map.StoreLocationListDto
+import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
+import com.kinopio.eatgo.presentation.map.NaverMapActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import com.naver.maps.map.widget.LocationButtonView
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() , OnMapReadyCallback {
@@ -19,6 +33,9 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private val binding : ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    private lateinit var markerList : List<StoreLocationDto>;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -37,6 +54,31 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         binding.customCurLocationBtn.setOnClickListener {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
+        val baseURL = "http://10.0.2.2:8080"
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val storeLocationService = retrofit.create(StoreLocationService::class.java)
+
+        storeLocationService.getStores().enqueue(object : Callback<StoreLocationListDto> {
+            override fun onFailure(call: Call<StoreLocationListDto>, t: Throwable) {
+                Log.d("fail", "실패")
+                Log.d("fail", "$t")
+            }
+
+            override fun onResponse(
+                call: Call<StoreLocationListDto>,
+                response: Response<StoreLocationListDto>
+            ) {
+                if(response.isSuccessful.not()){
+                    return
+                }
+                response.body()?.let{
+                    markerList = it.res
+                }
+            }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -52,15 +94,32 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-        var markerList = arrayOf(doubleArrayOf(37.58360643235775, 127.00287162295791), doubleArrayOf(37.57634704780042, 127.00014662083021), doubleArrayOf(37.57437921990977, 127.00597769025228), doubleArrayOf(37.57545705952983, 127.00408207401604))
 
-        for (i in 0 .. 3) {
+//        var markerList = arrayOf(doubleArrayOf(37.58360643235775, 127.00287162295791), doubleArrayOf(37.57634704780042, 127.00014662083021), doubleArrayOf(37.57437921990977, 127.00597769025228), doubleArrayOf(37.57545705952983, 127.00408207401604))
+
+        for (i in 0 .. markerList.size - 1) {
             val marker = Marker()
-            marker.position = LatLng(markerList[i][0], markerList[i][1])
-            marker.width = 50
-            marker.height = 70
+
+            marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
+            marker.width = 100
+            marker.height = 110
+//            marker.icon = OverlayImage.fromResource(R.mipmap.yakitori)
+
+            when(markerList[i].categoryId) {
+                1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+                2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
+                3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
+                4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
+                5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
+                6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
+                7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
+                8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
+                else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+            }
+
             marker.map = naverMap
         }
 

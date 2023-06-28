@@ -84,10 +84,8 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
         )
         marker.icon = OverlayImage.fromResource(R.mipmap.marker)
         marker.map = naverMap
-
         naverMap.addOnCameraChangeListener { reason, animated ->
             Log.i("NaverMap", "카메라 변경 - reson: $reason, animated: $animated")
-            Log.d("aaa", "${naverMap.cameraPosition.target.latitude}, ${naverMap.cameraPosition.target.longitude}")
             marker.position = LatLng(
                 // 현재 보이는 네이버맵의 정중앙 가운데로 마커 이동
                 naverMap.cameraPosition.target.latitude,
@@ -102,6 +100,7 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
             )
+            Log.d("aaa", "${naverMap.cameraPosition.target.latitude}, ${naverMap.cameraPosition.target.longitude}")
             // 좌표 -> 주소 변환 텍스트 세팅, 버튼 활성화
             getAddress(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude)
         }
@@ -124,12 +123,14 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
             ) { address ->
                 if (address.size != 0) {
                     // 반환 값에서 전체 주소만 사용한다.
+                    Log.d("aaa", "'${address[0].getAddressLine(0)}', ${latitude}, ${longitude}")
                     binding.selectKoreaAddress.text = "${address[0].getAddressLine(0)}"
                 }
             }
         } else { // API 레벨이 33 미만인 경우
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null) {
+                Log.d("aaa", "${addresses[0].getAddressLine(0)}, ${latitude}, ${longitude}")
                 binding.selectKoreaAddress.text = "${addresses[0].getAddressLine(0)}"
 
             }
