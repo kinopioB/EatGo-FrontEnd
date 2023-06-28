@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ToggleButton
 import androidx.activity.result.ActivityResultLauncher
@@ -32,9 +33,9 @@ class CreateStoreActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
 
     private var selectedToggleButton: ToggleButton? = null
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
 
-    private val PICK_IMAGE_REQUEST_CODE = 1
 
     private val toggleButtonChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         if (isChecked) {
@@ -53,13 +54,13 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
 
-    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToggleButtons()
+
         menuAdapter = MenuAdapter(menuList)
         openInfoAdapter = OpenInfoAdapter(openInfoList)
 
@@ -143,8 +144,6 @@ class CreateStoreActivity : AppCompatActivity() {
         binding.cate6.setOnCheckedChangeListener(toggleButtonChangeListener)
 
 
-
-
     }
 
     // 영업일 정보 토글 버튼 리스너 세팅
@@ -175,7 +174,6 @@ class CreateStoreActivity : AppCompatActivity() {
     private fun showTimePicker(day: String) {
         val dialogBinding = OpenInfoTimePickerBinding.inflate(layoutInflater)
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Set Opening and Closing Time")
             .setView(dialogBinding.root)
             .setPositiveButton("Done") { _, _ ->
                 val startTimeHour = dialogBinding.timePicker.hour
@@ -193,6 +191,14 @@ class CreateStoreActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .create()
+
+        dialog.setOnShowListener {
+            val window = dialog.window
+            window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            )
+        }
 
         dialog.show()
     }
