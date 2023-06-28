@@ -29,11 +29,7 @@ class CustomQRScannerActivity : AppCompatActivity() {
         val binding = ActivityCustomBarcodeScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 뒤로가기 툴바
-/*        val ab = supportActionBar
-        ab!!.title = "코드 스캔"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)*/
-
+        // 뒤로 가기 ToolBar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar) // 액티비티의 앱바로 툴바를 지정합니다
         val actionBar : ActionBar? = supportActionBar
@@ -50,7 +46,7 @@ class CustomQRScannerActivity : AppCompatActivity() {
         captureManager.setShowMissingCameraPermissionDialog(true,"카메라 권한 요청")	// 권한요청 다이얼로그 보이게 할 지 말 지
         captureManager.decode()		// decoding 시작
 
-        // 플래시 버튼 클릭 ?
+        // 플래시 버튼 클릭
         btnFlash.setOnClickListener {
             Log.d("qr", "qr코드 플래시")
             if (!isFlash) {
@@ -110,6 +106,4 @@ class CustomQRScannerActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         captureManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
-
 }
