@@ -19,7 +19,6 @@ class ReviewFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
         //false로 설정해 주면 화면밖 혹은 뒤로가기 버튼시 다이얼로그라 dismiss 되지 않는다.
         isCancelable = false
-
     }
 
     private lateinit var binding: FragmentReviewBinding
@@ -49,7 +48,6 @@ class ReviewFragment : DialogFragment() {
             val inputText = binding.reviewText.text.toString()
             Log.d("review", "editText : $inputText")
             Log.d("review", "ratingStar : $ratingStar")
-
         }
     }
 }

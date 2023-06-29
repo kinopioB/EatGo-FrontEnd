@@ -16,13 +16,13 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         val fragmentClassName = intent.getStringExtra("fragmentToOpen")
 
-        Log.d("review", " review fragment : $fragmentClassName")
+        Log.d("review", " review fragment : ")
 
         if (fragmentClassName != null) {
             try {
                 val fragment = Class.forName(fragmentClassName).newInstance() as Fragment
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.reviewFragment, fragment)
+                    .add(R.id.detailReview, fragment)
                     .commit()
             } catch (e: Exception) {
                 e.printStackTrace()
