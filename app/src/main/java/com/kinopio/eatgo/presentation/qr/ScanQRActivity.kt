@@ -1,5 +1,6 @@
 package com.kinopio.eatgo.presentation.qr
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,11 +11,13 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import com.kinopio.eatgo.databinding.ActivityScanQrBinding
+import com.kinopio.eatgo.presentation.store.ReviewDetailActivity
+import com.kinopio.eatgo.presentation.store.ReviewFragment
 
 
 class ScanQRActivity : AppCompatActivity() {
 
-    private lateinit var txtResult: TextView
+    private lateinit var txtResult : TextView
 
     // 스캐너 설정
     private val barcodeLauncher = registerForActivityResult(
@@ -24,16 +27,31 @@ class ScanQRActivity : AppCompatActivity() {
         // 내용이 없다면
         if (result.contents == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-        } else { // 내용이 있다면
+        }
+        else { // 내용이 있다면
+
             // 1. Toast 메시지 출력.
+            // 주석처리
             Toast.makeText(
                 this,
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
             ).show()
 
-            // 2. 결과 값 TextView에 출력.
-            txtResult.text = result.contents.toString()
+            Log.d("review", result.formatName)
+
+            result.contents
+            var userId : Int = 0
+            var storeId : Int = 0
+
+            Log.d("review", "프레그먼트 실행 전")
+            val intent = Intent(this, ReviewDetailActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("storeId", storeId)
+            intent.putExtra("fragmentToOpen", ReviewFragment::class.java.name)
+            startActivity(intent)
+            Log.d("review", "프레그먼트 실행 후")
+            //txtResult.text = result.contents.toString()
         }
     }
 
@@ -64,18 +82,17 @@ class ScanQRActivity : AppCompatActivity() {
         options.setPrompt("커스텀 QR 스캐너 창")
         options.setDesiredBarcodeFormats( ScanOptions.QR_CODE )
         options.captureActivity = CustomQRScannerActivity::class.java
-
         barcodeLauncher.launch(options)
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityScanQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // val btnScan : Button = binding.btnScan
+        txtResult = binding.txtResult
 
         binding.btnScan.setOnClickListener {
             onScanButtonClicked()
