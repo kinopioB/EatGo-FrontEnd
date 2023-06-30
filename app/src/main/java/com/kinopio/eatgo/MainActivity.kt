@@ -10,6 +10,8 @@ import com.kinopio.eatgo.domain.map.StoreLocationDto
 import com.kinopio.eatgo.domain.map.StoreLocationListDto
 import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
 import com.kinopio.eatgo.presentation.map.NaverMapActivity
+import com.kinopio.eatgo.presentation.store.SummaryInfomationFragment
+import com.kinopio.eatgo.presentation.templates.NavigationFragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
@@ -38,8 +40,14 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         val fm = supportFragmentManager
+        val transaction = fm.beginTransaction()
+        var navigationFragment:NavigationFragment = NavigationFragment()
+
+        transaction.add(R.id.bottomBar, navigationFragment)
+        transaction.commit()
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
@@ -56,21 +64,23 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         val retrofit = RetrofitClient.getRetrofit()
         val storeLocationService = retrofit?.create(StoreLocationService::class.java)
 
-        storeLocationService?.getStores()?.enqueue(object : Callback<StoreLocationListDto> {
-            override fun onFailure(call: Call<StoreLocationListDto>, t: Throwable) {
+        storeLocationService?.getStores()?.enqueue(object : Callback<List<StoreLocationDto>> {
+            override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {
                 Log.d("fail", "실패")
                 Log.d("fail", "$t")
             }
 
             override fun onResponse(
-                call: Call<StoreLocationListDto>,
-                response: Response<StoreLocationListDto>
+                call: Call<List<StoreLocationDto>>,
+                response: Response<List<StoreLocationDto>>
             ) {
+                Log.d("aaa","awsdljhaskjdh")
                 if(response.isSuccessful.not()){
                     return
                 }
                 response.body()?.let{
-                    markerList = it.res
+                    Log.d("aaa", "$it")
+                    markerList = it
                 }
             }
         })
@@ -92,10 +102,18 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-
+        val transaction = supportFragmentManager.beginTransaction()
         for (i in 0 .. markerList.size - 1) {
             val marker = Marker()
+            marker.setOnClickListener {overlay ->
+                Log.d("aaa", "클릭클릭")
+                Log.d("aaa", "$overlay")
+                var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
 
+                transaction.add(R.id.frameLayout, infomationFragment)
+                transaction.commit()
+                true
+            }
             marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
             marker.width = 100
             marker.height = 110
