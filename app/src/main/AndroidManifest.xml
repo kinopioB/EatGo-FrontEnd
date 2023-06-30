@@ -40,9 +40,12 @@
             android:name=".presentation.store.ReviewDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_navigation" />
+        <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
-
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -81,16 +84,13 @@
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-
         </activity>
-
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="@string/naver_map_client_id" />
