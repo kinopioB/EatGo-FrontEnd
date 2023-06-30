@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         binding.customCurLocationBtn.setOnClickListener {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
+
         val retrofit = RetrofitClient.getRetrofit()
         val storeLocationService = retrofit?.create(StoreLocationService::class.java)
 
