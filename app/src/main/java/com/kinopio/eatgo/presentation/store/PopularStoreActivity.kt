@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.data.map.LoginService
 import com.kinopio.eatgo.databinding.ActivityPopularStoreBinding
 import com.kinopio.eatgo.domain.store.ui_model.Store
 
@@ -25,7 +27,9 @@ class PopularStoreActivity : AppCompatActivity() {
         binding = ActivityPopularStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        // retrofit 연결
+        val retrofit = RetrofitClient.getRetrofit2()
+        val loginService = retrofit.create(LoginService::class.java)
 
         // popular store data
         popularStoreList.add(Store("test","떡볶이", "test",null))
