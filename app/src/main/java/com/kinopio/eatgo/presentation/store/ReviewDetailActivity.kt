@@ -64,7 +64,7 @@ class ReviewDetailActivity : AppCompatActivity() {
         // 리뷰 창
         val fragmentClassName = intent.getStringExtra("fragmentToOpen")
 
-        Log.d("review", " review fragment : ")
+        Log.d("review", " review fragment : $fragmentClassName" )
 
             try {
                 val fragment = Class.forName("com.kinopio.eatgo.presentation.store.ReviewFragment").newInstance() as Fragment

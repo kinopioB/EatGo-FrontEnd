@@ -20,10 +20,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
-        <item name="android:gravity">center</item>
-        <item name="backgroundColor">@color/color_yellow</item>
-
+        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Actionbar</item>
     </style>
 
-
+    <style name="AppTheme.Actionbar" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:tint">@color/color_yellow</item>
+    </style>
 </resources>
