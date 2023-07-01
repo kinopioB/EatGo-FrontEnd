@@ -60,6 +60,7 @@ class CreateStoreActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupToggleButtons()
 
+
         menuFormAdapter = MenuFormAdapter(menuList)
         openInfoAdapter = OpenInfoAdapter(openInfoList)
 
