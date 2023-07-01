@@ -107,4 +107,6 @@ dependencies {
     // 네이버 로그인
     implementation 'com.navercorp.nid:oauth-jdk8:5.1.0' // jdk 8
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    def lottieVersion = "5.2.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

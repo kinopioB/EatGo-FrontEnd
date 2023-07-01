@@ -1,18 +1,30 @@
 package com.kinopio.eatgo.presentation.naverlogin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
+import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.databinding.ActivityMainBinding
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.User
+import com.kinopio.eatgo.data.map.LoginService
 import com.kinopio.eatgo.databinding.ActivityNaverLoginBinding
+import com.kinopio.eatgo.domain.map.LoginDto
+import com.kinopio.eatgo.domain.map.LoginResponseDto
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NaverLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNaverLoginBinding
@@ -21,7 +33,7 @@ class NaverLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNaverLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         /** Naver Login Module Initialize */
         val naverClientId = getString(R.string.social_login_info_naver_client_id)
         val naverClientSecret = getString(R.string.social_login_info_naver_client_secret)
@@ -31,8 +43,30 @@ class NaverLoginActivity : AppCompatActivity() {
         setLayoutState(false)
 
         binding.tvNaverLogin.setOnClickListener {
-            startNaverLogin()
+            val radioGroup = binding.loginRadioGroup
+
+            if (radioGroup.checkedRadioButtonId == -1){
+                Toast.makeText(this, "로그인 유형을 선택하세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val checkedId : String = resources.getResourceEntryName(radioGroup.checkedRadioButtonId)
+
+            Log.d("checked", "$checkedId")
+            if (checkedId == "boss"){
+                startNaverLogin(1)
+            }
+            else if (checkedId == "normal") {
+                startNaverLogin(2)
+            }
+
         }
+
+//        binding.tvNaverLogin.setOnClickListener {
+//
+//            startNaverLogin()
+//
+//        }
         binding.tvNaverLogout.setOnClickListener {
             startNaverLogout()
         }
@@ -44,17 +78,53 @@ class NaverLoginActivity : AppCompatActivity() {
     /**
      * 로그인
      * authenticate() 메서드를 이용한 로그인 */
-    private fun startNaverLogin(){
+    private fun startNaverLogin(role:Int){
         var naverToken :String? = ""
 
         val profileCallback = object : NidProfileCallback<NidProfileResponse> {
             override fun onSuccess(response: NidProfileResponse) {
                 val userId = response.profile?.id
-                binding.tvResult.text = "id: ${userId} \ntoken: ${naverToken}"
-                setLayoutState(true)
-                Toast.makeText(this@NaverLoginActivity, "네이버 아이디 로그인 성공!", Toast.LENGTH_SHORT).show()
+                val userName = response.profile?.name
+
+                val retrofit = RetrofitClient.getRetrofit2()
+                val loginService = retrofit.create(LoginService::class.java)
+
+                val loginInfo = LoginDto(
+                    userSocialId = userId.toString(),
+                    userName = userName.toString(),
+                    LoginType = 2,
+                    role = role
+                )
+                loginService.login(loginInfo).enqueue(object : Callback<LoginResponseDto> {
+
+                    override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
+                        Log.d("fail", "로그인 실패")
+                        Log.d("fail", "$t")
+                    }
+
+                    override fun onResponse(call: Call<LoginResponseDto>, response: Response<LoginResponseDto>) {
+                        Log.d("success", "로그인 성공")
+                        response.body()?.let {
+                            User.setUserId(it.userId)
+                            User.setUserName(it.userName)
+                            User.setUserSocialId(it.userSocialId)
+                            User.setRole(it.role)
+                            User.setSocialToken(naverToken.toString())
+                            User.setJwt(it.jwt)
+                            User.setLoginType(it.loginType)
+                        }
+                        Log.d("success", "${User.getJwt()}")
+                        Log.d("success", "${User.getUserSocialId()}")
+                        Log.d("success", "${User.getSocialToken()}")
+                        val intent:Intent = Intent(applicationContext, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                })
+
+//                setLayoutState(true)
             }
             override fun onFailure(httpStatus: Int, message: String) {
+
                 val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                 val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
                 Toast.makeText(this@NaverLoginActivity, "errorCode: ${errorCode}\n" +
@@ -67,6 +137,7 @@ class NaverLoginActivity : AppCompatActivity() {
 
         /** OAuthLoginCallback을 authenticate() 메서드 호출 시 파라미터로 전달하거나 NidOAuthLoginButton 객체에 등록하면 인증이 종료되는 것을 확인할 수 있습니다. */
         val oauthLoginCallback = object : OAuthLoginCallback {
+
             override fun onSuccess() {
                 // 네이버 로그인 인증이 성공했을 때 수행할 코드 추가
                 naverToken = NaverIdLoginSDK.getAccessToken()
@@ -88,8 +159,9 @@ class NaverLoginActivity : AppCompatActivity() {
                 onFailure(errorCode, message)
             }
         }
-
+        Log.d("naver", "123123 ${NaverIdLoginSDK.getAccessToken()}")
         NaverIdLoginSDK.authenticate(this, oauthLoginCallback)
+
     }
 
     /**
@@ -136,7 +208,7 @@ class NaverLoginActivity : AppCompatActivity() {
             binding.tvNaverLogin.visibility = View.VISIBLE
             binding.tvNaverLogout.visibility = View.GONE
             binding.tvNaverDeleteToken.visibility = View.GONE
-            binding.tvResult.text = ""
+//            binding.tvResult.text = ""
         }
     }
 }

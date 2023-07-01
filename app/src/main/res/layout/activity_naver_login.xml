@@ -6,61 +6,163 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_login"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_naver_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#2DB400"
-            android:padding="20dp"
-            android:text="Naver Login"
-            android:textColor="#FFFFFF"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/tv_naver_logout"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_naver_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#2DB400"
-            android:padding="20dp"
-            android:text="Naver Logout"
-            android:textColor="#FFFFFF"
-            android:visibility="gone"
-            app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"
-            app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_naver_delete_token"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#2DB400"
-            android:padding="20dp"
-            android:text="Naver Delete Token"
-            android:textColor="#FFFFFF"
-            android:visibility="gone"
-            app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="id, token: "
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="122dp"
+        app:layout_constraintBottom_toTopOf="@+id/loginRadioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_login" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_url="https://assets9.lottiefiles.com/packages/lf20_USXu1l.json" />
+
+    <RadioGroup
+        android:id="@+id/loginRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tv_kakao_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animationView">
+
+        <RadioButton
+            android:id="@+id/boss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사장">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일반">
+
+        </RadioButton>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tv_naver_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2DB400"
+        android:padding="20dp"
+        android:text="네이버 로그인"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_kakao_login" />
+
+    <TextView
+        android:id="@+id/tv_kakao_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFCD01"
+        android:padding="20dp"
+        android:text="카카오 로그인"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/tv_naver_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginRadioGroup" />
+
+            <TextView
+                android:id="@+id/tv_naver_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2DB400"
+                android:padding="20dp"
+                android:text="Naver Logout"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"
+                app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_naver_delete_token"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2DB400"
+                android:padding="20dp"
+                android:text="Naver Delete Token"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/cl_login"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="90dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/radioGroup">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_naver_login"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#2DB400"-->
+<!--            android:padding="20dp"-->
+<!--            android:text="Naver Login"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_logout"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_naver_logout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#2DB400"-->
+<!--            android:padding="20dp"-->
+<!--            android:text="Naver Logout"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"-->
+<!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_naver_delete_token"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#2DB400"-->
+<!--            android:padding="20dp"-->
+<!--            android:text="Naver Delete Token"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_result"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="id, token: "-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cl_login" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,11 @@ package com.kinopio.eatgo
 object User {
     private var userId : Int? = null
     private var userName : String? = null
+    private var userSocialId : String? = null
     private var role : Int? = null
-    private var token : String? = null
+    private var socialToken : String? = null
+    private var jwt : String? = null
+    private var loginType : Int? = null
 
     fun setUserId(userId:Int) {
         this.userId = userId;
@@ -30,11 +33,35 @@ object User {
         return this.role
     }
 
-    fun setToken(token:String) {
-        this.token = token
+    fun setSocialToken(token:String) {
+        this.socialToken = token
     }
 
-    fun getToken() :String? {
-        return this.token
+    fun getSocialToken() :String? {
+        return this.socialToken
+    }
+
+    fun setLoginType(loginType:Int) {
+        this.loginType = loginType
+    }
+
+    fun getLoginType() : Int?{
+        return this.loginType
+    }
+
+    fun setJwt(jwt:String) {
+        this.jwt = jwt
+    }
+
+    fun getJwt(): String? {
+        return this.jwt
+    }
+
+    fun setUserSocialId(userSocialId : String) {
+        this.userSocialId = userSocialId
+    }
+
+    fun getUserSocialId() :String?{
+        return this.userSocialId
     }
 }
