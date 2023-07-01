@@ -55,6 +55,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
+
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
 
@@ -83,6 +84,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.qr.CreateQRActivity"
+            android:theme="@style/ToolBar"
             android:exported="false" />
         <activity
             android:name=".presentation.qr.MainQRActivity"
