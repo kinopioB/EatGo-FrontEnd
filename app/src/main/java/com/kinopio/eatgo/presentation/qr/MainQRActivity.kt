@@ -27,10 +27,5 @@ class MainQRActivity : AppCompatActivity() {
             val intent = Intent( this, ScanQRActivity::class.java )
             startActivity(intent)
         }
-        binding.btnReview.setOnClickListener {
-            ReviewFragment().show(
-                supportFragmentManager, "Review"
-            )
-        }
     }
 }

@@ -5,7 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.EatGo" parent="Base.Theme.EatGo" />
+    <!--<style name="Theme.EatGo" parent="Base.Theme.EatGo" />-->
     <style name="CustomQRScannerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
     </style>
@@ -13,4 +13,17 @@
     <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:background">@drawable/review_border</item>
     </style>
+
+    <!-- Actionbar 없는 FullScreen -->
+    <style name="ToolBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:gravity">center</item>
+        <item name="backgroundColor">@color/color_yellow</item>
+
+    </style>
+
+
 </resources>

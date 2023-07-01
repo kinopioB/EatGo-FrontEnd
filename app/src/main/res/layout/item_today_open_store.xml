@@ -8,6 +8,13 @@
     android:padding="10dp"
     android:weightSum="10">
 
+    <ImageView
+        android:id="@+id/store_img"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:layout_weight="3"
+        android:src="@drawable/truck">
+    </ImageView>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -17,34 +24,31 @@
         android:layout_marginRight="8dp">
 
         <TextView
-            android:id="@+id/menu_name"
+            android:id="@+id/store_name"
             style="@style/ItemMenuNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="불꽃 타코야키" />
+            android:text="승주네 가게 " />
 
         <TextView
-            android:id="@+id/menu_name_info"
+            android:id="@+id/store_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/ItemMenuInfoText"
-            android:text="토치로 불맛을 내고 특제 불맛 소스를 곁들인 타코야키" />
+            android:text="승주네 푸드트럭입니다." />
 
-        <TextView
-            android:id="@+id/menu_price_amount"
+        <LinearLayout
+            android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemMenuPriceText"
-            android:text="14개 : 1000원" />
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
-    <ImageView
-        android:id="@+id/menuImg"
-        android:layout_width="0dp"
-        android:layout_height="110dp"
-        android:layout_weight="3"
-        android:src="@drawable/truck">
-    </ImageView>
 
 
 </LinearLayout>

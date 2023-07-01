@@ -104,6 +104,9 @@ dependencies {
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 
+    // view pager
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
     // 네이버 로그인
     implementation 'com.navercorp.nid:oauth-jdk8:5.1.0' // jdk 8
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"

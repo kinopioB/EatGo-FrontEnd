@@ -46,11 +46,29 @@
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
+          
+          <activity
+            android:name=".presentation.store.PopularStoreActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.store.ReviewDetailActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+
+            android:name=".presentation.naverlogin.NaverLoginActivity"
+            android:exported="true">
         </activity>
         <activity
             android:name=".presentation.templates.SplashActivity"
@@ -69,18 +87,15 @@
             android:exported="false" />
         <activity
             android:name=".presentation.qr.CreateQRActivity"
+            android:theme="@style/ToolBar"
             android:exported="false" />
         <activity
             android:name=".presentation.qr.MainQRActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+        
         </activity>
+
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
@@ -119,7 +134,11 @@
         <activity
             android:name=".presentation.store.CreateStoreActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
 
