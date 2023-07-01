@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
@@ -22,7 +21,7 @@ import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 
 
 class CreateStoreActivity : AppCompatActivity() {
-    private lateinit var menuAdapter: MenuAdapter
+    private lateinit var menuFormAdapter: MenuFormAdapter
     private lateinit var  openInfoAdapter :  OpenInfoAdapter
 
     private val menuList = mutableListOf<Menu>()
@@ -61,11 +60,12 @@ class CreateStoreActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupToggleButtons()
 
-        menuAdapter = MenuAdapter(menuList)
+
+        menuFormAdapter = MenuFormAdapter(menuList)
         openInfoAdapter = OpenInfoAdapter(openInfoList)
 
         binding.mRecyclerView.apply {
-            adapter = menuAdapter
+            adapter = menuFormAdapter
             layoutManager = LinearLayoutManager(this@CreateStoreActivity)
         }
 
@@ -111,14 +111,15 @@ class CreateStoreActivity : AppCompatActivity() {
             val menuName = binding.editTextMenuName.text.toString()
             val menuCount = binding.editTextMenuCount.text.toString().toIntOrNull()
             val menuPrice = binding.editTextMenuPrice.text.toString().toIntOrNull()
+            val menuDesc = "test" //칸 추가 필요
             if (menuName.isNotEmpty() && menuCount != null && menuPrice != null) {
                 val menu = selectedImageUri?.let { it1 ->
-                    Menu(menuName, menuCount, menuPrice,
-                        it1
+                    Menu(menuName, menuCount, menuPrice,menuDesc,
+                        "imageTestSampleLink"
                     )
                 }
                 menu?.let { it1 -> menuList.add(it1) }
-                menuAdapter.notifyDataSetChanged()
+                menuFormAdapter.notifyDataSetChanged()
 
                 // Reset input fields
                 binding.editTextMenuName.text.clear()

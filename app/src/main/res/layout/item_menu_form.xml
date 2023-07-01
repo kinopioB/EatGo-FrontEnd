@@ -1,0 +1,44 @@
+<!-- item.xml -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/menuImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp">
+    </ImageView>
+    <!-- 메뉴 이름 입력란 -->
+    <TextView
+        android:id="@+id/menuNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="text" />
+
+    <!-- 메뉴 개수 입력란 -->
+    <TextView
+        android:id="@+id/menuCountTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="text" />
+
+    <!-- 메뉴 가격 입력란 -->
+    <TextView
+        android:id="@+id/menuPriceTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="text" />
+
+
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/marker"
+        android:text="삭제" />
+
+</LinearLayout>
