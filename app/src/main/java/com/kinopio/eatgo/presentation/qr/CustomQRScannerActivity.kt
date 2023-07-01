@@ -29,13 +29,8 @@ class CustomQRScannerActivity : AppCompatActivity() {
         val binding = ActivityCustomBarcodeScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 뒤로 가기 ToolBar
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar) // 액티비티의 앱바로 툴바를 지정합니다
-        val actionBar : ActionBar? = supportActionBar
-        actionBar!!.title = "코드 스캔"
-        actionBar?.setDisplayHomeAsUpEnabled(true) // 앱바에 뒤로가기 버튼을 추가합니다
-
+        // Toolbar 적용
+        ToolbarUtils.setupToolbar(this, binding.root.findViewById<Toolbar>(R.id.toolbar),"제목", null)
 
         // 바코드 코드
         decoratedBarcodeView = binding.decoratedBarcodeView
@@ -63,18 +58,10 @@ class CustomQRScannerActivity : AppCompatActivity() {
         }
     }
 
-    // 뒤로가기 버튼을 눌렀을 때 동작
-    @SuppressLint("NonConstantResourceId")
+    // 뒤로가기 동작 버튼
+    // 분리된 클래스의 handleOptionsItemSelected 함수 호출
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> { // 툴바의 뒤로가기 버튼이 눌렸을 때 동작합니다
-                val intent = Intent(this, ScanQRActivity::class.java)
-                startActivity(intent)
-                finish()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
+        return ToolbarUtils.handleOptionsItemSelected(this, item)
     }
 
     // LifeCycle 에 따라 CaptureManager 또한 처리해주어야 한다.

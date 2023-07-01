@@ -42,6 +42,7 @@
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,13 +65,15 @@
             tools:replace="screenOrientation" />
         <activity
             android:name=".presentation.qr.ScanQRActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.qr.CreateQRActivity"
             android:theme="@style/ToolBar"
             android:exported="false" />
         <activity
+            android:name=".presentation.qr.CreateQRActivity"
+            android:exported="false"
+            android:theme="@style/ToolBar" />
+        <activity
             android:name=".presentation.qr.MainQRActivity"
+            android:theme="@style/ToolBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -81,6 +84,7 @@
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
@@ -88,6 +92,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="@string/naver_map_client_id" />

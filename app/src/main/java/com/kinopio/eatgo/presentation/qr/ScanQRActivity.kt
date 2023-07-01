@@ -3,22 +3,26 @@ package com.kinopio.eatgo.presentation.qr
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewbinding.ViewBinding
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityScanQrBinding
 import com.kinopio.eatgo.presentation.store.ReviewDetailActivity
 import com.kinopio.eatgo.presentation.store.ReviewFragment
 
 
 class ScanQRActivity : AppCompatActivity() {
-
     private lateinit var txtResult : TextView
-
     // 스캐너 설정
     private val barcodeLauncher = registerForActivityResult(
         ScanContract()
@@ -56,9 +60,6 @@ class ScanQRActivity : AppCompatActivity() {
     }
 
     fun onScanButtonClicked() {
-        // Launch ( SCAN 실행 )
-        // barcodeLauncher.launch(ScanOptions())
-
         val options = ScanOptions()
         options.setOrientationLocked(false)
         barcodeLauncher.launch(options)
@@ -69,7 +70,6 @@ class ScanQRActivity : AppCompatActivity() {
     private fun onCustomScanButtonClicked() {
         // Custom Scan Layout -> Activity
 
-        // Intent ? -> 맞는 방법일까 ?
         // val intent = Intent( this, CustomBarcodeScannerActivity::class.java)
         // startActivity(intent)
 
@@ -87,16 +87,20 @@ class ScanQRActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityScanQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.d("scan toolbar", "toolbar1")
+        ToolbarUtils.setupToolbar(this, binding.root.findViewById<Toolbar>(R.id.toolbar),"제목", null)
+        Log.d("scan toolbar", "toolbar2")
 
-        val btnCustomScan : Button = binding.btnCustomScan
         // Custom Scan 버튼 클릭
-        btnCustomScan.setOnClickListener {
+        binding.btnCustomScan.setOnClickListener {
             Log.d("qr", "커스텀 스캔 클릭")
             onCustomScanButtonClicked()
         }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return ToolbarUtils.handleOptionsItemSelected(this, item) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
     }
 }

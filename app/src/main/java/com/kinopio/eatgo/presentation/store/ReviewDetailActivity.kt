@@ -16,7 +16,7 @@ class ReviewDetailActivity : AppCompatActivity() {
 
         val fragmentClassName = intent.getStringExtra("fragmentToOpen")
 
-        Log.d("review", " review fragment : ")
+        Log.d("review", " review fragment : $fragmentClassName" )
 
         if (fragmentClassName != null) {
             try {
