@@ -91,12 +91,6 @@ class ScanQRActivity : AppCompatActivity() {
         val binding = ActivityScanQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // val btnScan : Button = binding.btnScan
-        txtResult = binding.txtResult
-
-        binding.btnScan.setOnClickListener {
-            onScanButtonClicked()
-        }
 
         val btnCustomScan : Button = binding.btnCustomScan
         // Custom Scan 버튼 클릭
