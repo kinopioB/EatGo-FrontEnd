@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.store.StoreReviewFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:padding="20dp">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:weightSum="1">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="리뷰 3개">
+           </TextView>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1">
+           </TextView>
+           <Button
+               android:layout_width="80dp"
+               android:layout_height="30dp"
+               android:drawableLeft="@drawable/qr_code_camera"
+               android:background="@color/color_gray1"
+               android:text="QR">
+           </Button>
+       </LinearLayout>
+       <androidx.recyclerview.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+       </androidx.recyclerview.widget.RecyclerView>
+   </LinearLayout>
+</FrameLayout>

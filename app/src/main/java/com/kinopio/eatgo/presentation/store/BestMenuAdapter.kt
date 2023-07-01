@@ -3,15 +3,16 @@ package com.kinopio.eatgo.presentation.store
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.kinopio.eatgo.databinding.ItemBestMenuBinding
 import com.kinopio.eatgo.databinding.ItemMenuBinding
 import com.kinopio.eatgo.domain.store.ui_model.Menu
 
-class MenuAdapter(private val menuList: List<Menu>?) :
-    RecyclerView.Adapter<MenuAdapter.Holder>() {
+class BestMenuAdapter(private val menuList: List<Menu>?) :
+    RecyclerView.Adapter<BestMenuAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemMenuBinding.inflate(inflater, parent, false)
+        val binding = ItemBestMenuBinding.inflate(inflater, parent, false)
         return Holder(binding)
     }
 
@@ -28,7 +29,7 @@ class MenuAdapter(private val menuList: List<Menu>?) :
         return menuList?.size ?: 0
     }
 
-    inner class Holder(private val binding: ItemMenuBinding) :
+    inner class Holder(private val binding: ItemBestMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(menu: Menu) {
