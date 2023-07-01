@@ -59,21 +59,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_main2" />
         <activity
             android:name=".presentation.store.ReviewDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
+        </activity>
 
-            <!--
+        <activity
+            android:name=".presentation.store.PopularStoreActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
+
         <activity
             android:name=".presentation.templates.SplashActivity"
             android:exported="false" />
@@ -106,7 +112,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             -->
+          android:exported="true">
         </activity>
+
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
@@ -134,16 +142,22 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presentation.store.CreateStoreActivity"
             android:exported="true">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
 
