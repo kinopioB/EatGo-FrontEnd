@@ -1,12 +1,15 @@
 package com.kinopio.eatgo.presentation.templates
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.FragmentNavigationBinding
+import kotlinx.coroutines.Dispatchers.Main
 
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,13 +34,33 @@ class NavigationFragment : Fragment() {
 //        }
 //    }
 
+    private lateinit var binding : FragmentNavigationBinding
+    private lateinit var intent : Intent
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.homeBtn.setOnClickListener {
+//            intent = Intent(context, MainActivity::class.java)
+//            startActivity(intent)
+
+//            activity?.let{
+//                intent = Intent (it, MainActivity::class.java)
+//                it.startActivity(intent)
+//            }
+
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish() // 현재 Activity를 종료하려는 경우
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_navigation, container, false)
-        val binding = FragmentNavigationBinding.inflate(inflater, container, false)
+        binding = FragmentNavigationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
