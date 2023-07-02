@@ -48,7 +48,6 @@
                 android:background="@drawable/review_button_border"
                 android:textColor="@color/white"
                 android:layout_marginRight="10dp"
-
                 android:text="QR" />
 
             <Button
@@ -316,23 +315,24 @@
             android:orientation="horizontal"
             android:weightSum="3"
             >
-
-            <TextView
+            <Button
                 android:id="@+id/startBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/play_circle"
                 android:layout_weight="1.5"
                 android:textAlignment="center"
+                android:background="@color/white"
                 android:text="영업 시작" />
 
-            <TextView
-                android:id="@+id/stopBtn"
+            <Button
+                android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/stop_circle"
                 android:layout_weight="1.5"
                 android:textAlignment="center"
+                android:background="@color/white"
                 android:text="영업 종료" />
         </LinearLayout>
     </LinearLayout>
