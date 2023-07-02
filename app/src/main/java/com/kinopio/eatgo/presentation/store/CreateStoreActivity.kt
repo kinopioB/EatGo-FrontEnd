@@ -2,9 +2,11 @@ package com.kinopio.eatgo.presentation.store
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +19,28 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.internal.ViewUtils.dpToPx
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
+import com.kinopio.eatgo.domain.store.Menu
+import com.kinopio.eatgo.domain.store.MenuRequestDto
+import com.kinopio.eatgo.domain.store.OpenInfoRequestDto
+import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
+import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
+import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
+import com.kinopio.eatgo.domain.store.ui_model.Store
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class CreateStoreActivity : AppCompatActivity() {
@@ -34,16 +52,23 @@ class CreateStoreActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateStoreBinding
 
-    private var selectedMenuImageUri: Uri? = null
-    private var selectedStoreImgUri : Uri?= null
+    private var selectedMenuImageUri: Uri =Uri.EMPTY
+    private var selectedStoreImgUri : Uri= Uri.EMPTY
 
     private var selectedToggleButton: ToggleButton? = null
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
     private lateinit var storeImageLauncher: ActivityResultLauncher<Intent>
 
+    private val storage: FirebaseStorage by lazy {
+        Firebase.storage
+    }
 
+    // 레트로핏 전송용 객체
+    private lateinit var storeRequestDto : StoreRequestDto
+    private  var newMenuList = mutableListOf<MenuRequestDto>()
 
+    // 카테고리 선택
     private val toggleButtonChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         if (isChecked) {
             // 하나의 토글 버튼이 선택되면 이전에 선택되었던 토글 버튼의 선택 상태를 해제합니다.
@@ -58,9 +83,6 @@ class CreateStoreActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,7 +160,6 @@ class CreateStoreActivity : AppCompatActivity() {
             }
         }
 
-
         // 메뉴 추가
         binding.buttonAdd.setOnClickListener {
             val menuName = binding.editTextMenuName.text.toString()
@@ -146,11 +167,16 @@ class CreateStoreActivity : AppCompatActivity() {
             val menuPrice = binding.editTextMenuPrice.text.toString().toIntOrNull()
             val menuInfo = "test" //칸 추가 필요
             if (menuName.isNotEmpty() && menuCount != null && menuPrice != null) {
-                val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, selectedMenuImageUri)
-                menuList.add(menu)
+                if(selectedMenuImageUri == null){
+                    val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, null)
+                    menuList.add(menu)
+                }else{
+                    val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, selectedMenuImageUri)
+                    menuList.add(menu)
+
+                }
                 menuFormAdapter.notifyDataSetChanged()
 
-                // Reset input fields
                 binding.editTextMenuName.text.clear()
                 binding.editTextMenuCount.text.clear()
                 binding.editTextMenuPrice.text.clear()
@@ -158,8 +184,8 @@ class CreateStoreActivity : AppCompatActivity() {
                 // Hide the input layout
                 binding.menuInputLayout.visibility = View.GONE
 
-                binding.menuImg.setImageURI(null)
-                selectedMenuImageUri = null
+                binding.menuImg.setImageURI(Uri.EMPTY)
+                selectedMenuImageUri = Uri.EMPTY
             } else {
                 // Handle input validation failure
             }
@@ -199,7 +225,157 @@ class CreateStoreActivity : AppCompatActivity() {
         }
 
 
+
+        //  등록 버튼
+        binding.submitBtn.setOnClickListener {
+
+            var uploadCount = 0
+            var completedCount = 0
+
+            // 메뉴 이미지 전송
+            for (i in 0..menuList.size-1){
+                val tmp = menuList.get(i)
+                Log.d("image","tmp ${tmp.imageUri}")
+
+                tmp.imageUri?.let { uri ->
+                    // tmp.imageUri가 null이 아닌 경우에 수행할 코드
+                    uploadCount++
+                    uploadPhoto(
+                        tmp.imageUri,
+                        successHandler = { imgUrl ->
+                            Log.d("image", "$imgUrl")
+                            completedCount++
+                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count, imgUrl, 1 ))
+                            checkMenuImgAllUploaded()
+                        },
+                        errorHandler = {
+                            Log.d("image","error")
+                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count,"", 1 ))
+                            //  checkMenuImgAllUploaded(uploadCount, completedCount)
+                            checkMenuImgAllUploaded()
+
+                        }
+                    )
+                } ?: run {
+                    // tmp.imageUri가 null인 경우에 수행할 코드
+                    newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count,"", 1 ))
+                    checkMenuImgAllUploaded()
+                }
+            }
+        }
+
+
     } // onCreate  종료
+
+    private fun checkMenuImgAllUploaded() {
+        // callRetrofit()
+        Log.d("image","메뉴 사진 업로드 ${menuList.size }, ${newMenuList.size}")
+        if(menuList.size == newMenuList.size){
+           // storeRequestDto.menus = newMenuList
+            uploadStoreImg()
+        }
+    }
+    private fun uploadStoreImg(){
+        Log.d("image", "가게 사진 업로드")
+
+
+        if(selectedStoreImgUri != null){
+            uploadPhoto(
+                selectedStoreImgUri,
+                successHandler = { imgUrl ->
+                   // storeRequestDto.storeName = binding.storeName.text.toString()
+                    val sharedPref = getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.putString("storeImgUrl", imgUrl)
+                    editor.apply()
+                    callRetrofit(imgUrl)
+
+             },
+                errorHandler = {
+                    Log.d("image","Store Image Uploaded Error")
+                }
+            )
+        }else{
+           // val sharedPref = getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+            callRetrofit("")
+        }
+
+    }
+
+
+    fun callRetrofit(storeThumbnail : String) {
+        Log.d("image","testing_test")
+
+        var newOpenInfoList : MutableList<OpenInfoRequestDto> = mutableListOf()
+
+        for(i in 0..openInfoList.size-1){
+            var openInfoTmp = openInfoList.get(i)
+            newOpenInfoList.add(OpenInfoRequestDto(openInfoTmp.day, openInfoTmp.startTime, openInfoTmp.endTime))
+        }
+
+
+        var storeName =  binding.storeName.text.toString()
+        var userId = 1
+        var address = "대한민국 서울특별시 종로구 명륜4가 66-2"
+        var positionX= 37.58276254809701 // 주소 바꾸기
+        var positionY= 127.00055558776944
+        var categoryId =1
+        var createdType =1
+
+        storeRequestDto = StoreRequestDto(
+            storeName,
+            userId,
+            address,
+            positionX,
+            positionY,
+            categoryId,
+            storeThumbnail,
+            createdType,
+            newMenuList,
+            null,
+            newOpenInfoList
+        )
+
+        Log.d("image", "ended with ${storeRequestDto}")
+
+        // retrofit 연결
+        val retrofit = RetrofitClient.getRetrofit2()
+        val storeService = retrofit.create(StoreService::class.java)
+
+        storeService.createStore(storeRequestDto).enqueue(object : Callback<StoreDetailResponseDto> {
+            override fun onFailure(call: Call<StoreDetailResponseDto>, t: Throwable) {
+                Log.d("image", "errorororor:) ")
+                Log.d("fail", "$t")
+            }
+            override fun onResponse(call: Call<StoreDetailResponseDto>, response: Response<StoreDetailResponseDto>) {
+                response.body()?.let {
+                  // 응답 성공
+                    Log.d("Created", "Store Created Success")
+                    Log.d("Created", "${response.body()}")
+                }
+            }
+        })
+
+    }
+    private fun uploadPhoto(uri: Uri, successHandler: (String) -> Unit, errorHandler: () -> Unit) {
+        val fileName = "${System.currentTimeMillis()}.png"
+        storage.reference.child("images").child("1").child(fileName)
+            .putFile(uri)
+            .addOnSuccessListener { uploadTask ->
+                uploadTask.storage.downloadUrl
+                    .addOnSuccessListener { uri ->
+                        successHandler(uri.toString())
+                    }
+                    .addOnFailureListener {
+                        errorHandler()
+                    }
+            }
+            .addOnFailureListener {
+                errorHandler()
+            }
+
+    }
+
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
     }

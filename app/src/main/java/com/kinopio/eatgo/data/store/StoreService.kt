@@ -1,6 +1,8 @@
 package com.kinopio.eatgo.data.store
 
 import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
+import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
+import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.TodayOpenStoreResponseDto
 import retrofit2.Call
 import retrofit2.http.Body
@@ -13,4 +15,7 @@ interface StoreService {
 
     @GET("api/v1/stores/today-open")
     fun getTodayOpenStores() : Call<List<TodayOpenStoreResponseDto>>
+
+    @POST("api/v1/stores")
+    fun createStore(@Body storeRequestDto: StoreRequestDto) : Call<StoreDetailResponseDto>
 }
