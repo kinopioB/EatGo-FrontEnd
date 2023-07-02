@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.databinding.ItemMenuFormBinding
-import com.kinopio.eatgo.domain.store.ui_model.Menu
+import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 
-class MenuFormAdapter(private val menuList: List<Menu>) :
+class MenuFormAdapter(private val menuList: List<MenuForm>) :
     RecyclerView.Adapter<MenuFormAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -27,12 +27,12 @@ class MenuFormAdapter(private val menuList: List<Menu>) :
     inner class Holder(private val binding: ItemMenuFormBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(menu: Menu) {
+        fun bind(menu: MenuForm) {
             binding.apply {
                 menuNameTv.text = menu.name
                 menuCountTv.text = menu.count.toString()
                 menuPriceTv.text = menu.price.toString()
-               // menuImg.setImageURI(menu.imageUri)
+                menuImg.setImageURI(menu.imageUri)
             }
         }
     }

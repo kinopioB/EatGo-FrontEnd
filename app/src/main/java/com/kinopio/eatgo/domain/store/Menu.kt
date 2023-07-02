@@ -1,4 +1,4 @@
-package com.kinopio.eatgo.domain.store.ui_model
+package com.kinopio.eatgo.domain.store
 
 import android.net.Uri
 import java.io.Serializable

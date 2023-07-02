@@ -5,18 +5,23 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.internal.ViewUtils.dpToPx
+import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
-import com.kinopio.eatgo.domain.store.ui_model.Menu
+import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 
 
@@ -24,15 +29,18 @@ class CreateStoreActivity : AppCompatActivity() {
     private lateinit var menuFormAdapter: MenuFormAdapter
     private lateinit var  openInfoAdapter :  OpenInfoAdapter
 
-    private val menuList = mutableListOf<Menu>()
+    private val menuList= mutableListOf<MenuForm>()
     private val openInfoList = mutableListOf<OpenInfo>()
 
     private lateinit var binding: ActivityCreateStoreBinding
 
-    private var selectedImageUri: Uri? = null
+    private var selectedMenuImageUri: Uri? = null
+    private var selectedStoreImgUri : Uri?= null
 
     private var selectedToggleButton: ToggleButton? = null
+
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
+    private lateinit var storeImageLauncher: ActivityResultLauncher<Intent>
 
 
 
@@ -84,20 +92,29 @@ class CreateStoreActivity : AppCompatActivity() {
             }
         }
 
-        // 사진 추가 -> 갤러리 연동
-        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // 가게 사진 추가
+        binding.storeImgAddBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            storeImageLauncher.launch(intent)
+        }
+
+
+        // 가게  사진 추가 -> 갤러리 연동
+        storeImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
-                // Handle the selected image URI here
                 if (data != null) {
                     val imageUri: Uri? = data.data
                     if (imageUri != null) {
-                        selectedImageUri = imageUri
-                        binding.menuImg.setImageURI(selectedImageUri)
+                        selectedStoreImgUri = imageUri
+                        binding.storeImgLayout.visibility = View.VISIBLE
+                        binding.storeImg.setImageURI(selectedStoreImgUri)
                     }
                 }
             }
         }
+
 
         // 메뉴 사진 추가
         binding.buttonAddPhoto.setOnClickListener {
@@ -106,19 +123,31 @@ class CreateStoreActivity : AppCompatActivity() {
             imagePickerLauncher.launch(intent)
         }
 
+
+        // 메뉴 사진 추가 -> 갤러리 연동
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (data != null) {
+                    val imageUri: Uri? = data.data
+                    if (imageUri != null) {
+                        selectedMenuImageUri = imageUri
+                        binding.menuImg.setImageURI(selectedMenuImageUri)
+                    }
+                }
+            }
+        }
+
+
         // 메뉴 추가
         binding.buttonAdd.setOnClickListener {
             val menuName = binding.editTextMenuName.text.toString()
             val menuCount = binding.editTextMenuCount.text.toString().toIntOrNull()
             val menuPrice = binding.editTextMenuPrice.text.toString().toIntOrNull()
-            val menuDesc = "test" //칸 추가 필요
+            val menuInfo = "test" //칸 추가 필요
             if (menuName.isNotEmpty() && menuCount != null && menuPrice != null) {
-                val menu = selectedImageUri?.let { it1 ->
-                    Menu(menuName, menuCount, menuPrice,menuDesc,
-                        "imageTestSampleLink"
-                    )
-                }
-                menu?.let { it1 -> menuList.add(it1) }
+                val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, selectedMenuImageUri)
+                menuList.add(menu)
                 menuFormAdapter.notifyDataSetChanged()
 
                 // Reset input fields
@@ -130,7 +159,7 @@ class CreateStoreActivity : AppCompatActivity() {
                 binding.menuInputLayout.visibility = View.GONE
 
                 binding.menuImg.setImageURI(null)
-                selectedImageUri = null
+                selectedMenuImageUri = null
             } else {
                 // Handle input validation failure
             }
@@ -145,8 +174,35 @@ class CreateStoreActivity : AppCompatActivity() {
         binding.cate6.setOnCheckedChangeListener(toggleButtonChangeListener)
 
 
-    }
 
+        // 태그 추가
+        binding.tagAddBtn.setOnClickListener {
+            val inputText = binding.tagEt.text.toString().trim()
+
+            if (inputText.isNotEmpty()) {
+                val textView = TextView(this)
+                textView.text = inputText
+                textView.setPadding(20,20,20,20)
+                textView.setBackgroundResource(R.drawable.store_create_box_border) // 노란색 태두리 설정
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f) // 텍스트 크기 설정
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    dpToPx(40)
+
+                )
+                layoutParams.setMargins(0, 0, 20, 0) // TextView 간격 설정
+                textView.layoutParams = layoutParams
+
+                binding.tagInputed.addView(textView)
+            }
+        }
+
+
+    } // onCreate  종료
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
     // 영업일 정보 토글 버튼 리스너 세팅
     private fun setupToggleButtons() {
         val toggleButtons = listOf(
@@ -216,6 +272,7 @@ class CreateStoreActivity : AppCompatActivity() {
         openInfoList.removeAll(removedStores)
         openInfoAdapter.notifyDataSetChanged()
     }
+
 
 
 

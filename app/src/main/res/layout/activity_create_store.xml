@@ -41,15 +41,17 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/store_create_box_border"
-                android:text="불러오기"></Button>
+                android:text="위치 설정"></Button>
         </LinearLayout>
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="상단의 버튼을 눌러 가게 위치를 설정해주세요"
             android:background="@drawable/box_border">
 
-        </EditText>
+        </TextView>
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center"
@@ -65,12 +67,25 @@
             android:layout_gravity="center"
             android:src="@drawable/truck">
         </ImageView>
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="9"
             android:text="가게 정보"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/storeImgAddBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/store_create_box_border"
+            android:layout_gravity="right"
+            android:text="사진 추가">
+
+        </Button>
 
         </LinearLayout>
 
@@ -81,14 +96,42 @@
             android:background="@drawable/store_create_box_border"
             android:padding="10dp">
 
+
+            <LinearLayout
+                android:id="@+id/storeImgLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="가게 사진 "
+                    android:textSize="18sp">
+                </TextView>
+                <ImageView
+                    android:id="@+id/storeImg"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:padding="30dp"
+                    android:background="@drawable/gray_square_round_border"
+                    android:layout_height="200dp">
+
+                </ImageView>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/store_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="가게 이름"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/store_edittext"
-                app:layout_constraintEnd_toEndOf="parent"></TextView>
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/storeImgLayout">
+
+            </TextView>
 
             <EditText
                 android:id="@+id/store_edittext"
@@ -99,7 +142,35 @@
                 android:hint="가게 이름을 입력해주세요."
                 android:padding="10dp"
                 android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@id/store_name"></EditText>
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/store_name">
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/store_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="가게 상세"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/store_edittext"
+                app:layout_constraintEnd_toEndOf="parent">
+            </TextView>
+
+            <EditText
+                android:id="@+id/store_info_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_border"
+                android:hint="가게에 대한 간단한 설명을 작성해주세요."
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/store_info">
+            </EditText>
+
 
             <TextView
                 android:id="@+id/store_type"
@@ -108,8 +179,8 @@
                 android:layout_marginTop="15dp"
                 android:text="가게 형태"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/store_edittext"></TextView>
+                app:layout_constraintTop_toBottomOf="@id/store_info_edittext">
+            </TextView>
 
             <RadioGroup
                 android:id="@+id/store_type_radio"
@@ -255,6 +326,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/category_icon"
+            android:drawablePadding="10dp"
             android:text="분류"
             android:textSize="20sp">
 
@@ -343,7 +416,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="상세 메뉴"
-                android:textSize="20sp"></TextView>
+                android:drawableLeft="@drawable/menu_icon"
+                android:drawablePadding="5dp"
+                android:textSize="20sp">
+            </TextView>
 
             <View
                 android:layout_width="0dp"
@@ -367,17 +443,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible"
+            android:background="@drawable/item_menu_box_border"
+            android:padding="5dp"
             android:weightSum="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" * 아래 정보를 입력해주세요 * ">
 
+            </TextView>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:id="@+id/menuImg"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/check">
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/item_menu_default">
 
                 </ImageView>
                 <!-- 메뉴 이름 입력창 -->
@@ -408,10 +494,24 @@
                     android:inputType="number" />
             </LinearLayout>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:hint="메뉴에 대한 설명을 입력해주세요."
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/gray_square_round_border">
+            </EditText>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
 
                 <Button
                     android:id="@+id/button_add_photo"
@@ -439,18 +539,83 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/category_icon"
+            android:drawablePadding="10dp"
+            android:text="태그"
+            android:textSize="20sp">
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="* 가게에 태그를 등록해주세요 ( 선택 )  * ">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/tagEt"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"/>
+
+            <Button
+                android:id="@+id/tagAddBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/store_create_box_border"
+                android:layout_gravity="right"
+                android:text="태그 추가">
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tagInputed"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent">
+
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="50dp"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/submitBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="가게 등록하기"></Button>
+                android:layout_margin="5dp"
+                android:text="가게 등록하기">
+            </Button>
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="취소하기">
+            </Button>
+
         </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

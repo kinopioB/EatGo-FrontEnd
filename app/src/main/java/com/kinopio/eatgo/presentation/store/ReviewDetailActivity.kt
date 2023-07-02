@@ -1,6 +1,5 @@
 package com.kinopio.eatgo.presentation.store
 
-import StoreMenuFragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityReviewDetailBinding
-import com.kinopio.eatgo.domain.store.ui_model.Menu
-import com.naver.maps.map.e
-import java.io.Serializable
+import com.kinopio.eatgo.domain.store.Menu
 
 
 class ReviewDetailActivity : AppCompatActivity() {
