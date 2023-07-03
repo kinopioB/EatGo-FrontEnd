@@ -11,7 +11,7 @@ import com.kinopio.eatgo.databinding.ActivityReviewDetailBinding
 import com.kinopio.eatgo.domain.store.Menu
 
 
-class ReviewDetailActivity : AppCompatActivity() {
+class StoreDetailActivity : AppCompatActivity() {
 
     private lateinit var menuList :List<Menu>
 
