@@ -20,9 +20,7 @@
     <color name="color_33FF5C43">#33FF5C43</color>
 
     <color name="color_yellow">#ffc93c</color>
+    <color name="color_red">#ff0000</color>
     <color name="color_dark_gray">#333131</color>
-
-
-
 
 </resources>

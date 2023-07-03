@@ -19,7 +19,7 @@
     <style name="StoreRadioButton" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:buttonTint">@color/dark_blue</item>
+        <item name="android:buttonTint">@color/color_yellow</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
     </style>
@@ -44,4 +44,9 @@
         <item name="android:layout_marginTop">3dp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ItmeMenuForm">
+        <item name="android:background">@drawable/item_menu_box_border</item>
+    </style>
+
 </resources>

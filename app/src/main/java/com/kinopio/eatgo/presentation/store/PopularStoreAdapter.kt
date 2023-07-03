@@ -9,10 +9,11 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.databinding.ItemOpenInfoBinding
 import com.kinopio.eatgo.databinding.ItemPopularStoreBinding
+import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.store.ui_model.Store
 
-class PopularStoreAdapter(private val storeList: List<Store>) :
+class PopularStoreAdapter(private val storeList: List<PopularStoreResponseDto>) :
     RecyclerView.Adapter<PopularStoreAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularStoreAdapter.Holder {
@@ -33,11 +34,10 @@ class PopularStoreAdapter(private val storeList: List<Store>) :
     inner class Holder(private val binding: ItemPopularStoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(store: Store) {
+        fun bind(popularStore: PopularStoreResponseDto) {
             binding.apply {
-                binding.popularStoreName.text = store.name
-                binding.popularStoreCate.text = store.category
-
+                binding.popularStoreName.text = popularStore.storeName
+                binding.popularStoreCate.text = popularStore.categoryName
 //
             }
         }

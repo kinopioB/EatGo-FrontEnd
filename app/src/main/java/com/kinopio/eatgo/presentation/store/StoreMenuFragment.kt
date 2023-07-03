@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.R
-import com.kinopio.eatgo.domain.store.ui_model.Menu
+import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.presentation.store.BestMenuAdapter
 import com.kinopio.eatgo.presentation.store.MenuAdapter
 
