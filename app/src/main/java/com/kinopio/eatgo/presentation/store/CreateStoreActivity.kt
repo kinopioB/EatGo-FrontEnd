@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
@@ -18,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.internal.ViewUtils.dpToPx
@@ -89,6 +91,13 @@ class CreateStoreActivity : AppCompatActivity() {
         binding = ActivityCreateStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToggleButtons()
+
+        ToolbarUtils.setupToolbar(
+            this,
+            binding.root.findViewById<Toolbar>(R.id.toolbar),
+            "가게 등록",
+            null
+        )
 
 
         menuFormAdapter = MenuFormAdapter(menuList)
@@ -457,6 +466,12 @@ class CreateStoreActivity : AppCompatActivity() {
     }
 
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return ToolbarUtils.handleOptionsItemSelected(
+            this,
+            item
+        ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
+    }
 
 
 

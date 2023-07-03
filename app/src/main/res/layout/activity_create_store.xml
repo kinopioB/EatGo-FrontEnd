@@ -1,621 +1,620 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:weightSum="10"
-    tools:context=".presentation.store.CreateStoreActivity">
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
 
-    <LinearLayout
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:weightSum="10"
+        tools:context=".presentation.store.CreateStoreActivity">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="10">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:src="@drawable/store_location_select">
+            android:orientation="vertical">
 
-            </ImageView>
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:text="가게 위치"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/store_location_select">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="가게 위치"
+                    android:textSize="20sp">
+
+                </TextView>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/store_create_box_border"
+                    android:text="위치 설정"></Button>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_border"
+                android:gravity="center"
+                android:text="상단의 버튼을 눌러 가게 위치를 설정해주세요">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/truck"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:text="가게 정보"
+                    android:textSize="20sp">
+
+                </TextView>
+
+                <Button
+                    android:id="@+id/storeImgAddBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/store_create_box_border"
+                    android:text="사진 추가">
+
+                </Button>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/store_create_box_border"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:id="@+id/storeImgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="가게 사진 "
+                        android:textSize="18sp"></TextView>
+
+                    <ImageView
+                        android:id="@+id/storeImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/gray_square_round_border"
+                        android:padding="30dp">
+
+                    </ImageView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/store_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="가게 이름"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/storeImgLayout">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/store_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/box_border"
+                    android:hint="가게 이름을 입력해주세요."
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/store_name">
+
+                </EditText>
+
+                <TextView
+                    android:id="@+id/store_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="가게 상세"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_edittext"></TextView>
+
+                <EditText
+                    android:id="@+id/store_info_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/box_border"
+                    android:hint="가게에 대한 간단한 설명을 작성해주세요."
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/store_info"></EditText>
+
+
+                <TextView
+                    android:id="@+id/store_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="가게 형태"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/store_info_edittext"></TextView>
+
+                <RadioGroup
+                    android:id="@+id/store_type_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    app:layout_constraintTop_toBottomOf="@id/store_type">
+
+                    <RadioButton
+                        style="@style/StoreRadioButton"
+                        android:text="포장마차"></RadioButton>
+
+                    <RadioButton
+                        style="@style/StoreRadioButton"
+                        android:text="매장"></RadioButton>
+
+                    <RadioButton
+                        style="@style/StoreRadioButton"
+                        android:text="푸드트럭"></RadioButton>
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/payment_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="결제 방식"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/store_type_radio"></TextView>
+
+                <RadioGroup
+                    android:id="@+id/payment_type_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    app:layout_constraintTop_toBottomOf="@id/payment_type">
+
+                    <RadioButton
+                        style="@style/StoreRadioButton"
+                        android:text="현금"></RadioButton>
+
+                    <RadioButton
+                        style="@style/StoreRadioButton"
+                        android:text="카드"></RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/food_truck_type"
+                        style="@style/StoreRadioButton"
+                        android:text="계좌이체"></RadioButton>
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/open_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="장사요일"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/payment_type_radio"></TextView>
+
+                <LinearLayout
+                    android:id="@+id/toggleBtns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:weightSum="14"
+                    app:layout_constraintTop_toBottomOf="@id/open_day">
+
+                    <ToggleButton
+                        android:id="@+id/tbMon"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/monday"
+                        android:textOn="@string/monday" />
+
+                    <ToggleButton
+                        android:id="@+id/tbTue"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/tuesday"
+                        android:textOn="@string/tuesday" />
+
+                    <ToggleButton
+                        android:id="@+id/tbWed"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/wednesday"
+                        android:textOn="@string/wednesday" />
+
+                    <ToggleButton
+                        android:id="@+id/tbThu"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/thursday"
+                        android:textOn="@string/thursday" />
+
+                    <ToggleButton
+                        android:id="@+id/tbFri"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/friday"
+                        android:textOn="@string/friday" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_sat"
+                        style="@style/DayToggleButton"
+
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/saturday"
+                        android:textOn="@string/saturday" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_sun"
+                        style="@style/DayToggleButton"
+                        android:background="@drawable/btn_toggle"
+                        android:textOff="@string/sunday"
+                        android:textOn="@string/sunday" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/openRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/toggleBtns" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/category_icon"
+                android:drawablePadding="10dp"
+                android:text="분류"
                 android:textSize="20sp">
 
             </TextView>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/store_create_box_border"
-                android:text="위치 설정"></Button>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="상단의 버튼을 눌러 가게 위치를 설정해주세요"
-            android:background="@drawable/box_border">
-
-        </TextView>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:weightSum="10"
-            android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:src="@drawable/truck">
-        </ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="9"
-            android:text="가게 정보"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <Button
-            android:id="@+id/storeImgAddBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/store_create_box_border"
-            android:layout_gravity="right"
-            android:text="사진 추가">
-
-        </Button>
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/store_create_box_border"
-            android:padding="10dp">
-
-
             <LinearLayout
-                android:id="@+id/storeImgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/store_create_box_border"
+                android:padding="10dp"
+                android:weightSum="12">
+
+                <ToggleButton
+                    android:id="@+id/cate1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/cate_toggle_bung"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/cate2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/cate_toggle_snack"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/cate3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/cate_toggle_toast"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/cate4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+
+                    android:background="@drawable/cate_toggle_taco"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/cate5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+
+                    android:background="@drawable/cate_toggle_sweetpotato"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <ToggleButton
+                    android:id="@+id/cate6"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/cate_toggle_skewer"
+                    android:clickable="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/menu_icon"
+                    android:drawablePadding="5dp"
+                    android:text="상세 메뉴"
+                    android:textSize="20sp"></TextView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/menuAddBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/store_create_box_border"
+                    android:text="메뉴 추가"></Button>
+            </LinearLayout>
+
+            <!-- 입력창 레이아웃 -->
+            <LinearLayout
+                android:id="@+id/menuInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_box_border"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="5dp"
+                android:visibility="visible"
+                android:weightSum="10">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="가게 사진 "
-                    android:textSize="18sp">
+                    android:text=" * 아래 정보를 입력해주세요 * ">
+
                 </TextView>
-                <ImageView
-                    android:id="@+id/storeImg"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:padding="30dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <ImageView
+                        android:id="@+id/menuImg"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/item_menu_default">
+
+                    </ImageView>
+                    <!-- 메뉴 이름 입력창 -->
+                    <EditText
+                        android:id="@+id/editText_menu_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:hint="메뉴 이름"
+                        android:inputType="text" />
+
+                    <!-- 메뉴 개수 입력창 -->
+                    <EditText
+                        android:id="@+id/editText_menu_count"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:hint="메뉴 개수"
+                        android:inputType="number" />
+
+                    <!-- 메뉴 가격 입력창 -->
+                    <EditText
+                        android:id="@+id/editText_menu_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:hint="메뉴 가격"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/gray_square_round_border"
-                    android:layout_height="200dp">
+                    android:hint="메뉴에 대한 설명을 입력해주세요."
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></EditText>
 
-                </ImageView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/store_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="가게 이름"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/storeImgLayout">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/store_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/box_border"
-                android:hint="가게 이름을 입력해주세요."
-                android:padding="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/store_name">
-
-            </EditText>
-
-            <TextView
-                android:id="@+id/store_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="가게 상세"
-                android:textSize="18sp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/store_edittext"
-                app:layout_constraintEnd_toEndOf="parent">
-            </TextView>
-
-            <EditText
-                android:id="@+id/store_info_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/box_border"
-                android:hint="가게에 대한 간단한 설명을 작성해주세요."
-                android:padding="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/store_info">
-            </EditText>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
 
-            <TextView
-                android:id="@+id/store_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="가게 형태"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/store_info_edittext">
-            </TextView>
+                    <Button
+                        android:id="@+id/button_add_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:text="사진 추가" />
+                    <!-- 입력 완료 버튼 -->
+                    <Button
+                        android:id="@+id/button_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
 
-            <RadioGroup
-                android:id="@+id/store_type_radio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                app:layout_constraintTop_toBottomOf="@id/store_type">
+                        android:text="입력 완료" />
 
-                <RadioButton
-                    style="@style/StoreRadioButton"
-                    android:text="포장마차">
-                </RadioButton>
+                </LinearLayout>
 
-                <RadioButton
-                    style="@style/StoreRadioButton"
-                    android:text="매장">
-                </RadioButton>
-
-                <RadioButton
-                    style="@style/StoreRadioButton"
-                    android:text="푸드트럭">
-                </RadioButton>
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/payment_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="결제 방식"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/store_type_radio"></TextView>
-
-            <RadioGroup
-                android:id="@+id/payment_type_radio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                app:layout_constraintTop_toBottomOf="@id/payment_type">
-
-                <RadioButton
-                    style="@style/StoreRadioButton"
-                    android:text="현금">
-                </RadioButton>
-
-                <RadioButton
-                    style="@style/StoreRadioButton"
-                    android:text="카드">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/food_truck_type"
-                    style="@style/StoreRadioButton"
-                    android:text="계좌이체">
-                </RadioButton>
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/open_day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="장사요일"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/payment_type_radio"></TextView>
-
-            <LinearLayout
-                android:id="@+id/toggleBtns"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:weightSum="14"
-                app:layout_constraintTop_toBottomOf="@id/open_day">
-
-                <ToggleButton
-                    android:id="@+id/tbMon"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/monday"
-                    android:textOn="@string/monday" />
-
-                <ToggleButton
-                    android:id="@+id/tbTue"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/tuesday"
-                    android:textOn="@string/tuesday" />
-
-                <ToggleButton
-                    android:id="@+id/tbWed"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/wednesday"
-                    android:textOn="@string/wednesday" />
-
-                <ToggleButton
-                    android:id="@+id/tbThu"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/thursday"
-                    android:textOn="@string/thursday" />
-
-                <ToggleButton
-                    android:id="@+id/tbFri"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/friday"
-                    android:textOn="@string/friday" />
-
-                <ToggleButton
-                    android:id="@+id/tb_sat"
-                    style="@style/DayToggleButton"
-
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/saturday"
-                    android:textOn="@string/saturday" />
-
-                <ToggleButton
-                    android:id="@+id/tb_sun"
-                    style="@style/DayToggleButton"
-                    android:background="@drawable/btn_toggle"
-                    android:textOff="@string/sunday"
-                    android:textOn="@string/sunday" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/openRecyclerView"
+                android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/toggleBtns" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:drawableLeft="@drawable/category_icon"
-            android:drawablePadding="10dp"
-            android:text="분류"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/store_create_box_border"
-            android:padding="10dp"
-            android:weightSum="12">
-
-            <ToggleButton
-                android:id="@+id/cate1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-                android:background="@drawable/cate_toggle_bung"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-
-            <ToggleButton
-                android:id="@+id/cate2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-                android:background="@drawable/cate_toggle_snack"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-
-            <ToggleButton
-                android:id="@+id/cate3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-                android:background="@drawable/cate_toggle_toast"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-
-            <ToggleButton
-                android:id="@+id/cate4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-
-                android:background="@drawable/cate_toggle_taco"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-
-            <ToggleButton
-                android:id="@+id/cate5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-
-                android:background="@drawable/cate_toggle_sweetpotato"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-
-            <ToggleButton
-                android:id="@+id/cate6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="2"
-                android:background="@drawable/cate_toggle_skewer"
-                android:clickable="true"
-                android:textOff=""
-                android:textOn="" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:baselineAligned="false"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상세 메뉴"
-                android:drawableLeft="@drawable/menu_icon"
-                android:drawablePadding="5dp"
-                android:textSize="20sp">
-            </TextView>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/menuAddBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/store_create_box_border"
-                android:layout_gravity="right"
-                android:text="메뉴 추가">
-            </Button>
-        </LinearLayout>
-
-        <!-- 입력창 레이아웃 -->
-        <LinearLayout
-            android:id="@+id/menuInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:background="@drawable/item_menu_box_border"
-            android:padding="5dp"
-            android:weightSum="10">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" * 아래 정보를 입력해주세요 * ">
-
-            </TextView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/menuImg"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/item_menu_default">
-
-                </ImageView>
-                <!-- 메뉴 이름 입력창 -->
-                <EditText
-                    android:id="@+id/editText_menu_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:hint="메뉴 이름"
-                    android:inputType="text" />
-
-                <!-- 메뉴 개수 입력창 -->
-                <EditText
-                    android:id="@+id/editText_menu_count"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:hint="메뉴 개수"
-                    android:inputType="number" />
-
-                <!-- 메뉴 가격 입력창 -->
-                <EditText
-                    android:id="@+id/editText_menu_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:hint="메뉴 가격"
-                    android:inputType="number" />
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:hint="메뉴에 대한 설명을 입력해주세요."
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/gray_square_round_border">
-            </EditText>
+                android:drawableLeft="@drawable/category_icon"
+                android:drawablePadding="10dp"
+                android:text="태그"
+                android:textSize="20sp"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* 가게에 태그를 등록해주세요 ( 선택 )  * ">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <EditText
+                    android:id="@+id/tagEt"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3" />
+
+                <Button
+                    android:id="@+id/tagAddBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/store_create_box_border"
+                    android:text="태그 추가"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tagInputed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center">
 
                 <Button
-                    android:id="@+id/button_add_photo"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/submitBtn"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:text="사진 추가" />
-                <!-- 입력 완료 버튼 -->
-                <Button
-                    android:id="@+id/button_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="가게 등록하기"></Button>
 
-                    android:text="입력 완료" />
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="취소하기"></Button>
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:drawableLeft="@drawable/category_icon"
-            android:drawablePadding="10dp"
-            android:text="태그"
-            android:textSize="20sp">
-        </TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="* 가게에 태그를 등록해주세요 ( 선택 )  * ">
-
-        </TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:weightSum="3"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/tagEt"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="3"/>
-
-            <Button
-                android:id="@+id/tagAddBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/store_create_box_border"
-                android:layout_gravity="right"
-                android:text="태그 추가">
-            </Button>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tagInputed"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_width="match_parent">
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/submitBtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:text="가게 등록하기">
-            </Button>
-
-            <Button
-                android:id="@+id/cancelBtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:text="취소하기">
-            </Button>
-
-        </LinearLayout>
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

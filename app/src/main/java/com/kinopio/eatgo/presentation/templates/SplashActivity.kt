@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
         var handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {
-            Intent(this, NaverLoginActivity::class.java).apply{
+            Intent(this, MainActivity::class.java).apply{
                 Thread.sleep(2000)
                 startActivity(this)
                 finish()
