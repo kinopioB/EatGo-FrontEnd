@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.databinding.ItemMenuBinding
-import com.kinopio.eatgo.domain.store.ui_model.Menu
+import com.kinopio.eatgo.domain.store.Menu
 
 class MenuAdapter(private val menuList: List<Menu>?) :
     RecyclerView.Adapter<MenuAdapter.Holder>() {
