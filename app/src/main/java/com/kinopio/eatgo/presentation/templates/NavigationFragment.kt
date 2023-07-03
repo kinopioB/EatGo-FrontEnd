@@ -13,6 +13,7 @@ import com.kinopio.eatgo.databinding.FragmentNavigationBinding
 import com.kinopio.eatgo.presentation.map.NaverMapActivity
 import com.kinopio.eatgo.presentation.store.CreateStoreActivity
 import com.kinopio.eatgo.presentation.store.ManageActivity
+import com.kinopio.eatgo.presentation.store.MyPageActivity
 import com.kinopio.eatgo.presentation.store.PopularStoreActivity
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -66,7 +67,7 @@ class NavigationFragment : Fragment() {
                 val intent = Intent(context, ManageActivity::class.java)
                 startActivity(intent)
             }*/
-            val intent = Intent(context, ManageActivity::class.java)
+            val intent = Intent(context, MyPageActivity::class.java)
             startActivity(intent)
         }
     }
