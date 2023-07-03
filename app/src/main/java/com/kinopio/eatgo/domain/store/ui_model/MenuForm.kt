@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class MenuForm(
     val name: String,
-    val count: Int,
+    val amount: Int,
     val price : Int,
     val info : String,
     val imageUri : Uri?

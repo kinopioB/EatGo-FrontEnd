@@ -163,15 +163,15 @@ class CreateStoreActivity : AppCompatActivity() {
         // 메뉴 추가
         binding.buttonAdd.setOnClickListener {
             val menuName = binding.editTextMenuName.text.toString()
-            val menuCount = binding.editTextMenuCount.text.toString().toIntOrNull()
+            val menuAmount = binding.editTextMenuCount.text.toString().toIntOrNull()
             val menuPrice = binding.editTextMenuPrice.text.toString().toIntOrNull()
             val menuInfo = "test" //칸 추가 필요
-            if (menuName.isNotEmpty() && menuCount != null && menuPrice != null) {
+            if (menuName.isNotEmpty() && menuAmount != null && menuPrice != null) {
                 if(selectedMenuImageUri == null){
-                    val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, null)
+                    val menu = MenuForm(menuName, menuAmount, menuPrice, menuInfo, null)
                     menuList.add(menu)
                 }else{
-                    val menu = MenuForm(menuName, menuCount, menuPrice, menuInfo, selectedMenuImageUri)
+                    val menu = MenuForm(menuName, menuAmount, menuPrice, menuInfo, selectedMenuImageUri)
                     menuList.add(menu)
 
                 }
@@ -245,12 +245,12 @@ class CreateStoreActivity : AppCompatActivity() {
                         successHandler = { imgUrl ->
                             Log.d("image", "$imgUrl")
                             completedCount++
-                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count, imgUrl, 1 ))
+                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount, imgUrl, 1 ))
                             checkMenuImgAllUploaded()
                         },
                         errorHandler = {
                             Log.d("image","error")
-                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count,"", 1 ))
+                            newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount,"", 1 ))
                             //  checkMenuImgAllUploaded(uploadCount, completedCount)
                             checkMenuImgAllUploaded()
 
@@ -258,7 +258,7 @@ class CreateStoreActivity : AppCompatActivity() {
                     )
                 } ?: run {
                     // tmp.imageUri가 null인 경우에 수행할 코드
-                    newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.count,"", 1 ))
+                    newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount,"", 1 ))
                     checkMenuImgAllUploaded()
                 }
             }

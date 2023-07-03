@@ -30,7 +30,7 @@ class MenuFormAdapter(private val menuList: List<MenuForm>) :
         fun bind(menu: MenuForm) {
             binding.apply {
                 menuNameTv.text = menu.name
-                menuCountTv.text = menu.count.toString()
+                menuCountTv.text = menu.amount.toString()
                 menuPriceTv.text = menu.price.toString()
                 menuImg.setImageURI(menu.imageUri)
             }
