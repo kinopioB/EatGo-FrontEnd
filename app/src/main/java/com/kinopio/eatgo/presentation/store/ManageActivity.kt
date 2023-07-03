@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityManageBinding
 import com.kinopio.eatgo.domain.map.StoreHistoryRequestDto
+import com.kinopio.eatgo.domain.templates.ApiResultDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,9 +28,14 @@ class ManageActivity : AppCompatActivity() {
         ToolbarUtils.setupToolbar(
             this,
             binding.root.findViewById<Toolbar>(R.id.toolbar),
-            "제목",
+            "가게 관리",
             null
         )
+
+        var startStatus = findViewById<TextView>(R.id.startStatus)
+        var endStatus = findViewById<TextView>(R.id.endStatus)
+        startStatus.visibility = View.GONE
+        endStatus.visibility = View.GONE
 
 
         binding.startBtn.setOnClickListener {
@@ -38,9 +47,9 @@ class ManageActivity : AppCompatActivity() {
             Log.d("store start retrofit", "store retrofit2")
 
             var storeId = 1
-            var address = ""
-            var positionX = ""
-            var positionY = ""
+            var address = "대한민국 서울특별시 종로구 대명1길 16-2"
+            var positionX = "37.58296105306665"
+            var positionY = "127.00062394329927"
 
             var storeHistoryRequestDto: StoreHistoryRequestDto = StoreHistoryRequestDto(
                 address = address,
@@ -50,16 +59,15 @@ class ManageActivity : AppCompatActivity() {
             )
 
             storeService.changeStoreStatusOpen(storeId, storeHistoryRequestDto)
-                .enqueue(object : Callback<StoreHistoryRequestDto> {
-                    override fun onFailure(call: Call<StoreHistoryRequestDto>, t: Throwable) {
+                .enqueue(object : Callback<ApiResultDto> {
+                    override fun onFailure(call: Call<ApiResultDto>, t: Throwable) {
                         Log.d("fail", "실패")
                         Log.d("fail", "$t")
                     }
                     override fun onResponse(
-                        call: Call<StoreHistoryRequestDto>,
-                        response: Response<StoreHistoryRequestDto>
+                        call: Call<ApiResultDto>,
+                        response: Response<ApiResultDto>
                     ) {
-                        TODO("Not yet implemented")
                         if (response.isSuccessful.not()) {
                             Log.d("retrofit", "retrofit4")
                             return
@@ -67,6 +75,10 @@ class ManageActivity : AppCompatActivity() {
                         Log.d("retrofit", "통신 + ${response?.body()}")
                     }
                 })
+
+            endStatus.visibility = View.GONE
+            startStatus.visibility = View.VISIBLE
+
         }
 
         binding.closeBtn.setOnClickListener {
@@ -79,16 +91,15 @@ class ManageActivity : AppCompatActivity() {
 
             var storeId = 1
             storeService.changeStoreStatusClose(storeId)
-                .enqueue(object : Callback<StoreHistoryRequestDto> {
-                    override fun onFailure(call: Call<StoreHistoryRequestDto>, t: Throwable) {
+                .enqueue(object : Callback<ApiResultDto> {
+                    override fun onFailure(call: Call<ApiResultDto>, t: Throwable) {
                         Log.d("fail", "실패")
                         Log.d("fail", "$t")
                     }
                     override fun onResponse(
-                        call: Call<StoreHistoryRequestDto>,
-                        response: Response<StoreHistoryRequestDto>
+                        call: Call<ApiResultDto>,
+                        response: Response<ApiResultDto>
                     ) {
-                        TODO("Not yet implemented")
                         if (response.isSuccessful.not()) {
                             Log.d("retrofit", "retrofit4")
                             return
@@ -96,6 +107,8 @@ class ManageActivity : AppCompatActivity() {
                         Log.d("retrofit", "통신 + ${response?.body()}")
                     }
                 })
+            endStatus.visibility = View.VISIBLE
+            startStatus.visibility = View.GONE
         }
     }
 
