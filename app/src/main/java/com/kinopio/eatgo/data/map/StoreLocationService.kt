@@ -2,6 +2,7 @@ package com.kinopio.eatgo.data.map
 
 import com.kinopio.eatgo.domain.map.StoreLocationDto
 import com.kinopio.eatgo.domain.map.StoreLocationListDto
+import com.kinopio.eatgo.domain.store.StoreResponseDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,4 +14,6 @@ interface StoreLocationService {
     @GET("api/v1/stores/search/{searchFilter}")
     fun getFilterStores(@Path("searchFilter") searchFilter : String) : Call<List<StoreLocationDto>>
 
+    @GET("api/v1/stores/{storeId}")
+    fun getSummaryStore(@Path("storeId") storeId : Int) : Call<StoreResponseDto>
 }

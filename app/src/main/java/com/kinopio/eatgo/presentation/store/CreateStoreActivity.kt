@@ -38,6 +38,7 @@ import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.store.ui_model.Store
+import com.kinopio.eatgo.presentation.map.NaverMapFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -119,6 +120,19 @@ class CreateStoreActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             storeImageLauncher.launch(intent)
+        }
+
+        // 가게 위치 추가
+        binding.positionBtn.setOnClickListener {
+            Log.d("createtest", "123123");
+            binding.createStoreContainer.visibility = View.INVISIBLE
+            binding.createMapContainer.visibility = View.VISIBLE
+            val fm = supportFragmentManager
+            val transaction = fm.beginTransaction()
+            var mapFragment : NaverMapFragment = NaverMapFragment()
+            transaction.add(R.id.createMapContainer, mapFragment)
+            transaction.commit()
+
         }
 
 
