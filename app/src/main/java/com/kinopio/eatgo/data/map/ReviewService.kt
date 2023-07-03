@@ -15,8 +15,6 @@ interface ReviewService {
                       @Path("userId") userId: Int, @Body reviewRequestDto: ReviewResponseDto
     ) : Call<ReviewResponseDto>
 
-    @GET("api/v1/stores/mypage/{storeId}")
-    fun getReviews(@Path("storeId") storeId: Int) : Call<StoreMyPageResponseDto>
 
 
 }

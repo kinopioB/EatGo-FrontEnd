@@ -13,17 +13,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
+        android:padding="10dp"
         tools:context=".presentation.store.MyPageActivity">
 
         <LinearLayout
+            android:id="@+id/storeCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
             <LinearLayout
                 android:id="@+id/myStoreImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="top|center"
+                android:orientation="vertical"
                 android:elevation="10dp"
                 android:background="@drawable/mypage_store_box_border">
 
@@ -42,41 +46,100 @@
                         android:layout_weight="8"
                         android:text="성균관 타코야키"
                         android:textSize="20dp" />
-
-                    <ImageView
-                        android:id="@+id/likeImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/heart_fill" />
                     <TextView
+                        android:id="@+id/categoryName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10" />
+                        android:text="카테고리 이름"
+                        />
+                    <TextView
+                        android:id="@+id/categoryIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="아이콘"
+                        />
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="330dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"
+                    android:background="#FFF9C9"
+                    android:text="">
+                </TextView>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/mypage_store_box_border"
+                android:padding="10dp"
+                android:weightSum="5"
+                android:elevation="5dp"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageView
+                    android:id="@+id/likeImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/heart_fill" />
+                <TextView
+                    android:id="@+id/likeImageNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10" />
+
+                <TextView
+                    android:id="@+id/reviewNum"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="최근 리뷰" />
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    android:text="리뷰 갯수" />
+
+                <TextView
+                    android:id="@+id/ratingStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    android:text="리뷰 평점" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="좋아요 수" />
-
+                    android:id="@+id/startStatus"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="0"
+                    android:textAlignment="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/start_status_border"
+                    android:text="영업 중"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    />
                 <Button
-                    android:id="@+id/manageBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="관리 페이지" />
+                    android:id="@+id/endStatus"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="0"
+                    android:textAlignment="center"
+                    android:background="@drawable/stop_status_border"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="영업 종료"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    />
 
             </LinearLayout>
 
