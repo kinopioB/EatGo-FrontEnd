@@ -37,7 +37,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.store.ReviewDetailActivity"
+            android:name=".presentation.store.StoreDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"

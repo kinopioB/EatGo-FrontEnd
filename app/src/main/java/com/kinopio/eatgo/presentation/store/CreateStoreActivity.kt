@@ -21,8 +21,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -31,15 +29,12 @@ import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
-import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.MenuRequestDto
 import com.kinopio.eatgo.domain.store.OpenInfoRequestDto
-import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
 import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
 import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
-import com.kinopio.eatgo.domain.store.ui_model.Store
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -302,7 +297,7 @@ class CreateStoreActivity : AppCompatActivity() {
              },
                 errorHandler = {
                     Log.d("image","Store Image Uploaded Error")
-                    val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                    val intent = Intent(applicationContext, StoreDetailActivity::class.java)
                     startActivity(intent)
                 }
             )
@@ -357,7 +352,7 @@ class CreateStoreActivity : AppCompatActivity() {
             override fun onFailure(call: Call<StoreDetailResponseDto>, t: Throwable) {
                 Log.d("image", "errorororor:) ")
                 Log.d("fail", "$t")
-                val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                val intent = Intent(applicationContext, StoreDetailActivity::class.java)
                 startActivity(intent)
             }
             override fun onResponse(call: Call<StoreDetailResponseDto>, response: Response<StoreDetailResponseDto>) {
@@ -366,7 +361,7 @@ class CreateStoreActivity : AppCompatActivity() {
                     Log.d("Created", "Store Created Success")
                     Log.d("Created", "${response.body()}")
 
-                    val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
+                    val intent = Intent(this@CreateStoreActivity, StoreDetailActivity::class.java)
                     startActivity(intent)
                 }
             }
