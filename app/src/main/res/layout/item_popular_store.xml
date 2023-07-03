@@ -1,0 +1,28 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+    android:padding="5dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/truck">
+    </ImageView>
+    <TextView
+        android:id="@+id/popular_store_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가게 이름"/>
+
+    <TextView
+        android:id="@+id/popular_store_cate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="붕어빵" />
+
+
+</LinearLayout>
