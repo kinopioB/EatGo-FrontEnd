@@ -37,6 +37,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.store.ReviewDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.naverlogin.NaverLoginActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".presentation.store.PopularStoreActivity"
+            android:exported="true" >
+
+        </activity>
             android:name=".presentation.store.ManageActivity"
             android:exported="true"
             android:theme="@style/ToolBar">
@@ -105,7 +116,6 @@
             android:exported="true">
 <!--             <intent-filter>-->
 <!--             <action android:name="android.intent.action.MAIN" />-->
-
 <!--             <category android:name="android.intent.category.LAUNCHER" />-->
 <!--             </intent-filter>-->
         </activity>
@@ -127,7 +137,6 @@
             android:exported="true">
 <!--             <intent-filter>-->
 <!--             <action android:name="android.intent.action.MAIN" />-->
-
 <!--             <category android:name="android.intent.category.LAUNCHER" />-->
 <!--             </intent-filter>-->
         </activity>

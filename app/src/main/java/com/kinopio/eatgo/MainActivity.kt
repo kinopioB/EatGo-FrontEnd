@@ -4,6 +4,9 @@ import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.annotation.UiThread
 import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.ActivityMainBinding
@@ -33,11 +36,12 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+    private var searchFilter:String = ""
     private val binding : ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private lateinit var markerList : List<StoreLocationDto>;
-
+    var markers = mutableListOf<Marker>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -63,27 +67,16 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
 
-        val retrofit = RetrofitClient.getRetrofit()
-        val storeLocationService = retrofit?.create(StoreLocationService::class.java)
+        binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Log.d("search", "검색 눌림")
+                    searchFilter = binding.searchEditText.text.toString()
 
-        storeLocationService?.getStores()?.enqueue(object : Callback<List<StoreLocationDto>> {
-            override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {
-                Log.d("fail", "실패")
-                Log.d("fail", "$t")
-            }
 
-            override fun onResponse(
-                call: Call<List<StoreLocationDto>>,
-                response: Response<List<StoreLocationDto>>
-            ) {
-                Log.d("aaa","awsdljhaskjdh")
-                if(response.isSuccessful.not()){
-                    return
+                    return true
                 }
-                response.body()?.let{
-                    Log.d("aaa", "$it")
-                    markerList = it
-                }
+                return false
             }
         })
     }
@@ -105,46 +98,159 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         val transaction = supportFragmentManager.beginTransaction()
-        for (i in 0 .. markerList.size - 1) {
-            val marker = Marker()
-            marker.setOnClickListener {overlay ->
-                Log.d("aaa", "클릭클릭")
-                Log.d("aaa", "$overlay")
-                var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
 
-                transaction.add(R.id.frameLayout, infomationFragment)
-                transaction.commit()
-                true
-            }
-            marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
-            marker.width = 100
-            marker.height = 110
+
+        val retrofit = RetrofitClient.getRetrofit()
+
+        val list: MutableList<Int> = mutableListOf()        // 또는 `arrayListOf`를 사용합니다.
+        val storeLocationService = retrofit?.create(StoreLocationService::class.java)
+        if (searchFilter == "") {
+            Log.d("search", "$searchFilter")
+            storeLocationService?.getStores()?.enqueue(object : Callback<List<StoreLocationDto>> {
+                override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {
+                    Log.d("fail", "실패")
+                    Log.d("fail", "$t")
+                }
+
+                override fun onResponse(
+                    call: Call<List<StoreLocationDto>>,
+                    response: Response<List<StoreLocationDto>>
+                ) {
+                    Log.d("search","awsdljhaskjdh")
+                    if(response.isSuccessful.not()){
+                        return
+                    }
+                    response.body()?.let{
+                        Log.d("aaa", "$it")
+                        markerList = it
+                        for (i in 0 .. markerList.size - 1) {
+                            val marker = Marker()
+                            marker.setOnClickListener {overlay ->
+                                Log.d("aaa", "클릭클릭")
+                                Log.d("aaa", "$overlay")
+                                var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
+
+                                transaction.add(R.id.frameLayout, infomationFragment)
+                                transaction.commit()
+                                true
+                            }
+                            marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
+                            marker.width = 100
+                            marker.height = 110
 //            marker.icon = OverlayImage.fromResource(R.mipmap.yakitori)
 
-            when(markerList[i].categoryId) {
-                1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-                2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
-                3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
-                4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
-                5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
-                6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
-                7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
-                8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
-                else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-            }
+                            when(markerList[i].categoryId) {
+                                1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+                                2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
+                                3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
+                                4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
+                                5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
+                                6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
+                                7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
+                                8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
+                                else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+                            }
+                            markers.add(marker)
+                            marker.map = naverMap
+                            Log.d("search", "$marker")
+                            Log.d("marker", "${marker.getMap()}")
+                        }
 
-            marker.map = naverMap
+                        searchFilter = ""
+                    }
+
+                }
+            })
+            this.naverMap = naverMap
+            // 현재 위치
+            naverMap.locationSource = locationSource
+            // 현재 위치 버튼 기능
+            naverMap.uiSettings.isLocationButtonEnabled = false
+            naverMap.uiSettings.isZoomControlEnabled = false
+            naverMap.uiSettings.isLogoClickEnabled = false
+            // 위치를 추적하면서 카메라도 따라 움직인다.
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+        else {
+
+            for (i in 0 .. markers.size - 1) {
+                markers[i].setMap(null);
+            }
+            val marker = Marker()
+            marker.map = null
+            markers = mutableListOf<Marker>()
+
+            Log.d("search", "filter : $searchFilter")
+            storeLocationService?.getFilterStores(searchFilter)?.enqueue(object : Callback<List<StoreLocationDto>> {
+                override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {
+                    Log.d("fail", "실패")
+                    Log.d("fail", "$t")
+                }
+
+                override fun onResponse(
+                    call: Call<List<StoreLocationDto>>,
+                    response: Response<List<StoreLocationDto>>
+                ) {
+                    Log.d("search","filter")
+                    if(response.isSuccessful.not()){
+                        return
+                    }
+                    response.body()?.let{
+                        Log.d("aaa", "$it")
+
+                        markerList = it
+
+//                        val marker = Marker()
+
+//                        Log.d("search", "$marker")
+
+                        for (i in 0 .. markerList.size - 1) {
+
+                            val marker = Marker()
+                            marker.setOnClickListener {overlay ->
+                                Log.d("aaa", "클릭클릭")
+                                Log.d("aaa", "$overlay")
+                                var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
+
+                                transaction.add(R.id.frameLayout, infomationFragment)
+                                transaction.commit()
+                                true
+                            }
+                            marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
+                            marker.width = 100
+                            marker.height = 110
+//            marker.icon = OverlayImage.fromResource(R.mipmap.yakitori)
+
+                            when(markerList[i].categoryId) {
+                                1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+                                2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
+                                3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
+                                4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
+                                5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
+                                6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
+                                7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
+                                8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
+                                else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
+                            }
+//
+                            marker.map = naverMap
+                        }
+                        searchFilter = ""
+                    }
+                }
+            })
+            this.naverMap = naverMap
+            // 현재 위치
+            naverMap.locationSource = locationSource
+            // 현재 위치 버튼 기능
+            naverMap.uiSettings.isLocationButtonEnabled = false
+            naverMap.uiSettings.isZoomControlEnabled = false
+            naverMap.uiSettings.isLogoClickEnabled = false
+            // 위치를 추적하면서 카메라도 따라 움직인다.
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
 
-        this.naverMap = naverMap
-        // 현재 위치
-        naverMap.locationSource = locationSource
-        // 현재 위치 버튼 기능
-        naverMap.uiSettings.isLocationButtonEnabled = false
-        naverMap.uiSettings.isZoomControlEnabled = false
-        naverMap.uiSettings.isLogoClickEnabled = false
-        // 위치를 추적하면서 카메라도 따라 움직인다.
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+
     }
 
     companion object {

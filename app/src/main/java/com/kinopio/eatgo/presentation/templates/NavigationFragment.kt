@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.FragmentNavigationBinding
+import com.kinopio.eatgo.presentation.map.NaverMapActivity
 import kotlinx.coroutines.Dispatchers.Main
 
 //// TODO: Rename parameter arguments, choose names that match
@@ -47,10 +48,14 @@ class NavigationFragment : Fragment() {
 //                it.startActivity(intent)
 //            }
 
-            val intent = Intent(requireActivity(), MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
-            requireActivity().finish() // 현재 Activity를 종료하려는 경우
 
+        }
+
+        binding.addBtn.setOnClickListener {
+            val intent = Intent(context, NaverMapActivity::class.java)
+            startActivity(intent)
         }
     }
 
