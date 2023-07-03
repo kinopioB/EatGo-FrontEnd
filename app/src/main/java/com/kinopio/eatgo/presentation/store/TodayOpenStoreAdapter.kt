@@ -3,17 +3,14 @@ package com.kinopio.eatgo.presentation.store
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
-import com.kinopio.eatgo.databinding.ItemOpenInfoBinding
-import com.kinopio.eatgo.databinding.ItemPopularStoreBinding
 import com.kinopio.eatgo.databinding.ItemTodayOpenStoreBinding
+import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
+import com.kinopio.eatgo.domain.store.TodayOpenStoreResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.store.ui_model.Store
 
-class TodayOpenStoreAdapter(private val storeList: List<Store>) :
+class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDto>) :
     RecyclerView.Adapter<TodayOpenStoreAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodayOpenStoreAdapter.Holder {
@@ -34,10 +31,11 @@ class TodayOpenStoreAdapter(private val storeList: List<Store>) :
     inner class Holder(private val binding: ItemTodayOpenStoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(store: Store) {
+        fun bind(store: TodayOpenStoreResponseDto) {
             binding.apply {
-                binding.storeName.text = store.name
-                binding.storeDesc.text = store.desc
+                binding.storeName.text = store.storeName
+                binding.storeDesc.text = store.info
+
 
 //                for (tag in store.tags) {
 //                    val tagButton = Button(requireContext())
