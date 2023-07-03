@@ -5,42 +5,48 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kinopio.eatgo.databinding.ItemStoreBinding
+import com.kinopio.eatgo.databinding.ItemMypageReviewBinding
+import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.Review
 
-class ReviewAdapter(private val reviewList: List<Review>) :
+class ReviewAdapter(private val reviewList: List<Review>?) :
     RecyclerView.Adapter<ReviewAdapter.Holder>() {
 
     // ViewHolder 객체를 생성하고 초기화
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemStoreBinding.inflate(inflater, parent, false)
+        val binding = ItemMypageReviewBinding.inflate(inflater, parent, false)
+        Log.d("store start retrofit", "onCreateViewHolder 진입")
+
         return Holder(binding)
     }
 
     // 데이터를 가져와 ViewHolder 안의 내용을 채워줌
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val store = reviewList[position]
-        Log.d("store", "$store")
-        //holder.bind(store)
+        val review = reviewList?.get(position)
+        Log.d("store", "$review")
+        if (review != null) {
+            holder.bind(review)
+        }
     }
 
     // 총 데이터 갯수 반환
     override fun getItemCount(): Int {
-        Log.d("store", "${reviewList.size}")
-        return reviewList.size
+        Log.d("store start retrofit", "${reviewList?.size ?:0}")
+        return reviewList?.size ?: 0
     }
 
-    inner class Holder(private val binding: ItemStoreBinding) :
+    inner class Holder(private val binding: ItemMypageReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        /*fun bind(store: Store) {
+        fun bind(review: Review) {
             binding.apply {
-                text1.text = store.name
-                text2.text = store.startTime
-                text3.text = store.endTime
-                text4.text = store.location
+                Log.d("store start retrofit", "Holder 진입")
+
+                user.text = review.userName
+                ratingStar.rating = review.rating.toFloat()
+                content.text = review.content
+                createdAt.text = review.createdAt
             }
-        }*/
+        }
     }
 }
