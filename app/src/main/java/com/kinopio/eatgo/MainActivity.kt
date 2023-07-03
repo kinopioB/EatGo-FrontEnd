@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     Log.d("search", "검색 눌림")
                     searchFilter = binding.searchEditText.text.toString()
-                    
+
 
                     return true
                 }
