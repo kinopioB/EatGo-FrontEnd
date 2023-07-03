@@ -33,6 +33,7 @@ import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
+import com.kinopio.eatgo.domain.store.CreateStoreResponseDto
 import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.MenuRequestDto
 import com.kinopio.eatgo.domain.store.OpenInfoRequestDto
@@ -50,17 +51,17 @@ import retrofit2.Response
 
 class CreateStoreActivity : AppCompatActivity() {
     private lateinit var menuFormAdapter: MenuFormAdapter
-    private lateinit var  openInfoAdapter :  OpenInfoAdapter
+    private lateinit var openInfoAdapter: OpenInfoAdapter
 
-    private val menuList= mutableListOf<MenuForm>()
+    private val menuList = mutableListOf<MenuForm>()
     private var isBest = 0
     private val openInfoList = mutableListOf<OpenInfo>()
     private val tagList = mutableListOf<TagRequestDto>()
 
     private lateinit var binding: ActivityCreateStoreBinding
 
-    private var selectedMenuImageUri: Uri =Uri.EMPTY
-    private var selectedStoreImgUri : Uri= Uri.EMPTY
+    private var selectedMenuImageUri: Uri = Uri.EMPTY
+    private var selectedStoreImgUri: Uri = Uri.EMPTY
 
     private var selectedToggleButton: ToggleButton? = null
     private var selectedButtonNumber: Int = 0
@@ -73,28 +74,29 @@ class CreateStoreActivity : AppCompatActivity() {
     }
 
     // 레트로핏 전송용 객체
-    private lateinit var storeRequestDto : StoreRequestDto
-    private  var newMenuList = mutableListOf<MenuRequestDto>()
+    private lateinit var storeRequestDto: StoreRequestDto
+    private var newMenuList = mutableListOf<MenuRequestDto>()
     private var storeImgUrl = ""
 
     // 카테고리 선택
-    private val toggleButtonChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-        if (isChecked) {
-            // 하나의 토글 버튼이 선택되면 이전에 선택되었던 토글 버튼의 선택 상태를 해제합니다.
-            if (selectedToggleButton != null && selectedToggleButton != buttonView) {
-                selectedToggleButton?.isChecked = false
-            }
-            selectedToggleButton = buttonView as ToggleButton
-            selectedButtonNumber = getButtonNumber(buttonView)
+    private val toggleButtonChangeListener =
+        CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // 하나의 토글 버튼이 선택되면 이전에 선택되었던 토글 버튼의 선택 상태를 해제합니다.
+                if (selectedToggleButton != null && selectedToggleButton != buttonView) {
+                    selectedToggleButton?.isChecked = false
+                }
+                selectedToggleButton = buttonView as ToggleButton
+                selectedButtonNumber = getButtonNumber(buttonView)
 
-        } else {
-            // 선택이 해제되면 selectedToggleButton을 null로 설정합니다.
-            if (selectedToggleButton == buttonView) {
-                selectedToggleButton = null
-                selectedButtonNumber = 0
+            } else {
+                // 선택이 해제되면 selectedToggleButton을 null로 설정합니다.
+                if (selectedToggleButton == buttonView) {
+                    selectedToggleButton = null
+                    selectedButtonNumber = 0
+                }
             }
         }
-    }
 
     private fun getButtonNumber(button: ToggleButton): Int {
         return when (button.id) {
@@ -156,19 +158,20 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
         // 가게  사진 추가 -> 갤러리 연동
-        storeImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                if (data != null) {
-                    val imageUri: Uri? = data.data
-                    if (imageUri != null) {
-                        selectedStoreImgUri = imageUri
-                        binding.storeImgLayout.visibility = View.VISIBLE
-                        binding.storeImg.setImageURI(selectedStoreImgUri)
+        storeImageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    if (data != null) {
+                        val imageUri: Uri? = data.data
+                        if (imageUri != null) {
+                            selectedStoreImgUri = imageUri
+                            binding.storeImgLayout.visibility = View.VISIBLE
+                            binding.storeImg.setImageURI(selectedStoreImgUri)
+                        }
                     }
                 }
             }
-        }
 
         // 대표 메뉴 선택 체크박스
         // 체크 박스의 상태 변경 리스너 설정
@@ -176,7 +179,7 @@ class CreateStoreActivity : AppCompatActivity() {
             if (isChecked) {
                 isBest = 1;
             } else {
-               isBest = 0;
+                isBest = 0;
                 // isChecked가 false인 경우에 해당하는 코드를 작성하세요.
             }
         }
@@ -190,18 +193,19 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
         // 메뉴 사진 추가 -> 갤러리 연동
-        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                if (data != null) {
-                    val imageUri: Uri? = data.data
-                    if (imageUri != null) {
-                        selectedMenuImageUri = imageUri
-                        binding.menuImg.setImageURI(selectedMenuImageUri)
+        imagePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    if (data != null) {
+                        val imageUri: Uri? = data.data
+                        if (imageUri != null) {
+                            selectedMenuImageUri = imageUri
+                            binding.menuImg.setImageURI(selectedMenuImageUri)
+                        }
                     }
                 }
             }
-        }
 
         // 메뉴 추가
         binding.buttonAdd.setOnClickListener {
@@ -212,11 +216,18 @@ class CreateStoreActivity : AppCompatActivity() {
             val menuInfo = binding.menuInfo.text.toString() //칸 추가 필요
 
             if (menuName.isNotEmpty() && menuAmount != null && menuPrice != null) {
-                if(selectedMenuImageUri == null){
+                if (selectedMenuImageUri == null) {
                     val menu = MenuForm(menuName, menuAmount, menuPrice, menuInfo, null, 1)
                     menuList.add(menu)
-                }else{
-                    val menu = MenuForm(menuName, menuAmount, menuPrice, menuInfo, selectedMenuImageUri, isBest)
+                } else {
+                    val menu = MenuForm(
+                        menuName,
+                        menuAmount,
+                        menuPrice,
+                        menuInfo,
+                        selectedMenuImageUri,
+                        isBest
+                    )
                     menuList.add(menu)
 
                 }
@@ -247,7 +258,6 @@ class CreateStoreActivity : AppCompatActivity() {
         binding.cate6.setOnCheckedChangeListener(toggleButtonChangeListener)
 
 
-
         // 태그 추가
         binding.tagAddBtn.setOnClickListener {
             val inputText = binding.tagEt.text.toString().trim()
@@ -255,7 +265,7 @@ class CreateStoreActivity : AppCompatActivity() {
             if (inputText.isNotEmpty()) {
                 val textView = TextView(this)
                 textView.text = inputText
-                textView.setPadding(20,20,20,20)
+                textView.setPadding(20, 20, 20, 20)
                 textView.setBackgroundResource(R.drawable.store_create_box_border) // 노란색 태두리 설정
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f) // 텍스트 크기 설정
 
@@ -273,7 +283,6 @@ class CreateStoreActivity : AppCompatActivity() {
         }
 
 
-
         //  등록 버튼
         binding.submitBtn.setOnClickListener {
 
@@ -286,33 +295,33 @@ class CreateStoreActivity : AppCompatActivity() {
     } // onCreate  종료
 
 
-    private fun uploadStoreImg(){
+    private fun uploadStoreImg() {
         Log.d("image", "가게 사진 업로드")
 
-        if(selectedStoreImgUri != null){
+        if (selectedStoreImgUri != null) {
             uploadPhoto(
                 selectedStoreImgUri,
                 successHandler = { imgUrl ->
                     storeImgUrl = imgUrl
                     callMenuImageUpload()
-             },
+                },
                 errorHandler = {
-                    Log.d("image","Store Image Uploaded Error")
-                   // 토스트 메세지
+                    Log.d("image", "Store Image Uploaded Error")
+                    // 토스트 메세지
                 }
             )
-        }else{
+        } else {
             // callRetrofit()
             // 토스트 띄워야함.
         }
 
     }
 
-    fun callMenuImageUpload(){
-        for (i in 0..menuList.size-1){
+    fun callMenuImageUpload() {
+        for (i in 0..menuList.size - 1) {
             val tmp = menuList.get(i)
-            Log.d("image","tmp ${tmp.imageUri}")
-            Log.d("menu","tmp ${tmp.amount}")
+            Log.d("image", "tmp ${tmp.imageUri}")
+            Log.d("menu", "tmp ${tmp.amount}")
 
             tmp.imageUri?.let { uri ->
                 // tmp.imageUri가 null이 아닌 경우에 수행할 코드
@@ -320,54 +329,88 @@ class CreateStoreActivity : AppCompatActivity() {
                     tmp.imageUri,
                     successHandler = { imgUrl ->
                         Log.d("image", "$imgUrl")
-                        newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount, imgUrl, tmp.isBest ))
+                        newMenuList.add(
+                            MenuRequestDto(
+                                tmp.name,
+                                tmp.info,
+                                tmp.price,
+                                tmp.amount,
+                                imgUrl,
+                                tmp.isBest
+                            )
+                        )
                         checkMenuImgAllUploaded()
                     },
                     errorHandler = {
-                        Log.d("image","error")
-                        newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount,"", tmp.isBest ))
+                        Log.d("image", "error")
+                        newMenuList.add(
+                            MenuRequestDto(
+                                tmp.name,
+                                tmp.info,
+                                tmp.price,
+                                tmp.amount,
+                                "",
+                                tmp.isBest
+                            )
+                        )
                         checkMenuImgAllUploaded()
                     }
                 )
             } ?: run {
                 // tmp.imageUri가 null인 경우에 수행할 코드
-                newMenuList.add(MenuRequestDto(tmp.name, tmp.info, tmp.price, tmp.amount,"", tmp.isBest ))
+                newMenuList.add(
+                    MenuRequestDto(
+                        tmp.name,
+                        tmp.info,
+                        tmp.price,
+                        tmp.amount,
+                        "",
+                        tmp.isBest
+                    )
+                )
                 checkMenuImgAllUploaded()
             }
         }
 
     }
+
     private fun checkMenuImgAllUploaded() {
-        Log.d("image","메뉴 사진 업로드 ${menuList.size }, ${newMenuList.size}")
-        if(menuList.size == newMenuList.size){
+        Log.d("image", "메뉴 사진 업로드 ${menuList.size}, ${newMenuList.size}")
+        if (menuList.size == newMenuList.size) {
             callRetrofit()
         }
     }
 
     fun callRetrofit() {
-        Log.d("image","testing_test")
+        Log.d("image", "testing_test")
 
-        var newOpenInfoList : MutableList<OpenInfoRequestDto> = mutableListOf()
-        var newTagList : MutableList<TagRequestDto> = mutableListOf()
+        var newOpenInfoList: MutableList<OpenInfoRequestDto> = mutableListOf()
+        var newTagList: MutableList<TagRequestDto> = mutableListOf()
 
-        for(i in 0..openInfoList.size-1){
+        for (i in 0..openInfoList.size - 1) {
             var openInfoTmp = openInfoList.get(i)
-            newOpenInfoList.add(OpenInfoRequestDto(openInfoTmp.day, openInfoTmp.startTime, openInfoTmp.endTime))
+            newOpenInfoList.add(
+                OpenInfoRequestDto(
+                    openInfoTmp.day,
+                    openInfoTmp.startTime,
+                    openInfoTmp.endTime
+                )
+            )
         }
 
 
-        var storeName =  binding.storeEdittext.text.toString()
+        var storeName = binding.storeEdittext.text.toString()
         var userId = 1
         var address = "대한민국 서울특별시 종로구 명륜4가 66-2"
-        var positionX= 37.58276254809701 // 주소 바꾸기
-        var positionY= 127.00055558776944
+        var positionX = 37.58276254809701 // 주소 바꾸기
+        var positionY = 127.00055558776944
         var categoryId = selectedButtonNumber
         var createdType = 1
 
 
         storeRequestDto = StoreRequestDto(
             storeName = storeName,
-            userId =userId,
+            userId = userId,
             address = address,
             positionX = positionX,
             positionY = positionY,
@@ -385,26 +428,30 @@ class CreateStoreActivity : AppCompatActivity() {
         val retrofit = RetrofitClient.getRetrofit2()
         val storeService = retrofit.create(StoreService::class.java)
 
-        storeService.createStore(storeRequestDto).enqueue(object : Callback<StoreDetailResponseDto> {
-            override fun onFailure(call: Call<StoreDetailResponseDto>, t: Throwable) {
-                Log.d("image", "errorororor:) ")
-                Log.d("fail", "$t")
-                val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
-                startActivity(intent)
-            }
-            override fun onResponse(call: Call<StoreDetailResponseDto>, response: Response<StoreDetailResponseDto>) {
-                response.body()?.let {
-                  // 응답 성공
-                    Log.d("Created", "Store Created Success")
-                    Log.d("Created", "${response.body()}")
-
-                    val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
-                    startActivity(intent)
+        storeService.createStore(storeRequestDto)
+            .enqueue(object : Callback<CreateStoreResponseDto> {
+                override fun onFailure(call: Call<CreateStoreResponseDto>, t: Throwable) {
+                    Log.d("image", "errorororor:) ")
+                    Log.d("fail", "$t")
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<CreateStoreResponseDto>,
+                    response: Response<CreateStoreResponseDto>
+                ) {
+                    response.body()?.let {
+                        // 응답 성공
+                        Log.d("Created", "Store Created Success")
+                        Log.d("Created", "${response.body()}")
+                        val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
+                        intent.putExtra("storeId", response.body()!!.storeId)
+                        startActivity(intent)
+                    }
+                }
+            })
 
     }
+
     private fun uploadPhoto(uri: Uri, successHandler: (String) -> Unit, errorHandler: () -> Unit) {
         val fileName = "${System.currentTimeMillis()}.png"
         storage.reference.child("images").child("1").child(fileName)
@@ -427,6 +474,7 @@ class CreateStoreActivity : AppCompatActivity() {
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
     }
+
     // 영업일 정보 토글 버튼 리스너 세팅
     private fun setupToggleButtons() {
         val toggleButtons = listOf(
@@ -480,7 +528,6 @@ class CreateStoreActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
             )
         }
-
         dialog.show()
     }
 
@@ -502,10 +549,8 @@ class CreateStoreActivity : AppCompatActivity() {
         return ToolbarUtils.handleOptionsItemSelected(
             this,
             item
-        ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
+        )
     }
-
-
 
 
 }
