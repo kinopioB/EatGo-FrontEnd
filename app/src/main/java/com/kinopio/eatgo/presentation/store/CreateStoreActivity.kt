@@ -318,6 +318,9 @@ class CreateStoreActivity : AppCompatActivity() {
     }
 
     fun callMenuImageUpload() {
+        if(menuList.size ==0){
+            callRetrofit()
+        }
         for (i in 0..menuList.size - 1) {
             val tmp = menuList.get(i)
             Log.d("image", "tmp ${tmp.imageUri}")
@@ -385,7 +388,7 @@ class CreateStoreActivity : AppCompatActivity() {
         Log.d("image", "testing_test")
 
         var newOpenInfoList: MutableList<OpenInfoRequestDto> = mutableListOf()
-        var newTagList: MutableList<TagRequestDto> = mutableListOf()
+//        var newTagList: MutableList<TagRequestDto> = mutableListOf()
 
         for (i in 0..openInfoList.size - 1) {
             var openInfoTmp = openInfoList.get(i)
@@ -443,7 +446,7 @@ class CreateStoreActivity : AppCompatActivity() {
                         // 응답 성공
                         Log.d("Created", "Store Created Success")
                         Log.d("Created", "${response.body()}")
-                        val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
+                        val intent = Intent(this@CreateStoreActivity, StoreDetailActivity::class.java)
                         intent.putExtra("storeId", response.body()!!.storeId)
                         startActivity(intent)
                     }

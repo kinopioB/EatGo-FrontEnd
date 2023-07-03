@@ -4,11 +4,16 @@ import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.UiThread
-import androidx.appcompat.app.AppCompatActivity
 import com.kinopio.eatgo.R
-import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
-import com.kinopio.eatgo.presentation.templates.NavigationFragment
+import com.kinopio.eatgo.databinding.FragmentNaverMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
@@ -17,39 +22,50 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.NaverIdLoginSDK.applicationContext
 import java.util.Locale
 
+//// TODO: Rename parameter arguments, choose names that match
+//// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//private const val ARG_PARAM1 = "param1"
+//private const val ARG_PARAM2 = "param2"
 
-
-class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
+/**
+ * A simple [Fragment] subclass.
+ * Use the [NaverMapFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class NaverMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
-    private val binding : ActivityNaverMapBinding by lazy {
-        ActivityNaverMapBinding.inflate(layoutInflater)
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    private lateinit var binding : FragmentNaverMapBinding
 
-        val fm = supportFragmentManager
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentNaverMapBinding.inflate(inflater, container, false)
+
+        val fm = childFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
-
         mapFragment.getMapAsync(this)
 
         locationSource =
-            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+            FusedLocationSource(this, NaverMapFragment.LOCATION_PERMISSION_REQUEST_CODE)
 
-        supportActionBar?.hide()
-
-
-        val transaction = fm.beginTransaction()
-        var navigationFragment: NavigationFragment = NavigationFragment()
-
-        transaction.add(R.id.bottomBar, navigationFragment)
-        transaction.commit()
+//        binding.selectPostiton.setOnClickListener {
+//            requireActivity().findViewById<TextView>(R.id.resultAddress).text = binding.selectKoreaAddress.text
+//            requireActivity().findViewById<FrameLayout>(R.id.createMapContainer).visibility = View.GONE
+//            requireActivity().findViewById<LinearLayout>(R.id.createStoreContainer).visibility = View.VISIBLE
+//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//
+//        }
+        return binding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -67,23 +83,16 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-        var markerList = arrayOf(doubleArrayOf(37.58360643235775, 127.00287162295791), doubleArrayOf(37.57634704780042, 127.00014662083021), doubleArrayOf(37.57437921990977, 127.00597769025228), doubleArrayOf(37.57545705952983, 127.00408207401604))
-
-        for (i in 0 .. 3) {
-            val marker = Marker()
-            marker.position = LatLng(markerList[i][0], markerList[i][1])
-            marker.width = 50
-            marker.height = 70
-            marker.map = naverMap
-        }
 
         this.naverMap = naverMap
         // 현재 위치
         naverMap.locationSource = locationSource
         // 현재 위치 버튼 기능
-//        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.uiSettings.isLocationButtonEnabled = false
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.uiSettings.isLogoClickEnabled = false
+        naverMap.uiSettings.isCompassEnabled = false
+
         // 위치를 추적하면서 카메라도 따라 움직인다.
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
@@ -110,13 +119,11 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
             )
-            Log.d("aaa", "${naverMap.cameraPosition.target.latitude}, ${naverMap.cameraPosition.target.longitude}")
             // 좌표 -> 주소 변환 텍스트 세팅, 버튼 활성화
             getAddress(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude)
         }
 
     }
-
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
@@ -124,7 +131,7 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
     private fun getAddress(latitude: Double, longitude: Double) {
 //        Log.d("aaa", "this")
         // Geocoder 선언
-        val geocoder = Geocoder(applicationContext, Locale.KOREAN)
+        val geocoder = Geocoder(requireContext().applicationContext, Locale.KOREAN)
 
         // 안드로이드 API 레벨이 33 이상인 경우
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -146,4 +153,23 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
             }
         }
     }
+//    companion object {
+//        /**
+//         * Use this factory method to create a new instance of
+//         * this fragment using the provided parameters.
+//         *
+//         * @param param1 Parameter 1.
+//         * @param param2 Parameter 2.
+//         * @return A new instance of fragment NaverMapFragment.
+//         */
+//        // TODO: Rename and change types and number of parameters
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            NaverMapFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(ARG_PARAM1, param1)
+//                    putString(ARG_PARAM2, param2)
+//                }
+//            }
+//    }
 }

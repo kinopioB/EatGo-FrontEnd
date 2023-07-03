@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ReviewDetailActivity : AppCompatActivity() {
+class StoreDetailActivity : AppCompatActivity() {
 
     private var menuList :List<Menu> = mutableListOf()
 
@@ -54,7 +54,7 @@ class ReviewDetailActivity : AppCompatActivity() {
                             if(data.menus.size !=0){
                                 menuList = data.menus
                             }
-                            binding.pager.adapter = StoreDetailTabAdapter(this@ReviewDetailActivity, menuList)
+                            binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList)
 
                         }
                     }
