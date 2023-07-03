@@ -17,7 +17,7 @@ import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityScanQrBinding
-import com.kinopio.eatgo.presentation.store.ReviewDetailActivity
+import com.kinopio.eatgo.presentation.store.StoreDetailActivity
 import com.kinopio.eatgo.presentation.store.ReviewFragment
 
 
@@ -49,7 +49,7 @@ class ScanQRActivity : AppCompatActivity() {
             var storeId : Int = 0
 
             Log.d("review", "프레그먼트 실행 전")
-            val intent = Intent(this, ReviewDetailActivity::class.java)
+            val intent = Intent(this, StoreDetailActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("storeId", storeId)
             intent.putExtra("fragmentToOpen", ReviewFragment::class.java.name)

@@ -302,7 +302,7 @@ class CreateStoreActivity : AppCompatActivity() {
              },
                 errorHandler = {
                     Log.d("image","Store Image Uploaded Error")
-                    val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                    val intent = Intent(applicationContext, StoreDetailActivity::class.java)
                     startActivity(intent)
                 }
             )
@@ -357,7 +357,7 @@ class CreateStoreActivity : AppCompatActivity() {
             override fun onFailure(call: Call<StoreDetailResponseDto>, t: Throwable) {
                 Log.d("image", "errorororor:) ")
                 Log.d("fail", "$t")
-                val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                val intent = Intent(applicationContext, StoreDetailActivity::class.java)
                 startActivity(intent)
             }
             override fun onResponse(call: Call<StoreDetailResponseDto>, response: Response<StoreDetailResponseDto>) {
@@ -366,7 +366,7 @@ class CreateStoreActivity : AppCompatActivity() {
                     Log.d("Created", "Store Created Success")
                     Log.d("Created", "${response.body()}")
 
-                    val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
+                    val intent = Intent(this@CreateStoreActivity, StoreDetailActivity::class.java)
                     startActivity(intent)
                 }
             }
