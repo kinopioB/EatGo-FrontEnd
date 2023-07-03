@@ -293,6 +293,8 @@ class CreateStoreActivity : AppCompatActivity() {
              },
                 errorHandler = {
                     Log.d("image","Store Image Uploaded Error")
+                    val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                    startActivity(intent)
                 }
             )
         }else{
@@ -346,12 +348,17 @@ class CreateStoreActivity : AppCompatActivity() {
             override fun onFailure(call: Call<StoreDetailResponseDto>, t: Throwable) {
                 Log.d("image", "errorororor:) ")
                 Log.d("fail", "$t")
+                val intent = Intent(applicationContext, ReviewDetailActivity::class.java)
+                startActivity(intent)
             }
             override fun onResponse(call: Call<StoreDetailResponseDto>, response: Response<StoreDetailResponseDto>) {
                 response.body()?.let {
                   // 응답 성공
                     Log.d("Created", "Store Created Success")
                     Log.d("Created", "${response.body()}")
+
+                    val intent = Intent(this@CreateStoreActivity, ReviewDetailActivity::class.java)
+                    startActivity(intent)
                 }
             }
         })

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.presentation.naverlogin.NaverLoginActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
         var handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {
-            Intent(this, MainActivity::class.java).apply{
+            Intent(this, NaverLoginActivity::class.java).apply{
                 Thread.sleep(2000)
                 startActivity(this)
                 finish()

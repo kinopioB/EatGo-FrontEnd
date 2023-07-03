@@ -14,8 +14,6 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface StoreService {
-    @POST("api/v1/stores/popular")
-    fun getPopularStore() : Call<LoginResponseDto>
 
     @POST("api/v1/stores/{storeId}/open")
     fun changeStoreStatusOpen(@Path("storeId") storeId: Int,

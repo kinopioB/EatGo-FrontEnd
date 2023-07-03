@@ -8,8 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.User
 import com.kinopio.eatgo.databinding.FragmentNavigationBinding
 import com.kinopio.eatgo.presentation.map.NaverMapActivity
+import com.kinopio.eatgo.presentation.store.CreateStoreActivity
+import com.kinopio.eatgo.presentation.store.ManageActivity
+import com.kinopio.eatgo.presentation.store.PopularStoreActivity
 import kotlinx.coroutines.Dispatchers.Main
 
 //// TODO: Rename parameter arguments, choose names that match
@@ -40,13 +44,6 @@ class NavigationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.homeBtn.setOnClickListener {
-//            intent = Intent(context, MainActivity::class.java)
-//            startActivity(intent)
-
-//            activity?.let{
-//                intent = Intent (it, MainActivity::class.java)
-//                it.startActivity(intent)
-//            }
 
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
@@ -54,7 +51,22 @@ class NavigationFragment : Fragment() {
         }
 
         binding.addBtn.setOnClickListener {
-            val intent = Intent(context, NaverMapActivity::class.java)
+            val intent = Intent(context, CreateStoreActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.manualBtn.setOnClickListener {
+            val intent = Intent(context, PopularStoreActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.mypageBtn.setOnClickListener{
+
+            /*if(User.getRole() == 1){
+                val intent = Intent(context, ManageActivity::class.java)
+                startActivity(intent)
+            }*/
+            val intent = Intent(context, ManageActivity::class.java)
             startActivity(intent)
         }
     }
