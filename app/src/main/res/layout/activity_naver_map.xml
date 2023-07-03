@@ -50,5 +50,14 @@
             android:text="해당 위치로 설정"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#CCCCCC"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
+
+    </LinearLayout>
 </FrameLayout>

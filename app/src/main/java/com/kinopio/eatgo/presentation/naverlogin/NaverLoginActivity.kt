@@ -92,9 +92,10 @@ class NaverLoginActivity : AppCompatActivity() {
                 val loginInfo = LoginDto(
                     userSocialId = userId.toString(),
                     userName = userName.toString(),
-                    LoginType = 2,
+                    loginType = 2,
                     role = role
                 )
+                Log.d("naver", "$loginInfo")
                 loginService.login(loginInfo).enqueue(object : Callback<LoginResponseDto> {
 
                     override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {

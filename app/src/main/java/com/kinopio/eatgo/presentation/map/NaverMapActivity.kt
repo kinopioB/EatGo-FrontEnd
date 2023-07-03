@@ -8,6 +8,7 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
+import com.kinopio.eatgo.presentation.templates.NavigationFragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
@@ -40,6 +41,15 @@ class NaverMapActivity : AppCompatActivity() , OnMapReadyCallback{
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        supportActionBar?.hide()
+
+
+        val transaction = fm.beginTransaction()
+        var navigationFragment: NavigationFragment = NavigationFragment()
+
+        transaction.add(R.id.bottomBar, navigationFragment)
+        transaction.commit()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

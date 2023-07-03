@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -19,7 +19,9 @@
         android:elevation="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="안녕하세요"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:text="김밥"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="@+id/map"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/map"
-        app:layout_constraintTop_toTopOf="@+id/editText">
+        app:layout_constraintTop_toTopOf="@+id/searchEditText">
 
     </FrameLayout>
 
