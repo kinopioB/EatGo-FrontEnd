@@ -3,11 +3,13 @@ package com.kinopio.eatgo.presentation.store
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kinopio.eatgo.R
-import com.kinopio.eatgo.databinding.ActivityReviewDetailBinding
+import com.kinopio.eatgo.databinding.ActivityStoreDetailBinding
 import com.kinopio.eatgo.domain.store.Menu
 
 
@@ -17,8 +19,16 @@ class StoreDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityReviewDetailBinding.inflate(layoutInflater)
+        val binding = ActivityStoreDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 카테고리 아이디 넘겨줘야 함
+        ToolbarUtils.setupToolbar(
+            this,
+            binding.root.findViewById<Toolbar>(R.id.toolbar),
+            "카테고리",
+            null
+        )
 
         // 탭 설정
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -72,5 +82,12 @@ class StoreDetailActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return ToolbarUtils.handleOptionsItemSelected(
+            this,
+            item
+        ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
     }
 }
