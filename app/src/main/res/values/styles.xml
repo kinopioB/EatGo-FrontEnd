@@ -68,11 +68,13 @@
     <style name="YelloButtonTemplate">
         <item name="android:background"> @drawable/yellow_button</item>
         <item name="android:textColor"> @color/white</item>
+        <item name="android:elevation">50dp</item>
     </style>
 
     <style name="BrownButtonTemplate">
         <item name="android:background"> @drawable/brown_button</item>
         <item name="android:textColor"> @color/white</item>
+        <item name="android:elevation">50dp</item>
     </style>
 
     <style name="ToolBarTemplate">
