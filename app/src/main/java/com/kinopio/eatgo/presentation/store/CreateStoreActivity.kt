@@ -1,11 +1,14 @@
 package com.kinopio.eatgo.presentation.store
 
+import ToolbarUtils
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.util.TypedValue
 import android.view.MenuItem
@@ -18,36 +21,29 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
-import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
 import com.kinopio.eatgo.domain.store.CreateStoreResponseDto
-import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.MenuRequestDto
 import com.kinopio.eatgo.domain.store.OpenInfoRequestDto
-import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
-import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
 import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.TagRequestDto
 import com.kinopio.eatgo.domain.store.ui_model.MenuForm
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
-import com.kinopio.eatgo.domain.store.ui_model.Store
 import com.kinopio.eatgo.presentation.map.NaverMapFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 
 class CreateStoreActivity : AppCompatActivity() {
@@ -58,8 +54,11 @@ class CreateStoreActivity : AppCompatActivity() {
     private var isBest = 0
     private val openInfoList = mutableListOf<OpenInfo>()
     private val tagList = mutableListOf<TagRequestDto>()
+    private var selectedPositionX = 0.0
+    private var selectedPositionY = 0.0
 
     private lateinit var binding: ActivityCreateStoreBinding
+
 
     private var selectedMenuImageUri: Uri = Uri.EMPTY
     private var selectedStoreImgUri: Uri = Uri.EMPTY
@@ -101,12 +100,12 @@ class CreateStoreActivity : AppCompatActivity() {
 
     private fun getButtonNumber(button: ToggleButton): Int {
         return when (button.id) {
-            R.id.cate1 -> 1
-            R.id.cate2 -> 2
-            R.id.cate3 -> 3
-            R.id.cate4 -> 4
-            R.id.cate5 -> 5
-            R.id.cate6 -> 6
+            com.kinopio.eatgo.R.id.cate1 -> 1
+            com.kinopio.eatgo.R.id.cate2 -> 2
+            com.kinopio.eatgo.R.id.cate3 -> 3
+            com.kinopio.eatgo.R.id.cate4 -> 4
+            com.kinopio.eatgo.R.id.cate5 -> 5
+            com.kinopio.eatgo.R.id.cate6 -> 6
             else -> -1
         }
     }
@@ -121,7 +120,7 @@ class CreateStoreActivity : AppCompatActivity() {
         // 툴바 세팅
         ToolbarUtils.setupToolbar(
             this,
-            binding.root.findViewById<Toolbar>(R.id.toolbar),
+            binding.root.findViewById<Toolbar>(com.kinopio.eatgo.R.id.toolbar),
             "가게 등록",
             null
         )
@@ -165,7 +164,7 @@ class CreateStoreActivity : AppCompatActivity() {
             val fm = supportFragmentManager
             val transaction = fm.beginTransaction()
             var mapFragment : NaverMapFragment = NaverMapFragment()
-            transaction.add(R.id.createMapContainer, mapFragment)
+            transaction.add(com.kinopio.eatgo.R.id.createMapContainer, mapFragment)
             transaction.commit()
 
         }
@@ -276,12 +275,15 @@ class CreateStoreActivity : AppCompatActivity() {
         binding.tagAddBtn.setOnClickListener {
             val inputText = binding.tagEt.text.toString().trim()
 
-            if (inputText.isNotEmpty()) {
+            binding.tagEt.text = null
+
+            if (inputText.isNotEmpty() || inputText != null) {
                 val textView = TextView(this)
                 textView.text = inputText
                 textView.setPadding(20, 20, 20, 20)
-                textView.setBackgroundResource(R.drawable.store_create_box_border) // 노란색 태두리 설정
+                textView.setBackgroundResource(com.kinopio.eatgo.R.drawable.store_create_box_border) // 노란색 태두리 설정
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f) // 텍스트 크기 설정
+                textView.elevation= 10f
 
                 val layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -300,19 +302,51 @@ class CreateStoreActivity : AppCompatActivity() {
         //  등록 버튼
         binding.submitBtn.setOnClickListener {
 
-            uploadStoreImg()
+            if(checkIsAbleToUpload()){
+                uploadStoreImg()
+            }
             // 메뉴 이미지 전송
-
         }
 
 
     } // onCreate  종료
 
+    private fun checkIsAbleToUpload():Boolean{
 
+        var checkStoreName = binding.storeEdittext.text.toString()
+        var checkStoreAddress = binding.resultAddress.text.toString()
+        if (checkStoreName ==" " || checkStoreName.isNullOrBlank() || checkStoreName.isBlank()) {
+
+            val myToast: Toast =
+                Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.NO_STORE_NAME_ERROR, Toast.LENGTH_SHORT)
+            myToast.show()
+            return false
+        }
+        // 주소 입력되었는 지 확인
+        if(checkStoreAddress == " " || checkStoreAddress.isNullOrBlank() || checkStoreAddress.isBlank()){
+            val myToast: Toast =
+                Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.NO_STORE_ADDRESS_ERROR, Toast.LENGTH_SHORT)
+            myToast.show()
+            return false
+        }
+        if(selectedButtonNumber <= 0 || selectedButtonNumber > 7 || selectedButtonNumber == null){
+            val myToast: Toast =
+                Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.NO_STORE_CATEGORY_ERROR, Toast.LENGTH_SHORT)
+            myToast.show()
+            return false
+        }
+        return true
+    }
     private fun uploadStoreImg() {
-        Log.d("image", "가게 사진 업로드")
 
-        if (selectedStoreImgUri != null) {
+        if (selectedStoreImgUri != Uri.EMPTY) {
+
+            val loadingAnimDialog = LoadingDialog(this, getString(R.string.CREATE_STORE_LOADING_MESSAGE))
+            loadingAnimDialog.show()
+            Handler().postDelayed({
+                loadingAnimDialog.dismiss()
+            }, 10000)
+
             uploadPhoto(
                 selectedStoreImgUri,
                 successHandler = { imgUrl ->
@@ -321,12 +355,16 @@ class CreateStoreActivity : AppCompatActivity() {
                 },
                 errorHandler = {
                     Log.d("image", "Store Image Uploaded Error")
-                    // 토스트 메세지
+                    val myToast: Toast =
+                        Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.STORE_IMAGE_UPLOAD_ERROR, Toast.LENGTH_SHORT)
+                    myToast.show()
                 }
             )
         } else {
-            // callRetrofit()
-            // 토스트 띄워야함.
+            // 가게 사진 있는지 확인
+            val myToast: Toast =
+                Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.NO_STORE_IMAGE_ERROR, Toast.LENGTH_SHORT)
+            myToast.show()
         }
 
     }
@@ -418,11 +456,13 @@ class CreateStoreActivity : AppCompatActivity() {
 
         var storeName = binding.storeEdittext.text.toString()
         var userId = 1
-        var address = "대한민국 서울특별시 종로구 명륜4가 66-2"
-        var positionX = 37.58276254809701 // 주소 바꾸기
-        var positionY = 127.00055558776944
+        var address = binding.resultAddress.text.toString().trim()
+        getPosition(address)
+        var positionX = selectedPositionX
+        var positionY = selectedPositionY
         var categoryId = selectedButtonNumber
         var createdType = 1
+
 
 
         storeRequestDto = StoreRequestDto(
@@ -462,6 +502,7 @@ class CreateStoreActivity : AppCompatActivity() {
                         Log.d("Created", "${response.body()}")
                         val intent = Intent(this@CreateStoreActivity, StoreDetailActivity::class.java)
                         intent.putExtra("storeId", response.body()!!.storeId)
+                        LoadingDialog(this@CreateStoreActivity, getString(R.string.CREATE_STORE_LOADING_MESSAGE) ).hide()
                         startActivity(intent)
                     }
                 }
@@ -567,6 +608,17 @@ class CreateStoreActivity : AppCompatActivity() {
             this,
             item
         )
+    }
+
+    private fun getPosition(address : String) {
+        Geocoder(applicationContext, Locale.KOREA).getFromLocationName(address, 1)?.let {
+            Location("").apply {
+                Log.d("geo", "${it[0].latitude}, ${it[0].longitude}")
+                selectedPositionX = it[0].latitude.toDouble()
+                selectedPositionY = it[0].longitude.toDouble()
+
+            }
+        }
     }
 
 

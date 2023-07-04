@@ -1,19 +1,17 @@
 package com.kinopio.eatgo.presentation.store
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityStoreDetailBinding
-import com.kinopio.eatgo.domain.map.ReviewResponseDto
 
 import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.ReviewDto
@@ -46,6 +44,13 @@ class StoreDetailActivity : AppCompatActivity() {
 
 
         if (storeId != -1) {
+
+           // val loadingAnimDialog = LoadingDialog(this)
+//            loadingAnimDialog.show()
+//            Handler().postDelayed({
+//                loadingAnimDialog.dismiss()
+//            }, 10000)
+
             val retrofit = RetrofitClient.getRetrofit2()
             val storeService = retrofit.create(StoreService::class.java)
 
@@ -73,7 +78,7 @@ class StoreDetailActivity : AppCompatActivity() {
                                 reviewList = data.reviews
                             }
                             binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList)
-
+                           // loadingAnimDialog.hide()
                         }
                     }
                 })
