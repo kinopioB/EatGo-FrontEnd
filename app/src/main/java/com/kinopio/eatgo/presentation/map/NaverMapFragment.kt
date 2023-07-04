@@ -58,13 +58,13 @@ class NaverMapFragment : Fragment(), OnMapReadyCallback {
         locationSource =
             FusedLocationSource(this, NaverMapFragment.LOCATION_PERMISSION_REQUEST_CODE)
 
-        binding.selectPostiton.setOnClickListener {
-            requireActivity().findViewById<TextView>(R.id.resultAddress).text = binding.selectKoreaAddress.text
-            requireActivity().findViewById<FrameLayout>(R.id.createMapContainer).visibility = View.GONE
-            requireActivity().findViewById<LinearLayout>(R.id.createStoreContainer).visibility = View.VISIBLE
-            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-
-        }
+//        binding.selectPostiton.setOnClickListener {
+//            requireActivity().findViewById<TextView>(R.id.resultAddress).text = binding.selectKoreaAddress.text
+//            requireActivity().findViewById<FrameLayout>(R.id.createMapContainer).visibility = View.GONE
+//            requireActivity().findViewById<LinearLayout>(R.id.createStoreContainer).visibility = View.VISIBLE
+//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//
+//        }
         return binding.root
     }
 

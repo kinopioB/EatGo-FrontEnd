@@ -15,6 +15,7 @@ import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.map.ReviewService
 import com.kinopio.eatgo.databinding.FragmentReviewBinding
+import com.kinopio.eatgo.domain.map.ReviewRequestDto
 import com.kinopio.eatgo.domain.map.ReviewResponseDto
 import com.kinopio.eatgo.domain.map.StoreLocationListDto
 import retrofit2.Call
@@ -72,7 +73,7 @@ class ReviewFragment : DialogFragment() {
 
             Log.d("reviewFragment",  "retrofit2")
 
-            var reviewRequestDto : ReviewResponseDto = ReviewResponseDto(
+            var reviewRequestDto : ReviewRequestDto = ReviewRequestDto(
                 userId = userId,
                 storeId = storeId,
                 content = inputText,
