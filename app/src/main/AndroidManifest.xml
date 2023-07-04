@@ -88,7 +88,7 @@
         <activity
             android:name=".presentation.qr.CreateQRActivity"
             android:exported="false"
-            android:theme="@style/ToolBar" />
+            android:theme="@style/QrToolBar" />
         <activity
             android:name=".presentation.qr.MainQRActivity"
             android:exported="true"
