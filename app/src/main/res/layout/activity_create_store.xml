@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/main_background">
-
+    android:orientation="vertical">
     <include layout="@layout/toolbar"/>
-
-
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/createMapContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </FrameLayout>
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
-        android:layout_marginTop="10dp"
         android:weightSum="10"
         tools:context=".presentation.store.CreateStoreActivity">
 
 
         <LinearLayout
+            android:id="@+id/createStoreContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -50,14 +52,16 @@
                 </TextView>
 
                 <Button
+                    android:id="@+id/positionBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    style="@style/YelloButtonTemplate"
+                    android:background="@drawable/store_create_box_border"
                     android:text="위치 설정"></Button>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/resultAddress"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -96,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
-                    style="@style/YelloButtonTemplate"
+                    android:background="@drawable/store_create_box_border"
                     android:text="사진 추가">
 
                 </Button>
@@ -108,7 +112,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/store_create_box_border"
-                style="@style/ItemBoxWithShadow"
                 android:padding="10dp">
 
 
@@ -131,7 +134,6 @@
                         android:id="@+id/storeImg"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:scaleType="centerCrop"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/gray_square_round_border"
                         android:padding="30dp">
@@ -323,9 +325,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toggleBtns"
-                    tools:layout_editor_absoluteX="10dp" />
+                    app:layout_constraintTop_toBottomOf="@id/toggleBtns" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -347,7 +347,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/store_create_box_border"
                 android:padding="10dp"
-                style="@style/ItemBoxWithShadow"
                 android:weightSum="12">
 
                 <ToggleButton
@@ -355,7 +354,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="2"
-                    android:background="@drawable/cate_toggle_skewer"
+                    android:background="@drawable/cate_toggle_bung"
                     android:clickable="true"
                     android:textOff=""
                     android:textOn="" />
@@ -375,7 +374,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="2"
-                    android:background="@drawable/cate_toggle_bung"
+                    android:background="@drawable/cate_toggle_toast"
                     android:clickable="true"
                     android:textOff=""
                     android:textOn="" />
@@ -407,7 +406,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="2"
-                    android:background="@drawable/cate_toggle_toast"
+                    android:background="@drawable/cate_toggle_skewer"
                     android:clickable="true"
                     android:textOff=""
                     android:textOn="" />
@@ -440,7 +439,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
-                    style="@style/YelloButtonTemplate"
+                    android:background="@drawable/store_create_box_border"
                     android:text="메뉴 추가"></Button>
             </LinearLayout>
 
@@ -449,10 +448,10 @@
                 android:id="@+id/menuInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_box_border"
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:visibility="visible"
-                style="@style/ItemBoxWithShadow"
                 android:weightSum="10">
 
                 <TextView
@@ -465,13 +464,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp">
 
                     <ImageView
                         android:id="@+id/menuImg"
                         android:layout_width="60dp"
-                        android:scaleType="centerCrop"
                         android:layout_height="60dp"
                         android:src="@drawable/item_menu_default">
 
@@ -483,17 +482,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:hint="메뉴 이름"
-                        android:textSize="15sp"
                         android:inputType="text" />
 
                     <!-- 메뉴 개수 입력창 -->
                     <EditText
-                        android:id="@+id/editText_menu_amount"
+                        android:id="@+id/editText_menu_count"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:hint="메뉴 개수"
-                        android:textSize="15sp"
                         android:inputType="number" />
 
                     <!-- 메뉴 가격 입력창 -->
@@ -503,30 +500,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:hint="메뉴 가격"
-                        android:textSize="15sp"
                         android:inputType="number" />
-
-                    <CheckBox
-                        android:id="@+id/isBestCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </CheckBox>
                 </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=" * 대표 메뉴로 등록할 경우 체크박스를 체크해주세요 * ">
-                </TextView>
 
                 <EditText
-                    android:id="@+id/menu_info"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:textColorHint="@color/color_brown"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/gray_square_round_border"
                     android:hint="메뉴에 대한 설명을 입력해주세요."
                     android:padding="5dp"
@@ -544,7 +526,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        style="@style/BrownButtonTemplate"
                         android:layout_weight="1"
                         android:text="사진 추가" />
                     <!-- 입력 완료 버튼 -->
@@ -553,7 +534,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        style="@style/YelloButtonTemplate"
+
                         android:text="입력 완료" />
 
                 </LinearLayout>
@@ -572,12 +553,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/store_tag_icon"
+                android:drawableLeft="@drawable/category_icon"
                 android:drawablePadding="10dp"
                 android:text="태그"
-                android:textSize="20sp">
-
-            </TextView>
+                android:textSize="20sp"></TextView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -592,7 +571,6 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                style="@style/ItemBoxWithShadow"
                 android:weightSum="3">
 
                 <EditText
@@ -603,11 +581,10 @@
 
                 <Button
                     android:id="@+id/tagAddBtn"
-
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
-                    style="@style/YelloButtonTemplate"
+                    android:background="@drawable/store_create_box_border"
                     android:text="태그 추가"></Button>
             </LinearLayout>
 
@@ -628,26 +605,20 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/cancelBtn"
-                    android:layout_width="0dp"
-                    style="@style/BrownButtonTemplate"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="취소하기"></Button>
-
-                <Button
                     android:id="@+id/submitBtn"
-                    android:layout_width="0dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/YelloButtonTemplate"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="가게 등록하기"></Button>
 
-
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="취소하기"></Button>
 
             </LinearLayout>
 

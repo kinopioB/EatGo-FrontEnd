@@ -40,7 +40,16 @@
             android:name=".presentation.store.StoreDetailActivity"
             android:theme="@style/ToolBar"
             android:exported="true">
+          
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
         </activity>
+
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
@@ -54,6 +63,13 @@
             android:name=".presentation.store.ManageActivity"
             android:exported="true"
             android:theme="@style/ToolBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".presentation.store.ReviewAdapter"
