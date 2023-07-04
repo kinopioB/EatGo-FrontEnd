@@ -50,6 +50,14 @@
     </style>
 
     <!-- 공통으로 사용 가능한 style -->
+    <style name="BigItemBoxWithShadow">
+        <item name="android:elevation">20dp</item>
+        <item name="android:background">@drawable/store_create_box_border</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+
     <style name="ItemBoxWithShadow">
         <item name="android:elevation">10dp</item>
         <item name="android:background">@drawable/store_create_box_border</item>

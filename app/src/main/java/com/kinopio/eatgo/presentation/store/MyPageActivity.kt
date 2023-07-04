@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -29,7 +30,7 @@ import kotlin.properties.Delegates
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var reviewAdapter: ReviewAdapter
-    private lateinit var reviewList: List<Review>
+    // private lateinit var reviewList: List<Review>
     private lateinit var storeMyPageResponseDto : StoreMyPageResponseDto
 
     private val barcodeLauncher = registerForActivityResult(
@@ -107,19 +108,23 @@ class MyPageActivity : AppCompatActivity() {
                     Log.d("store start retrofit", "통신 + ${response?.body()}")
                     // isOpen = response.body()!!.isOpen
                     // 리뷰 값 불러오기
-                    response.body()?.let{ storeMyPageResponseDto ->
-                        Log.d("store start retrofit", "리사이클러뷰 진입")
-
-                        reviewList = storeMyPageResponseDto.reviews
-
-                        Log.d("store start retrofit", "${reviewList}")
-                        reviewAdapter = ReviewAdapter(reviewList)
-
-                        binding.myStoreReview.apply {
-                            adapter = reviewAdapter
-                            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        }
+                    response.body()?.let {
+                        storeMyPageResponseDto = it
                     }
+                    reviewAdapter = ReviewAdapter(storeMyPageResponseDto.reviews)
+                    binding.myStoreReview.apply {
+                        adapter = reviewAdapter
+                        this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    }
+
+                    Glide.with(binding.root)
+                        .load(storeMyPageResponseDto.thumbNail)
+                        .into(binding.thumbnailId)
+                    binding.title.text = storeMyPageResponseDto.storeName
+                    binding.categoryName.text = storeMyPageResponseDto.categoryName
+                    binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
+                    binding.ratingStar.text = storeMyPageResponseDto.ratingAverage.toString()
+                    binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
                 }
             })
 

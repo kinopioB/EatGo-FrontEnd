@@ -194,6 +194,7 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent = Intent(this , MainActivity::class.java)
         return ToolbarUtils.handleOptionsItemSelected(
             this,
             item
