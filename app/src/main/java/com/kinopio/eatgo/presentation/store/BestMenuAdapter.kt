@@ -33,7 +33,7 @@ class BestMenuAdapter(private val menuList: List<Menu>?) :
 
         fun bind(menu: Menu) {
             binding.apply {
-                binding.menuName.text = menu.name
+                binding.menuName.text = menu.menuName
             }
         }
     }

@@ -149,8 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/myButton"
@@ -171,7 +170,8 @@
                     android:layout_height="40dp"
                     android:background="@color/white"
                     android:drawableLeft="@drawable/heart"
-                    android:text=" 공유하기 " />
+                    android:textSize="15sp"
+                    android:text="  찜하기 " />
             </LinearLayout>
 
 
@@ -180,6 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <Button

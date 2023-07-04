@@ -10,7 +10,7 @@ import com.kinopio.eatgo.domain.store.TodayOpenStoreResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.store.ui_model.Store
 
-class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDto>) :
+class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDto>, private val onStoreClickListener: OnStoreClickListener) :
     RecyclerView.Adapter<TodayOpenStoreAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodayOpenStoreAdapter.Holder {
@@ -30,6 +30,16 @@ class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDt
 
     inner class Holder(private val binding: ItemTodayOpenStoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val storeId = storeList[position].storeId
+                    onStoreClickListener.onStoreClick(storeId)
+                }
+            }
+        }
 
         fun bind(store: TodayOpenStoreResponseDto) {
             binding.apply {

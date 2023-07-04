@@ -20,8 +20,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+interface OnStoreClickListener {
+    fun onStoreClick(storeId: Int)
+}
 
-class PopularStoreActivity : AppCompatActivity() {
+class PopularStoreActivity : AppCompatActivity(),OnStoreClickListener  {
 
     private lateinit var binding: ActivityPopularStoreBinding
 
@@ -51,7 +54,7 @@ class PopularStoreActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<PopularStoreResponseDto>>, response: Response<List<PopularStoreResponseDto>>) {
                 response.body()?.let {
                     popularStoreList = it.toMutableList()
-                    popularStoreAdpater = PopularStoreAdapter(popularStoreList)
+                    popularStoreAdpater = PopularStoreAdapter(popularStoreList, this@PopularStoreActivity)
 
                     binding.popularRv.apply{
                         adapter= popularStoreAdpater
@@ -70,7 +73,7 @@ class PopularStoreActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<TodayOpenStoreResponseDto>>, response: Response<List<TodayOpenStoreResponseDto>>) {
                 response.body()?.let {
                     todayOpenStoreList = it.toMutableList()
-                    todayOpenStoreAdapter = TodayOpenStoreAdapter(todayOpenStoreList)
+                    todayOpenStoreAdapter = TodayOpenStoreAdapter(todayOpenStoreList, this@PopularStoreActivity)
 
                     binding.todayOpenRv.apply{
                         adapter= todayOpenStoreAdapter
@@ -81,5 +84,11 @@ class PopularStoreActivity : AppCompatActivity() {
         })
 
 
+    }
+    override fun onStoreClick(storeId: Int) {
+        // 다른 activity로 넘어가는 코드
+        val intent = Intent(this, StoreDetailActivity::class.java)
+        intent.putExtra("storeId", storeId)
+        startActivity(intent)
     }
 }
