@@ -12,6 +12,12 @@
     <string name="saturday">토</string>
     <string name="sunday">일</string>
 
+    <string name="NO_STORE_NAME_ERROR"> ⚠️ 가게 이름을 입력해주세요 ⚠️</string>
+    <string name="NO_STORE_ADDRESS_ERROR"> ⚠️ 가게 주소를 설정해주세요 ⚠️</string>
+    <string name="NO_STORE_IMAGE_ERROR"> ⚠️ 가게 사진을 넣어 주세요 ⚠️</string>
+    <string name="STORE_IMAGE_UPLOAD_ERROR"> ⚠️ 가게 사진 업로드 에러입니다. 다시 시도해주세요 ⚠️</string>
+    <string name="NO_STORE_CATEGORY_ERROR"> ⚠️ 카테고리를 설정해주세요 ⚠️</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation">NavigationActivity</string>

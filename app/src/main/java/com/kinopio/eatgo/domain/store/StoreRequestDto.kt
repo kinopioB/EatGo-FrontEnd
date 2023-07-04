@@ -4,6 +4,7 @@ data class StoreRequestDto(
 
     var storeName : String,
     var userId : Int,
+    var info : String ="",
     var address : String,
     var positionX : Double,
     var positionY : Double,
