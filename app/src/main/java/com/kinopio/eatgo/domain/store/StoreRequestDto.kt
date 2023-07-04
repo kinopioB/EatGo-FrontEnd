@@ -10,8 +10,8 @@ data class StoreRequestDto(
     var categoryId : Int,
     var thumbnail : String,
     var createdType : Int,
-    var menus : List<MenuRequestDto>,
-    var tags: List<TagRequestDto>?,
-    var openInfos : List<OpenInfoRequestDto>
+    var menus : List<MenuRequestDto> = mutableListOf(),
+    var tags: List<TagRequestDto> = mutableListOf(),
+    var openInfos : List<OpenInfoRequestDto>  = mutableListOf()
 
 )

@@ -12,8 +12,11 @@ import com.kinopio.eatgo.databinding.ItemPopularStoreBinding
 import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.store.ui_model.Store
+import kotlinx.coroutines.NonDisposableHandle.parent
 
-class PopularStoreAdapter(private val storeList: List<PopularStoreResponseDto>) :
+
+class PopularStoreAdapter(private val storeList: List<PopularStoreResponseDto>, private val onStoreClickListener: OnStoreClickListener) :
+
     RecyclerView.Adapter<PopularStoreAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularStoreAdapter.Holder {
@@ -33,6 +36,15 @@ class PopularStoreAdapter(private val storeList: List<PopularStoreResponseDto>) 
 
     inner class Holder(private val binding: ItemPopularStoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val storeId = storeList[position].storeId
+                    onStoreClickListener.onStoreClick(storeId)
+                }
+            }
+        }
 
         fun bind(popularStore: PopularStoreResponseDto) {
             binding.apply {

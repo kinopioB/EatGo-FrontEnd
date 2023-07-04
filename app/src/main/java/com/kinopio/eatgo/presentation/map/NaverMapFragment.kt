@@ -76,6 +76,7 @@ class NaverMapFragment : Fragment(), OnMapReadyCallback {
             }
 
         }
+
         return binding.root
     }
 

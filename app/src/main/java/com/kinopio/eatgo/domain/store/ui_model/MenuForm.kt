@@ -8,5 +8,6 @@ data class MenuForm(
     val amount: Int,
     val price : Int,
     val info : String,
-    val imageUri : Uri?
+    val imageUri : Uri?,
+    val isBest : Int
 ) : Serializable

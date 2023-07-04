@@ -1,9 +1,11 @@
 package com.kinopio.eatgo.presentation.store
 
 import android.content.Context
+import android.util.AttributeSet
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
+import android.text.Editable
 import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -21,6 +23,9 @@ import com.kinopio.eatgo.databinding.ActivityMainBinding
 import com.kinopio.eatgo.databinding.ActivityManageBinding
 import com.kinopio.eatgo.domain.map.StoreHistoryRequestDto
 import com.kinopio.eatgo.domain.map.StoreLocationDto
+import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
+import com.kinopio.eatgo.domain.store.StoreModificationResponseDto
+import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 import com.kinopio.eatgo.domain.templates.ApiResultDto
 import com.kinopio.eatgo.presentation.map.NaverMapFragment
 import com.kinopio.eatgo.presentation.map.StoreMangeNaverMapFragment
@@ -42,13 +47,13 @@ import retrofit2.Response
 import retrofit2.create
 
 
-
 class ManageActivity : AppCompatActivity(), OnMapTouchListener {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
     private val binding : ActivityManageBinding by lazy {
         ActivityManageBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,10 +73,50 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
             null
         )
 
+        // 예외 처리 해줘야 함
+        var storeId = intent.getIntExtra("storeId", 0)
+        if(storeId == 0){
+            Log.d("store intent", "storeId가 0입니다")
+        }
         var startStatus = findViewById<TextView>(R.id.startStatus)
         var endStatus = findViewById<TextView>(R.id.endStatus)
         startStatus.visibility = View.GONE
         endStatus.visibility = View.GONE
+
+
+        val retrofit = RetrofitClient.getRetrofit2()
+        val storeService = retrofit.create(StoreService::class.java)
+
+
+        storeService.getModificationStore(storeId)
+            .enqueue(object : Callback<StoreModificationResponseDto> {
+                override fun onFailure(call: Call<StoreModificationResponseDto>, t: Throwable) {
+                    Log.d("fail", "실패")
+                    Log.d("fail", "$t")
+                }
+                override fun onResponse(
+                    call: Call<StoreModificationResponseDto>,
+                    response: Response<StoreModificationResponseDto>
+                ) {
+                    if (response.isSuccessful.not()) {
+                        Log.d("retrofit", "retrofit4")
+                        return
+                    }
+                    Log.d("retrofit", "통신 + ${response?.body()}")
+                    var storeMyPageResponseDto = response?.body()
+                    var days : List<OpenInfo>
+                    binding.storeEdittext.text = Editable.Factory.getInstance().newEditable(storeMyPageResponseDto?.storeName)
+                    if(storeMyPageResponseDto?.createdType == 1){
+                        binding.foodTruck.isChecked = true
+                    } else{
+                        binding.snackCart.isChecked = true
+                    }
+                    // storeMyPageResponseDto?.openInfos?.get(1)?.day
+
+                }
+            })
+
+
 
 
         binding.startBtn.setOnClickListener {
@@ -117,6 +162,8 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
 
         }
 
+        
+        
         binding.closeBtn.setOnClickListener {
             Log.d("store close retrofit", "store retrofit1")
 
@@ -124,8 +171,6 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
             val storeService = retrofit.create(StoreService::class.java)
 
             Log.d("store close retrofit", "store retrofit2")
-
-            var storeId = 1
             storeService.changeStoreStatusClose(storeId)
                 .enqueue(object : Callback<ApiResultDto> {
                     override fun onFailure(call: Call<ApiResultDto>, t: Throwable) {
