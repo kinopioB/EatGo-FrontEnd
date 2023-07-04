@@ -1,6 +1,7 @@
 package com.kinopio.eatgo.presentation.map
 
 import android.location.Geocoder
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -58,11 +59,21 @@ class NaverMapFragment : Fragment(), OnMapReadyCallback {
         locationSource =
             FusedLocationSource(this, NaverMapFragment.LOCATION_PERMISSION_REQUEST_CODE)
 
+        binding.customCurLocationBtn.setOnClickListener {
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+
         binding.selectPostiton.setOnClickListener {
             requireActivity().findViewById<TextView>(R.id.resultAddress).text = binding.selectKoreaAddress.text
             requireActivity().findViewById<FrameLayout>(R.id.createMapContainer).visibility = View.GONE
             requireActivity().findViewById<LinearLayout>(R.id.createStoreContainer).visibility = View.VISIBLE
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+
+            Geocoder(requireContext().applicationContext, Locale.KOREA).getFromLocationName(binding.selectKoreaAddress.text.toString(), 1)?.let {
+                Location("").apply {
+                    Log.d("geo", "${it[0].latitude}, ${it[0].longitude}")
+                }
+            }
 
         }
         return binding.root
@@ -131,6 +142,7 @@ class NaverMapFragment : Fragment(), OnMapReadyCallback {
     private fun getAddress(latitude: Double, longitude: Double) {
 //        Log.d("aaa", "this")
         // Geocoder 선언
+
         val geocoder = Geocoder(requireContext().applicationContext, Locale.KOREAN)
 
         // 안드로이드 API 레벨이 33 이상인 경우
