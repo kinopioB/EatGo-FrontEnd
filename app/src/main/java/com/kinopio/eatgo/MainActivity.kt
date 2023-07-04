@@ -12,9 +12,7 @@ import androidx.annotation.UiThread
 import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.ActivityMainBinding
 import com.kinopio.eatgo.domain.map.StoreLocationDto
-import com.kinopio.eatgo.domain.map.StoreLocationListDto
-import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
-import com.kinopio.eatgo.presentation.map.NaverMapActivity
+import com.kinopio.eatgo.presentation.qr.CustomQRScannerActivity
 import com.kinopio.eatgo.presentation.qr.ScanQRActivity
 import com.kinopio.eatgo.presentation.store.SummaryInfomationFragment
 import com.kinopio.eatgo.presentation.templates.NavigationFragment
@@ -29,10 +27,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import com.naver.maps.map.widget.LocationButtonView
-import java.util.Locale
+
 
 
 class MainActivity : AppCompatActivity() , OnMapReadyCallback {
@@ -51,11 +46,11 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        /*binding.btnCustomScan.setOnClickListener {
-            Log.d("qr", "커스텀 스캔 클릭")
+        binding.btnCustomScanMain.setOnClickListener {
+            Log.d("qr", "커스텀 스캔 클릭1")
             val intent = Intent( this, ScanQRActivity::class.java )
             startActivity(intent)
-        }*/
+        }
 
 
 

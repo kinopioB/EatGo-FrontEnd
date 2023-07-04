@@ -28,15 +28,7 @@ class ScanQRActivity : AppCompatActivity() {
         if (result.contents == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
         }
-        else { // 내용이 있다면
-            // 1. Toast 메시지 출력.
-            // 주석처리
-           /* Toast.makeText(
-                this,
-                "Scanned: " + result.contents,
-                Toast.LENGTH_LONG
-            ).show()*/
-
+        else {
             Log.d("review", result.formatName)
 
             var storeId = result.contents
@@ -49,7 +41,6 @@ class ScanQRActivity : AppCompatActivity() {
             intent.putExtra("fragmentToOpen", ReviewFragment::class.java.name)
             startActivity(intent)
             Log.d("review", "프레그먼트 실행 후")
-            //txtResult.text = result.contents.toString()
         }
     }
 
@@ -63,6 +54,8 @@ class ScanQRActivity : AppCompatActivity() {
     // Custom SCAN - onClick
     private fun onCustomScanButtonClicked() {
         // Custom Scan Layout -> Activity
+
+        Log.d("qr", "커스텀 스캔 클릭3")
 
         // val intent = Intent( this, CustomBarcodeScannerActivity::class.java)
         // startActivity(intent)
@@ -79,19 +72,14 @@ class ScanQRActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("qr", "커스텀 스캔 클릭2")
+
+        onCustomScanButtonClicked()
+
         super.onCreate(savedInstanceState)
-        val binding = ActivityScanQrBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+       /* val binding = ActivityScanQrBinding.inflate(layoutInflater)
+        setContentView(binding.root)*/
 
-        Log.d("scan toolbar", "toolbar1")
-        ToolbarUtils.setupToolbar(this, binding.root.findViewById<Toolbar>(R.id.toolbar),"제목", null)
-        Log.d("scan toolbar", "toolbar2")
-
-        // Custom Scan 버튼 클릭
-        binding.btnCustomScan.setOnClickListener {
-            Log.d("qr", "커스텀 스캔 클릭")
-            onCustomScanButtonClicked()
-        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return ToolbarUtils.handleOptionsItemSelected(this, item) // 분리된 클래스의 handleOptionsItemSelected 함수 호출

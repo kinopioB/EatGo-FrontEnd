@@ -111,8 +111,19 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                     } else{
                         binding.snackCart.isChecked = true
                     }
-                    // storeMyPageResponseDto?.openInfos?.get(1)?.day
 
+
+                    for (i in 0 .. storeMyPageResponseDto?.openInfos?.size!! - 1) {
+                        when(storeMyPageResponseDto.openInfos[i].day) {
+                            "월" -> binding.tbMon.isChecked = true
+                            "화" -> binding.tbTue.isChecked = true
+                            "수" -> binding.tbWed.isChecked = true
+                            "목" -> binding.tbThu.isChecked = true
+                            "금" -> binding.tbFri.isChecked = true
+                            "토" -> binding.tbSat.isChecked = true
+                            "일" -> binding.tbSun.isChecked = true
+                        }
+                    }
                 }
             })
 
