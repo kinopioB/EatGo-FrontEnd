@@ -7,5 +7,5 @@ data class ReviewResponseDto (
     val storeId:Int,
     val userName : String,
     val content:String,
-    val rating:Int
+    val rating:Int,
 )

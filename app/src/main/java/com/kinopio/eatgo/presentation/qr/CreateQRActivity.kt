@@ -25,13 +25,16 @@ class CreateQRActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Log.d("toolbar", "toolbar1")
-        ToolbarUtils.setupToolbar(this, binding.root.findViewById<Toolbar>(R.id.toolbar),"제목", null)
+        ToolbarUtils.setupToolbar(this, binding.root.findViewById<Toolbar>(R.id.toolbar),"QR스캔", null)
 
         // 유저 아이디, 스토어 아이디 가져오기
+
+        var storeId = intent.getIntExtra("storeId", 0)
+
         try {
             val barcodeEncoder = BarcodeEncoder()
             val bitmap = barcodeEncoder.encodeBitmap(
-                "https://www.naver.com/",
+                storeId.toString(),
                 BarcodeFormat.QR_CODE,
                 400,
                 400
@@ -42,7 +45,6 @@ class CreateQRActivity : AppCompatActivity() {
         }
 
         Log.d("toolbar", "toolbar2")
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

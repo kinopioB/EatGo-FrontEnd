@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -12,6 +14,7 @@ import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityStoreDetailBinding
 import com.kinopio.eatgo.domain.map.ReviewResponseDto
+
 import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.ReviewDto
 import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
@@ -32,7 +35,20 @@ class StoreDetailActivity : AppCompatActivity() {
 
         val receivedIntent = intent // 현재 Activity의 Intent 가져오기
         val storeId = receivedIntent.getIntExtra("storeId",-1)
-        Log.d("StoreDetail" , "넘어온 storeID 값 ${storeId}")
+       // 카테고리 아이디 넘겨줘야 함
+        ToolbarUtils.setupToolbar(
+            this,
+            binding.root.findViewById<Toolbar>(R.id.toolbar),
+            "카테고리",
+            null
+        )
+
+        // 탭 설정
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val selectedData = tab?.tag
+                val selectedPosition = tab?.position
+            }
 
         if (storeId != -1) {
             val retrofit = RetrofitClient.getRetrofit2()
@@ -120,5 +136,12 @@ class StoreDetailActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return ToolbarUtils.handleOptionsItemSelected(
+            this,
+            item
+        ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
     }
 }

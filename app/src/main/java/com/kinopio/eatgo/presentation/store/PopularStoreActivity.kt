@@ -3,10 +3,13 @@ package com.kinopio.eatgo.presentation.store
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.MainActivity
+import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.map.LoginService
@@ -40,6 +43,13 @@ class PopularStoreActivity : AppCompatActivity(),OnStoreClickListener  {
 //        setContentView(R.layout.activity_popular_store)
         binding = ActivityPopularStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ToolbarUtils.setupToolbar(
+            this,
+            binding.root.findViewById<Toolbar>(R.id.toolbar),
+            "인기 푸드 트럭",
+            null
+        )
 
         // retrofit 연결
         val retrofit = RetrofitClient.getRetrofit2()
@@ -82,8 +92,13 @@ class PopularStoreActivity : AppCompatActivity(),OnStoreClickListener  {
                 }
             }
         })
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return ToolbarUtils.handleOptionsItemSelected(
+            this,
+            item
+        )
     }
     override fun onStoreClick(storeId: Int) {
         // 다른 activity로 넘어가는 코드

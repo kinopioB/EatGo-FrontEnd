@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".presentation.qr.CreateQRActivity">
-   <include layout="@layout/toolbar"/>
-    <ImageView
-        android:id="@+id/imageViewQrCode"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal" />
+        android:background="@drawable/qr_background"
+        >
+        <ImageView
+            android:id="@+id/imageViewQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30dp" />
+    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="QR을 찍고 리뷰를 등록해보세요!"
+        android:textColor="#8b7535"
+        android:textSize="30dp"></TextView>
 
-</LinearLayout>
+    <include layout="@layout/toolbar_qr" />
+</FrameLayout>
