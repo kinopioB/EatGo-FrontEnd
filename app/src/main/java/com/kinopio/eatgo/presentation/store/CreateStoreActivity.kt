@@ -3,11 +3,13 @@ package com.kinopio.eatgo.presentation.store
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -544,7 +546,28 @@ class CreateStoreActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
             )
+            val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            val cancelButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+            val parentView = positiveButton.parent as ViewGroup
+
+            // LinearLayout으로 버튼들을 감싸고 중앙 정렬
+            val buttonContainer = LinearLayout(this)
+            buttonContainer.orientation = LinearLayout.HORIZONTAL
+
+
+            // 버튼들을 LinearLayout에 추가
+            parentView.removeView(positiveButton)
+            parentView.removeView(cancelButton)
+            positiveButton.gravity = Gravity.CENTER
+            cancelButton.gravity = Gravity.CENTER
+            buttonContainer.addView(cancelButton)
+            buttonContainer.addView(positiveButton)
+
+            // LinearLayout을 다이얼로그에 추가
+            parentView.addView(buttonContainer)
+
         }
+
         dialog.show()
     }
 

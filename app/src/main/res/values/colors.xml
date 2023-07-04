@@ -19,9 +19,10 @@
     <color name="color_FF5C43">#FF5C43</color>
     <color name="color_33FF5C43">#33FF5C43</color>
 
-    <color name="color_yellow">#ffc93c</color>
+
     <color name="color_red">#ff0000</color>
     <color name="color_dark_gray">#333131</color>
-    <color name="main_background">#E3FAFAFA</color>
+    <color name="main_background"></color>
+    <color name="color_yellow">#ffc93c</color>
     <color name="color_brown">#5C4706</color>
 </resources>

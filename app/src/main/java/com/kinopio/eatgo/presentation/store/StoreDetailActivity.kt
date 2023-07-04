@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
@@ -134,9 +135,12 @@ class StoreDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return ToolbarUtils.handleOptionsItemSelected(
-            this,
-            item
-        ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
+        if (item.itemId == android.R.id.home) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
+
 }
