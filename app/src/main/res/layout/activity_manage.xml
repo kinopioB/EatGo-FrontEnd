@@ -248,12 +248,14 @@
 <!--                    android:layout_height="match_parent">-->
 <!--                </com.kinopio.eatgo.util.TouchableWrapper>-->
 
-                <EditText
-                    style="@style/ItemBoxWithShadow"
-                    android:layout_width="300dp"
+                <TextView
+                    android:id="@+id/manageAddress"
+                    android:layout_width="350dp"
+                	style="@style/ItemBoxWithShadow"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:gravity="center"
                     android:background="@drawable/box_border" />
             </LinearLayout>
         </LinearLayout>

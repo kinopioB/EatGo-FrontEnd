@@ -59,12 +59,6 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
 
         setContentView(binding.root)
 
-        val fm = supportFragmentManager
-        val transaction = fm.beginTransaction()
-        var mapFragment : StoreMangeNaverMapFragment = StoreMangeNaverMapFragment()
-        transaction.add(R.id.manageMap, mapFragment)
-        transaction.commit()
-
 
         ToolbarUtils.setupToolbar(
             this,
@@ -91,8 +85,8 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
         storeService.getModificationStore(storeId)
             .enqueue(object : Callback<StoreModificationResponseDto> {
                 override fun onFailure(call: Call<StoreModificationResponseDto>, t: Throwable) {
-                    Log.d("fail", "실패")
-                    Log.d("fail", "$t")
+                    Log.d("fail123", "실패")
+                    Log.d("fail123", "$t")
                 }
                 override fun onResponse(
                     call: Call<StoreModificationResponseDto>,
@@ -111,6 +105,22 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                     } else{
                         binding.snackCart.isChecked = true
                     }
+
+                    val fm = supportFragmentManager
+                    val transaction = fm.beginTransaction()
+
+                    val bundle = Bundle()
+
+                    var mapFragment : StoreMangeNaverMapFragment = StoreMangeNaverMapFragment()
+
+//
+                    bundle.putDouble("positionX", storeMyPageResponseDto!!.positionX)
+                    bundle.putDouble("positionY", storeMyPageResponseDto!!.positionY)
+                    binding.manageAddress.text = storeMyPageResponseDto.address.toString()
+                    mapFragment.arguments = bundle
+
+                    transaction.add(R.id.manageMap, mapFragment)
+                    transaction.commit()
                     // storeMyPageResponseDto?.openInfos?.get(1)?.day
 
                 }

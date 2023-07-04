@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/MainSummaryframeLayout"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginStart="30dp"
