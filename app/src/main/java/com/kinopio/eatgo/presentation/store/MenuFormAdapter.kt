@@ -32,6 +32,7 @@ class MenuFormAdapter(private val menuList: List<MenuForm>) :
                 menuNameTv.text = menu.name
                 menuCountTv.text = menu.amount.toString()
                 menuPriceTv.text = menu.price.toString()
+                menuFormInfo.text = menu.info
                 menuImg.setImageURI(menu.imageUri)
             }
         }
