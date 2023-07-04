@@ -26,4 +26,15 @@
     <style name="AppTheme.Actionbar" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:tint">@color/color_yellow</item>
     </style>
+
+    <style name="QrToolBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="toolbarNavigationButtonStyle">@style/AppTheme.QrActionBar</item>
+    </style>
+    <style name="AppTheme.QrActionBar" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:tint">@color/white</item>
+    </style>
 </resources>
