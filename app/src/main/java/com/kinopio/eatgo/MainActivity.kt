@@ -1,5 +1,6 @@
 package com.kinopio.eatgo
 
+import android.content.Intent
 import android.os.Build.VERSION_CODES.O
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.kinopio.eatgo.domain.map.StoreLocationDto
 import com.kinopio.eatgo.domain.map.StoreLocationListDto
 import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
 import com.kinopio.eatgo.presentation.map.NaverMapActivity
+import com.kinopio.eatgo.presentation.qr.ScanQRActivity
 import com.kinopio.eatgo.presentation.store.SummaryInfomationFragment
 import com.kinopio.eatgo.presentation.templates.NavigationFragment
 import com.naver.maps.geometry.LatLng
@@ -48,6 +50,14 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        /*binding.btnCustomScan.setOnClickListener {
+            Log.d("qr", "커스텀 스캔 클릭")
+            val intent = Intent( this, ScanQRActivity::class.java )
+            startActivity(intent)
+        }*/
+
+
 
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()

@@ -66,7 +66,6 @@ class ScanQRActivity : AppCompatActivity() {
 
         // val intent = Intent( this, CustomBarcodeScannerActivity::class.java)
         // startActivity(intent)
-
         // ScanOptions + captureActivity(CustomScannerActivity)
         val options = ScanOptions()
         options.setOrientationLocked(false)
