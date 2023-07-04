@@ -13,7 +13,7 @@ interface ReviewService {
 
 
     @POST("api/v1/stores/{storeId}/reviews")
-    fun createReviews(@Path("storeId") storeId: Int, @Body reviewRequestDto: ReviewResponseDto
+    fun createReviews(@Path("storeId") storeId: Int, @Body reviewRequestDto: ReviewRequestDto
     ) : Call<ReviewResponseDto>
 
 

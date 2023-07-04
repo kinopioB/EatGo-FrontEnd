@@ -43,12 +43,7 @@ class StoreDetailActivity : AppCompatActivity() {
             null
         )
 
-        // 탭 설정
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val selectedData = tab?.tag
-                val selectedPosition = tab?.position
-            }
+
 
         if (storeId != -1) {
             val retrofit = RetrofitClient.getRetrofit2()
