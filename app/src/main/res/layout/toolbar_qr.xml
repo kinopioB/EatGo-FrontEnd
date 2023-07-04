@@ -8,22 +8,20 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/ToolBar"
         app:elevation="8dp">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:background="?attr/colorPrimary"
-            app:theme="@style/ToolBar"
-            android:layout_marginBottom="10dp"
-            style="@style/ToolBarTemplate">
+            app:theme="@style/QrToolBar">
             <TextView
                 android:id="@+id/title"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/toolBar_title"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_gravity="center" />
             <ImageView
                 android:id="@+id/image"

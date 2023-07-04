@@ -16,6 +16,4 @@ class StoreInfoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_store_info, container, false)
     }
 
-
-
 }

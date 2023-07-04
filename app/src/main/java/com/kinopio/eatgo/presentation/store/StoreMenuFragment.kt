@@ -32,8 +32,12 @@ class StoreMenuFragment : Fragment() {
         // 데이터 전달 받기
         val menuList = arguments?.getSerializable(ARG_MENU_LIST) as? List<Menu>
         if (menuList != null) {
+            for (menu in menuList) {
+                if (menu.isBest == 1) {
+                    bestMenuList.add(menu)
+                }
+            }
             this.menuList.addAll(menuList)
-            this.bestMenuList.addAll(menuList)
             // menuList 데이터 활용
         }
 

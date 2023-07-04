@@ -1,5 +1,6 @@
 package com.kinopio.eatgo.presentation.store
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.map.ReviewService
 import com.kinopio.eatgo.databinding.FragmentReviewBinding
+import com.kinopio.eatgo.domain.map.ReviewRequestDto
 import com.kinopio.eatgo.domain.map.ReviewResponseDto
 import com.kinopio.eatgo.domain.map.StoreLocationListDto
 import retrofit2.Call
@@ -64,42 +66,47 @@ class ReviewFragment : DialogFragment() {
             val storeId: Int = 1
             val userId: Int = 2
 
-            Log.d("retrofit",  "retrofit1")
+            Log.d("reviewFragment",  "retrofit1")
 
             val retrofit = RetrofitClient.getRetrofit2()
             val reviewService = retrofit.create(ReviewService::class.java)
 
-            Log.d("retrofit",  "retrofit2")
+            Log.d("reviewFragment",  "retrofit2")
 
-            var reviewRequestDto : ReviewResponseDto = ReviewResponseDto(
+            var reviewRequestDto : ReviewRequestDto = ReviewRequestDto(
                 userId = userId,
                 storeId = storeId,
                 content = inputText,
                 rating = ratingStar.toInt()
             )
-            Log.d("retrofit", reviewService.toString())
+            Log.d("reviewFragment : reviewRequestDto", "${reviewRequestDto}")
 
+
+            reviewService.createReviews(storeId, reviewRequestDto).enqueue(object : Callback<ReviewResponseDto> {
+                override fun onFailure(call: Call<ReviewResponseDto>, t: Throwable) {
+                    Log.d("fail", "실패")
+                    Log.d("fail", "$t")
+                }
+                override fun onResponse(
+                    call: Call<ReviewResponseDto>,
+                    response: Response<ReviewResponseDto>
+                ) {
+                    Log.d("reviewFragment",  "retrofit3")
+
+                    if (response.isSuccessful.not()) {
+                        Log.d("reviewFragment",  "retrofit4")
+                        return
+                    }
+                    Log.d("reviewFragment",  "통신 + ${response?.body()}")
+                    // 1. 리뷰 데이터 DB에 넣어주기
+                    // 2. activity에 그려주기 - mypage에 넘어가는 걸
+                    val intent = Intent(context, MyPageActivity::class.java)
+                    intent.putExtra("storeId", storeId)
+                    startActivity(intent)
+                    Log.d("reviewFragment", "리뷰 등록 완료")
+                }
+            })
             // URL
-            reviewService.createReviews(storeId, userId, reviewRequestDto).enqueue(object : Callback<ReviewResponseDto> {
-                    override fun onFailure(call: Call<ReviewResponseDto>, t: Throwable) {
-                        Log.d("fail", "실패")
-                        Log.d("fail", "$t")
-                    }
-                    override fun onResponse(
-                        call: Call<ReviewResponseDto>,
-                        response: Response<ReviewResponseDto>
-                    ) {
-                        Log.d("retrofit",  "retrofit3")
-
-                        if (response.isSuccessful.not()) {
-                            Log.d("retrofit",  "retrofit4")
-                            return
-                        }
-                        Log.d("retrofit",  "통신 + ${response?.body()}")
-                        // 1. 리뷰 데이터 DB에 넣어주기
-                        // 2. activity에 그려주기
-                    }
-                })
         }
     }
 }

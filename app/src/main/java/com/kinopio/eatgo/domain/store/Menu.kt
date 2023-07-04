@@ -4,9 +4,10 @@ import android.net.Uri
 import java.io.Serializable
 
 data class Menu(
-    val name: String,
+    val menuName: String,
     val amount: Int,
     val price : Int,
     val info : String,
-    val thumbnail : String
+    val thumbnail : String,
+    val isBest : Int
 ) : Serializable

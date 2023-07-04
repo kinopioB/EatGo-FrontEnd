@@ -5,6 +5,9 @@
     android:orientation="vertical"
     android:layout_marginBottom="5dp"
     android:padding="10dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/mypage_review_border"
+    android:elevation="5dp"
     android:weightSum="10">
 
     <RatingBar
@@ -16,24 +19,27 @@
         android:max="5"
         android:numStars="5"
         android:progressTint="#fad482"
-        android:rating="0"
         android:stepSize="1" />
+
     <TextView
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="키노피오 ">
-
+        android:text="키노피오가 좋아 ">
     </TextView>
 
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="리뷰 내용은 다음과.">
+        android:text="리뷰 내용은 다음과 같습니다.">
     </TextView>
 
-
-
+    <TextView
+        android:id="@+id/createdAt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="생성">
+    </TextView>
 
 </LinearLayout>
