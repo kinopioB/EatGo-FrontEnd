@@ -82,4 +82,9 @@
         <item name="android:elevation">10dp</item>
     </style>
 
+    <style name="NavigationTemplate">
+        <item name="android:background">@drawable/nav_background</item>
+        <item name="android:elevation">20dp</item>
+    </style>
+
 </resources>

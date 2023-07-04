@@ -25,4 +25,6 @@
     <color name="main_background"></color>
     <color name="color_yellow">#ffc93c</color>
     <color name="color_brown">#5C4706</color>
+
+    <color name="transparent">#00ff0000</color>
 </resources>

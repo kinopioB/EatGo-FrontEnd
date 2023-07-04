@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.kinopio.eatgo.databinding.ItemOpenInfoBinding
 import com.kinopio.eatgo.databinding.ItemPopularStoreBinding
 import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
@@ -50,6 +51,12 @@ class PopularStoreAdapter(private val storeList: List<PopularStoreResponseDto>, 
             binding.apply {
                 binding.popularStoreName.text = popularStore.storeName
                 binding.popularStoreCate.text = popularStore.categoryName
+                var grade = position.toInt()+1
+                binding.grade.text = grade.toString()+"등"
+
+                Glide.with(itemView)
+                    .load(popularStore.thumbnail)
+                    .into(popularStoreImg)
 //
             }
         }
