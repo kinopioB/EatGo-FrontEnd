@@ -7,7 +7,6 @@ import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -25,7 +24,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -343,7 +341,7 @@ class CreateStoreActivity : AppCompatActivity() {
 
         if (selectedStoreImgUri != Uri.EMPTY) {
 
-            val loadingAnimDialog = LoadingDialog(this)
+            val loadingAnimDialog = LoadingDialog(this, getString(R.string.CREATE_STORE_LOADING_MESSAGE))
             loadingAnimDialog.show()
             Handler().postDelayed({
                 loadingAnimDialog.dismiss()
@@ -504,7 +502,7 @@ class CreateStoreActivity : AppCompatActivity() {
                         Log.d("Created", "${response.body()}")
                         val intent = Intent(this@CreateStoreActivity, StoreDetailActivity::class.java)
                         intent.putExtra("storeId", response.body()!!.storeId)
-                        LoadingDialog(this@CreateStoreActivity).hide()
+                        LoadingDialog(this@CreateStoreActivity, getString(R.string.CREATE_STORE_LOADING_MESSAGE) ).hide()
                         startActivity(intent)
                     }
                 }
