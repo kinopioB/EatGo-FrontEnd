@@ -2,9 +2,11 @@ package com.kinopio.eatgo.data.store
 
 import com.kinopio.eatgo.domain.map.LoginResponseDto
 import com.kinopio.eatgo.domain.map.StoreHistoryRequestDto
+import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.domain.templates.ApiResultDto
 import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
 import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
+import com.kinopio.eatgo.domain.store.StoreModificationResponseDto
 import com.kinopio.eatgo.domain.store.StoreRequestDto
 import com.kinopio.eatgo.domain.store.TodayOpenStoreResponseDto
 import retrofit2.Call
@@ -31,4 +33,10 @@ interface StoreService {
 
     @POST("api/v1/stores")
     fun createStore(@Body storeRequestDto: StoreRequestDto) : Call<StoreDetailResponseDto>
+
+    @GET("api/v1/stores/mypage/modification/{storeId}")
+    fun getModificationStore(@Path("storeId") storeId: Int) : Call<StoreModificationResponseDto>
+
+    @GET("api/v1/stores/mypage/{storeId}")
+    fun getReviews(@Path("storeId") storeId: Int) : Call<StoreMyPageResponseDto>
 }

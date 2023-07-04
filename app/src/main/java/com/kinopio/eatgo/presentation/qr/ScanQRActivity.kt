@@ -29,22 +29,20 @@ class ScanQRActivity : AppCompatActivity() {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
         }
         else { // 내용이 있다면
-
             // 1. Toast 메시지 출력.
             // 주석처리
-            Toast.makeText(
+           /* Toast.makeText(
                 this,
                 "Scanned: " + result.contents,
                 Toast.LENGTH_LONG
-            ).show()
+            ).show()*/
 
             Log.d("review", result.formatName)
 
-            result.contents
-            var userId : Int = 0
-            var storeId : Int = 0
-
+            var storeId = result.contents
+            var userId = 2
             Log.d("review", "프레그먼트 실행 전")
+            // Mypage 로 넘겨주기
             val intent = Intent(this, StoreDetailActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("storeId", storeId)
