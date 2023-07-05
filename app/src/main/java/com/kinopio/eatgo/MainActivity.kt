@@ -123,6 +123,27 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             User.setPositionX(37.5837)
             User.setPositionY(127.0000)
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
+                grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+      fun handleClick(buttonNumber: Int) {
+        Log.d("Clicked", "${buttonNumber}")
+    }
+
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        val retrofit = RetrofitClient.getRetrofit()
 
         binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -149,6 +170,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                             }
                             response.body()?.let{
                                 markerList = it
+                                Log.d("mmm", "${it}")
 
                                 for (i in 0 .. markerList.size - 1) {
 
@@ -200,27 +222,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 return false
             }
         })
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
-                grantResults)) {
-            if (!locationSource.isActivated) { // 권한 거부됨
-                naverMap.locationTrackingMode = LocationTrackingMode.None
-            }
-            return
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-      fun handleClick(buttonNumber: Int) {
-        Log.d("Clicked", "${buttonNumber}")
-    }
-
-    @UiThread
-    override fun onMapReady(naverMap: NaverMap) {
-        val retrofit = RetrofitClient.getRetrofit()
 
         storeLocationService?.getStores()?.enqueue(object : Callback<List<StoreLocationDto>> {
             override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {

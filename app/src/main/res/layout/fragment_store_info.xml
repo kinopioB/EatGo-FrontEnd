@@ -63,8 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 style="@style/ItemBoxWithShadow"
-                android:padding="10dp"
-                android:background="@color/color_brown">
+                android:padding="10dp">
             </FrameLayout>
 
         </LinearLayout>
