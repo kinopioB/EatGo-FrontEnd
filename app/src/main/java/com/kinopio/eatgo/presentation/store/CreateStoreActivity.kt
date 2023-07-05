@@ -461,6 +461,7 @@ class CreateStoreActivity : AppCompatActivity() {
         var userId = 1
         var address = binding.resultAddress.text.toString().trim()
         getPosition(address)
+        var info  = binding.storeInfoEdittext.text.toString().trim()
         var positionX = selectedPositionX
         var positionY = selectedPositionY
         var categoryId = selectedButtonNumber
@@ -468,12 +469,15 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
 
+        // 가게 이름, 가게 상세, 가게 위치 ( 주소, 좌표) ,장사 요일, 분류, 가게 사진,
+        // 상세 메뉴, 태그 , 영업일 정보 넘어감.
         storeRequestDto = StoreRequestDto(
             storeName = storeName,
             userId = userId,
             address = address,
             positionX = positionX,
             positionY = positionY,
+            info= info,
             categoryId = categoryId,
             thumbnail = storeImgUrl,
             createdType = createdType,
