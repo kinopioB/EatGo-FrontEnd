@@ -18,6 +18,7 @@ import com.kinopio.eatgo.databinding.ActivityStoreDetailBinding
 import com.kinopio.eatgo.domain.store.Menu
 import com.kinopio.eatgo.domain.store.ReviewDto
 import com.kinopio.eatgo.domain.store.StoreDetailResponseDto
+import com.kinopio.eatgo.domain.store.StoreHistory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +28,8 @@ class StoreDetailActivity : AppCompatActivity() {
 
     private var menuList :List<Menu> = mutableListOf()
     private var reviewList : List<ReviewDto> = mutableListOf()
+    private var historyList : List<StoreHistory> = mutableListOf()
+    private var info : String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,13 @@ class StoreDetailActivity : AppCompatActivity() {
                             Log.d("StoreId", "Store Created Success")
                             Log.d("StoreId", "${response.body()}")
                             var data = response.body()!!
+
+                            // 가게 이름 세팅
+                            binding.storeName.text = data.storeName
+
+                            // 가게 리뷰 평점 세팅
+                            binding.reviewAverage.text = data.ratingAverage.toString()
+
                             if(data.menus.size !=0){
                                 menuList = data.menus
                                 Log.d("StoreDetail", "메뉴 사이즈 ${data.menus.size}")
@@ -79,7 +89,10 @@ class StoreDetailActivity : AppCompatActivity() {
                             if(data.reviews.size!=0){
                                 reviewList = data.reviews
                             }
-                            binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList)
+                            info = data.info
+                            Log.d("info", "${info}")
+                            historyList = data.storeHistories
+                            binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList, info, historyList)
                            // loadingAnimDialog.hide()
                         }
                     }
@@ -104,8 +117,7 @@ class StoreDetailActivity : AppCompatActivity() {
 //            }
 //        })
 
-
-        binding.pager.adapter = StoreDetailTabAdapter(this, menuList, reviewList)
+        binding.pager.adapter = StoreDetailTabAdapter(this, menuList, reviewList, info, historyList)
 
         /* 탭과 뷰페이저를 연결, 여기서 새로운 탭을 다시 만드므로 레이아웃에서 꾸미지말고 여기서 꾸며야함
         * 여기서 데이터 세팅 */
