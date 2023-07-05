@@ -15,7 +15,7 @@
     </style>
 
     <!-- Actionbar 없는 FullScreen -->
-    <style name="ToolBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ToolBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
