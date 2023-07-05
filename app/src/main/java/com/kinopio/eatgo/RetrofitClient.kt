@@ -6,10 +6,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     private var retrofit: Retrofit? = null
 
-//    private val url = "http://10.0.2.2:8080/eatgo/"
-//     private val url = "http://192.168.0.120:8080/eatgo/" // 핸드폰 URL
      private val url = "http://10.0.2.2:8080/eatgo/"
-//     private val url = "http://192.168.0.122:8080/eatgo/" // 핸드폰 URL
+//   private val url = "http://192.168.0.122:8080/eatgo/" // 핸드폰 URL
+
 
   
     fun getRetrofit(): Retrofit? {

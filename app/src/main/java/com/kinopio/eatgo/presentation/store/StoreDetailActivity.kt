@@ -92,7 +92,8 @@ class StoreDetailActivity : AppCompatActivity() {
                             info = data.info
                             Log.d("info", "${info}")
                             historyList = data.storeHistories
-                            binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList, info, historyList)
+                            var categoryId =data.categoryId
+                            binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList, categoryId, info, historyList)
                            // loadingAnimDialog.hide()
                         }
                     }
@@ -117,7 +118,7 @@ class StoreDetailActivity : AppCompatActivity() {
 //            }
 //        })
 
-        binding.pager.adapter = StoreDetailTabAdapter(this, menuList, reviewList, info, historyList)
+        binding.pager.adapter = StoreDetailTabAdapter(this, menuList, reviewList, 0, info, historyList)
 
         /* 탭과 뷰페이저를 연결, 여기서 새로운 탭을 다시 만드므로 레이아웃에서 꾸미지말고 여기서 꾸며야함
         * 여기서 데이터 세팅 */
