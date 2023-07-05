@@ -8,6 +8,8 @@ object User {
     private var socialToken : String? = null
     private var jwt : String? = null
     private var loginType : Int? = null
+    private var positionX : Double? = null
+    private var positionY : Double? = null
 
     fun setUserId(userId:Int) {
         this.userId = userId;
@@ -64,4 +66,22 @@ object User {
     fun getUserSocialId() :String?{
         return this.userSocialId
     }
+
+    fun setPositionX(positionX : Double) {
+        this.positionX = positionX
+    }
+
+    fun getPositionX() : Double? {
+        return this.positionX
+    }
+
+    fun setPositionY(positionY : Double) {
+        this.positionY = positionY
+    }
+
+    fun getPositionY() : Double? {
+        return this.positionY
+    }
+
+
 }

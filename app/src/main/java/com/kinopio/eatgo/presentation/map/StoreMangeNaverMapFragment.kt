@@ -49,6 +49,7 @@ class StoreMangeNaverMapFragment : Fragment(R.layout.fragment_store_mange_naver_
 
     private var listener: OnMapTouchListener? = null
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = requireActivity() as? OnMapTouchListener
@@ -92,6 +93,7 @@ class StoreMangeNaverMapFragment : Fragment(R.layout.fragment_store_mange_naver_
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
 
+
         this.naverMap = naverMap
         // 현재 위치
         naverMap.locationSource = locationSource
@@ -105,11 +107,20 @@ class StoreMangeNaverMapFragment : Fragment(R.layout.fragment_store_mange_naver_
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         val marker = Marker()
-        marker.position = LatLng(
-            naverMap.cameraPosition.target.latitude,
-            naverMap.cameraPosition.target.longitude
-        )
-        marker.icon = OverlayImage.fromResource(R.mipmap.marker)
+
+        arguments?.let {
+            marker.position = LatLng(
+                it.getDouble("positionX"),
+                it.getDouble("positionY")
+            )
+        }
+//        marker.position = LatLng(
+//            naverMap.cameraPosition.target.latitude,
+//            naverMap.cameraPosition.target.longitude
+//        )
+        marker.width = 100
+        marker.height = 110
+        marker.icon = OverlayImage.fromResource(R.drawable.store_location)
         marker.map = naverMap
 
     }
