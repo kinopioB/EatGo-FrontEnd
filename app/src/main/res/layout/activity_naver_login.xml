@@ -4,165 +4,195 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fef3dc"
     tools:context=".MainActivity">
 
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="122dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginRadioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/login_gif"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="350dp"
+        android:src="@drawable/login_color"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_url="https://assets9.lottiefiles.com/packages/lf20_USXu1l.json" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <RadioGroup
         android:id="@+id/loginRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-50dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/tv_kakao_login"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_gif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animationView">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        tools:layout_editor_absoluteX="145dp">
+        <RadioButton
+            android:id="@+id/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일반"
+            tools:layout_editor_absoluteX="88dp"
+            tools:layout_editor_absoluteY="652dp" />
 
         <RadioButton
             android:id="@+id/boss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="사장">
-
-        </RadioButton>
-
-        <RadioButton
-            android:id="@+id/normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="일반">
-
-        </RadioButton>
-
+            android:layout_marginStart="4dp"
+            android:text="사장"
+            tools:layout_editor_absoluteY="0dp" />
     </RadioGroup>
 
-    <ImageButton
-        android:id="@+id/tv_naver_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#2DB400"
-        android:padding="20dp"
-        android:src="@drawable/naver_login"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+
+    <TextView
+        android:id="@+id/normal_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"
+        android:background="@drawable/login_store_box_border"
+        android:gravity="center"
+        android:text="이메일 로그인"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_kakao_login" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginRadioGroup"
+        tools:layout_editor_absoluteX="55dp"></TextView>
+
+    <LinearLayout
+        android:id="@+id/tvNaverLogin"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/naver_login_box"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:elevation="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/normal_login"
+        tools:layout_editor_absoluteX="55dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+
+            android:src="@drawable/btn_naver_60" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:gravity="center"
+            android:text="네이버 로그인"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+    </LinearLayout>
 
     <ImageButton
-        android:id="@+id/tv_kakao_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFCD01"
-        android:padding="20dp"
-        android:textColor="#FFFFFF"
-        android:src="@drawable/kakao_login_medium_narrow"
-        app:layout_constraintBottom_toTopOf="@+id/tv_naver_login"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/kakao_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="50dp"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:scaleType="centerInside"
+        android:src="@drawable/kakao_login_large_wide"
+        android:text="카카오로 로그인"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginRadioGroup" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNaverLogin"
+        tools:layout_editor_absoluteX="55dp" />
 
-            <TextView
-                android:id="@+id/tv_naver_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#2DB400"
-                android:padding="20dp"
-                android:text="Naver Logout"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"
-                app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"
-                app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/textView"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="49dp"
+        android:gravity="center|center_vertical"
+        android:text="이메일로 회원가입"
+        android:textSize="10dp"
+        app:layout_constraintTop_toBottomOf="@id/kakao_login"
+        tools:layout_editor_absoluteX="55dp">
 
-            <TextView
-                android:id="@+id/tv_naver_delete_token"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#2DB400"
-                android:padding="20dp"
-                android:text="Naver Delete Token"
-                android:textColor="#FFFFFF"
-                android:visibility="gone"
-                app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
+    </TextView>
+
 
     <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/cl_login"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="90dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/radioGroup">-->
+    <!--        android:id="@+id/cl_login"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="90dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/radioGroup">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/tv_naver_login"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#2DB400"-->
-<!--            android:padding="20dp"-->
-<!--            android:text="Naver Login"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_logout"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_naver_login"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#2DB400"-->
+    <!--            android:padding="20dp"-->
+    <!--            android:text="Naver Login"-->
+    <!--            android:textColor="#FFFFFF"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_logout"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/tv_naver_logout"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#2DB400"-->
-<!--            android:padding="20dp"-->
-<!--            android:text="Naver Logout"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:visibility="gone"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"-->
-<!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_naver_logout"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#2DB400"-->
+    <!--            android:padding="20dp"-->
+    <!--            android:text="Naver Logout"-->
+    <!--            android:textColor="#FFFFFF"-->
+    <!--            android:visibility="gone"-->
+    <!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_login"-->
+    <!--            app:layout_constraintRight_toLeftOf="@+id/tv_naver_delete_token"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/tv_naver_delete_token"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#2DB400"-->
-<!--            android:padding="20dp"-->
-<!--            android:text="Naver Delete Token"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:visibility="gone"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_naver_delete_token"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#2DB400"-->
+    <!--            android:padding="20dp"-->
+    <!--            android:text="Naver Delete Token"-->
+    <!--            android:textColor="#FFFFFF"-->
+    <!--            android:visibility="gone"-->
+    <!--            app:layout_constraintLeft_toRightOf="@+id/tv_naver_logout"-->
+    <!--            app:layout_constraintRight_toRightOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_result"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:text="id, token: "-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/cl_login" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_result"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:text="id, token: "-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/cl_login" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

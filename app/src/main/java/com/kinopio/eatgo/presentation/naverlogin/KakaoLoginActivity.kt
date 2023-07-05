@@ -9,7 +9,6 @@ import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
-import com.kakao.sdk.common.util.Utility
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 
@@ -33,8 +32,8 @@ class KakaoLoginActivity : AppCompatActivity() {
         }
 
 
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
+        val keyHash = com.kakao.sdk.common.util.Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
 
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->

@@ -141,10 +141,13 @@ class StoreDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
