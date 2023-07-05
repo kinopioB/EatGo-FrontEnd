@@ -6,11 +6,7 @@
     android:orientation="vertical"
     android:theme="@style/Base.Theme.EatGo"
     android:weightSum="7">
-
     <include layout="@layout/toolbar"/>
-
-
-
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/decoratedBarcodeView"
         android:layout_width="match_parent"
