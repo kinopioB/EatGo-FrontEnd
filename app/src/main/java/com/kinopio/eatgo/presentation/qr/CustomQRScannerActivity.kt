@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
+import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.databinding.ActivityCustomBarcodeScannerBinding
 
@@ -60,8 +61,17 @@ class CustomQRScannerActivity : AppCompatActivity() {
 
     // 뒤로가기 동작 버튼
     // 분리된 클래스의 handleOptionsItemSelected 함수 호출
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return ToolbarUtils.handleOptionsItemSelected(this, item)
+    }*/
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // LifeCycle 에 따라 CaptureManager 또한 처리해주어야 한다.

@@ -4,15 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
+    style="@style/ItemBoxWithShadow"
     android:padding="10dp"
     android:weightSum="10">
 
     <ImageView
         android:id="@+id/store_img"
         android:layout_width="0dp"
-        android:layout_height="110dp"
+        android:layout_height="70dp"
         android:layout_weight="3"
+        android:padding="5dp"
+        android:layout_margin="5dp"
         android:src="@drawable/truck">
     </ImageView>
 
@@ -20,6 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="7"
+        android:layout_marginLeft="10dp"
         android:orientation="vertical"
         android:layout_marginRight="8dp">
 
@@ -28,27 +32,28 @@
             style="@style/ItemMenuNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="승주네 가게 " />
 
         <TextView
             android:id="@+id/store_desc"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/ItemMenuInfoText"
             android:text="승주네 푸드트럭입니다." />
 
-        <LinearLayout
+        <TextView
             android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="#박보검 #양석진 #가만안둬"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_brown">
 
-
-        </LinearLayout>
-
-
-
+        </TextView>
     </LinearLayout>
-
 
 </LinearLayout>

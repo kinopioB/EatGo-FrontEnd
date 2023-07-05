@@ -261,7 +261,9 @@ class CreateStoreActivity : AppCompatActivity() {
                 binding.menuImg.setImageURI(Uri.EMPTY)
                 selectedMenuImageUri = Uri.EMPTY
             } else {
-                // Handle input validation failure
+                val myToast: Toast =
+                    Toast.makeText(this.applicationContext, com.kinopio.eatgo.R.string.NO_MENU_REQUIRED_INPUT_ERROR, Toast.LENGTH_SHORT)
+                myToast.show()
             }
         }
 
@@ -300,8 +302,6 @@ class CreateStoreActivity : AppCompatActivity() {
                 tagList.add(TagRequestDto(inputText));
             }
         }
-
-
         //  등록 버튼
         binding.submitBtn.setOnClickListener {
 

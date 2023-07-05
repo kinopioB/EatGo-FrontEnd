@@ -8,8 +8,8 @@ object RetrofitClient {
 
     // private val url = "http://192.168.0.120:8080/eatgo/" // 핸드폰 URL
 //     private val url = "http://192.168.0.31:8080/eatgo/"
-//     private val url = "http://192.168.0.145:8080/eatgo/"
-    private val url = "http://10.0.2.2:8080/eatgo/" // 안드로이드 URL
+     private val url = "http://192.168.0.120:8080/eatgo/" // 핸드폰 URL
+
   
     fun getRetrofit(): Retrofit? {
         return retrofit ?: Retrofit.Builder()

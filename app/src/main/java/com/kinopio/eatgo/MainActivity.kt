@@ -1,19 +1,19 @@
 package com.kinopio.eatgo
 
-import android.os.Build.VERSION_CODES.O
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.UiThread
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.ActivityMainBinding
 import com.kinopio.eatgo.domain.map.StoreLocationDto
-import com.kinopio.eatgo.domain.map.StoreLocationListDto
-import com.kinopio.eatgo.databinding.ActivityNaverMapBinding
-import com.kinopio.eatgo.presentation.map.NaverMapActivity
+import com.kinopio.eatgo.presentation.qr.ScanQRActivity
 import com.kinopio.eatgo.presentation.store.SummaryInfomationFragment
 import com.kinopio.eatgo.presentation.templates.NavigationFragment
 import com.kinopio.eatgo.util.setNaverMapMarkerIcon
@@ -29,10 +29,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import com.naver.maps.map.widget.LocationButtonView
-import java.util.Locale
+
 
 
 class MainActivity : AppCompatActivity() , OnMapReadyCallback {
@@ -46,10 +43,32 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     var markers = mutableListOf<Marker>()
     private val retrofit = RetrofitClient.getRetrofit()
     private val storeLocationService = retrofit?.create(StoreLocationService::class.java)
+    private val TAG = "FirebaseService"
+
+
+    // 파이어베이스 디바이스에 부여된 토큰값 알아내기
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        // 스캔 버튼 클릭
+        binding.btnCustomScanMain.setOnClickListener {
+            Log.d("qr", "커스텀 스캔 클릭1")
+            val intent = Intent( this, ScanQRActivity::class.java )
+            startActivity(intent)
+        }
+
+        // 파이어베이스 디바이스에 부여된 토큰값 알아내기
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d(TAG, "토큰 가져오기 실패", task.exception)
+            }
+            val token = task.result
+            Log.d(TAG, "토큰 값 : ${token}")
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        }
 
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()

@@ -188,8 +188,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
-
             android:orientation="vertical">
 
             <LinearLayout
@@ -215,11 +213,11 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/BigItemBoxWithShadow"
+                style="@style/ItemBoxWithShadow"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/store_manage_box_border"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="22dp"
                 android:gravity="center"
                 android:orientation="vertical">
 <!--                <ImageView-->
