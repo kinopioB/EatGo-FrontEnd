@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:tabIndicatorColor = "@color/color_yellow"
                 app:layout_constraintTop_toBottomOf="@id/store_open_info">
 
                 <com.google.android.material.tabs.TabItem
