@@ -5,6 +5,7 @@
         android:id="@+id/reviewFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Base.Theme.EatGo"
         android:background="@drawable/review_border">
 
         <LinearLayout

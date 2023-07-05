@@ -6,6 +6,7 @@
     style="@style/ItemBoxWithShadow"
     android:layout_marginBottom="10dp"
     android:padding="10dp"
+    android:theme="@style/Base.Theme.EatGo"
     android:weightSum="10">
 
     <RatingBar
