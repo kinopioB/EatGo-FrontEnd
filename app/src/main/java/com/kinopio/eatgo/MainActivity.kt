@@ -46,13 +46,40 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private val storeLocationService = retrofit?.create(StoreLocationService::class.java)
     private val TAG = "FirebaseService"
 
-
+  
     // 파이어베이스 디바이스에 부여된 토큰값 알아내기
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
+            // 카테고리 선택 버튼
+        val button1: ImageButton = binding.categorySearchButton1
+        val button2: ImageButton = binding.categorySearchButton2
+        val button3: ImageButton = binding.categorySearchButton3
+        val button4: ImageButton = binding.categorySearchButton4
+        val button5: ImageButton = binding.categorySearchButton5
+        val button6: ImageButton = binding.categorySearchButton6
+
+        val buttonClickListener = View.OnClickListener { v ->
+            val buttonNumber = when (v.id) {
+                com.kinopio.eatgo.R.id.categorySearchButton1 -> 1
+                com.kinopio.eatgo.R.id.categorySearchButton2 -> 2
+                com.kinopio.eatgo.R.id.categorySearchButton3 -> 3
+                com.kinopio.eatgo.R.id.categorySearchButton4 -> 4
+                com.kinopio.eatgo.R.id.categorySearchButton5 -> 5
+                com.kinopio.eatgo.R.id.categorySearchButton6 -> 6
+                else -> 0
+            }
+            handleClick(buttonNumber)
+        }
+        button1.setOnClickListener(buttonClickListener)
+        button2.setOnClickListener(buttonClickListener)
+        button3.setOnClickListener(buttonClickListener)
+        button4.setOnClickListener(buttonClickListener)
+        button5.setOnClickListener(buttonClickListener)
+        button6.setOnClickListener(buttonClickListener)
+
 
 
         // 스캔 버튼 클릭
@@ -185,7 +212,9 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
+      fun handleClick(buttonNumber: Int) {
+        Log.d("Clicked", "${buttonNumber}")
+    }
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
