@@ -3,6 +3,7 @@ package com.kinopio.eatgo.presentation.store
 import ToolbarUtils
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -32,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
@@ -119,6 +122,8 @@ class CreateStoreActivity : AppCompatActivity() {
         binding = ActivityCreateStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToggleButtons()
+
+
 
         // 툴바 세팅
         ToolbarUtils.setupToolbar(

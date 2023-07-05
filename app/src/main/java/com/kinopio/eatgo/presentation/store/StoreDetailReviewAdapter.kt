@@ -42,6 +42,7 @@ class StoreDetailReviewAdapter(private val reviewList: List<ReviewDto>) :
                 ratingStar.rating = review.rating.toFloat()
                 user.text = review.userName
                 content.text = review.content
+                createdAt.text = review.createdAt
             }
         }
     }

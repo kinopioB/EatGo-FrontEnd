@@ -1,11 +1,15 @@
 package com.kinopio.eatgo.presentation.templates
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.User
@@ -52,8 +56,23 @@ class NavigationFragment : Fragment() {
         }
 
         binding.addBtn.setOnClickListener {
-            val intent = Intent(context, CreateStoreActivity::class.java)
-            startActivity(intent)
+
+            if(User.getRole() == 0){
+                Log.d("User", "${User}")
+                var dialog =  Dialog(requireContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setContentView(R.layout.custom_dialog)
+                dialog.show()
+
+                dialog.findViewById<Button>(R.id.yesBtn).setOnClickListener {
+                    dialog.hide()
+                }
+
+            }else{
+                val intent = Intent(context, CreateStoreActivity::class.java)
+                startActivity(intent)
+            }
+
         }
 
         binding.manualBtn.setOnClickListener {
