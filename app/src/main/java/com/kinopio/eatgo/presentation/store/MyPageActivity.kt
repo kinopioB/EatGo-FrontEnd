@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
@@ -109,8 +110,8 @@ class MyPageActivity : AppCompatActivity() {
                         .load(storeMyPageResponseDto.thumbNail)
                         .into(binding.thumbnailId)
                     binding.title.text = storeMyPageResponseDto.storeName
-                    binding.categoryName.text = storeMyPageResponseDto.categoryName
-                    binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
+                    // binding.categoryName.text = storeMyPageResponseDto.categoryName
+                    // binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
                     binding.starRating.text = storeMyPageResponseDto.ratingAverage.toString()
                     binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
                 }
@@ -159,11 +160,23 @@ class MyPageActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return ToolbarUtils.handleOptionsItemSelected(
             this,
             item
         ) // 분리된 클래스의 handleOptionsItemSelected 함수 호출
+    }*/
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 커스텀 스캐너 실행하기

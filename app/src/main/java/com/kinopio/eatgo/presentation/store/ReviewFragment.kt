@@ -106,7 +106,6 @@ class ReviewFragment : DialogFragment() {
                     Log.d("reviewFragment", "리뷰 등록 완료")
                 }
             })
-            // URL
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.R
@@ -44,6 +45,9 @@ class StoreReviewFragment : Fragment() {
         reviewAdapter = StoreDetailReviewAdapter(reviewList)
         reveiewRecyclerView.adapter = reviewAdapter
 
+        val reviewCountText = view.findViewById<TextView>(R.id.reviewCount)
+        var reviewCount = reviews?.size.toString()
+        reviewCountText.text = "리뷰 개수 : " + reviewCount+ " 개"
 
     }
     companion object {

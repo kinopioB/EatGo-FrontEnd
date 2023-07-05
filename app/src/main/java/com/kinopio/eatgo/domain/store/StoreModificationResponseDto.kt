@@ -4,7 +4,7 @@ import com.kinopio.eatgo.domain.store.ui_model.OpenInfo
 
 data class StoreModificationResponseDto(
     var storeId : Int,
-    var storeName : String,
+    var storeInfo : String,
     var address : String,
     var positionX : Double,
     var positionY : Double,

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-    </style>
-
     <style name="CircularToggleButton" parent="android:Widget.Button.Toggle">
         <item name="android:background">@drawable/btn_toggle</item>
     </style>
@@ -62,6 +58,12 @@
         <item name="android:layout_marginRight">5dp</item>
     </style>
 
+    <style name="ItemBoxWithShadowNoElevation">
+        <item name="android:background">@drawable/store_create_box_border</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
     <style name="MypageBoxWithShadow">
         <item name="android:elevation">5dp</item>
         <item name="android:background">@drawable/store_create_box_border</item>
@@ -75,6 +77,14 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
+
+    <style name="CategorySearchButton">
+        <item name="android:elevation">15dp</item>
+        <item name="android:background">@drawable/qr_scan_create_box_border</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
 
     <style name="YelloButtonTemplate">
         <item name="android:background"> @drawable/yellow_button</item>

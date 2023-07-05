@@ -1,16 +1,17 @@
-<!-- item.xml -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="5dp"
-    android:padding="10dp"
+    android:layout_marginBottom="10dp"
+    style="@style/ItemBoxWithShadow"
+    android:padding="15dp"
+    android:theme="@style/Base.Theme.EatGo"
     android:weightSum="10">
     <ImageView
         android:id="@+id/menuImg"
+        android:scaleType="centerCrop"
         android:layout_width="0dp"
-        android:layout_height="110dp"
+        android:layout_height="80dp"
         android:layout_weight="3"
         android:src="@drawable/truck"
         android:layout_marginRight="8dp">
