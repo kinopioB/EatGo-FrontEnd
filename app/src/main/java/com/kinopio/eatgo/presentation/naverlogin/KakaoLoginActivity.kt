@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.common.util.Utility
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 

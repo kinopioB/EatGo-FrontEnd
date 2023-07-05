@@ -17,7 +17,9 @@ import com.kinopio.eatgo.domain.store.StoreHistory
 import com.kinopio.eatgo.presentation.store.StoreInfoFragment
 import com.kinopio.eatgo.util.OnMapTouchListener
 import com.kinopio.eatgo.util.TouchableWrapper
+import com.kinopio.eatgo.util.setNaverMapMarkerIcon
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -79,8 +81,7 @@ class HistoryNaverMapFragment : Fragment(R.layout.fragment_history_naver_map), O
     override fun onMapReady(naverMap: NaverMap) {
 
         val histories = arguments?.getSerializable(ARG_HISTORY_LIST) as? List<StoreHistory>
-
-        Log.d("history", "${histories}")
+        val categoryId = arguments?.getSerializable(ARG_CATEGORY_ID) as? Int
 
         this.naverMap = naverMap
         // 현재 위치
@@ -92,20 +93,34 @@ class HistoryNaverMapFragment : Fragment(R.layout.fragment_history_naver_map), O
         naverMap.uiSettings.isCompassEnabled = false
 
         // 위치를 추적하면서 카메라도 따라 움직인다.
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+//        naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
+        if (histories?.size!! > 0) {
+            val cameraUpdate = CameraUpdate.scrollTo(LatLng(histories[0].positionX, histories[0].positionY))
+            naverMap.moveCamera(cameraUpdate)
+        }
 
-
-        val marker = Marker()
-        marker.position = LatLng(
-            naverMap.cameraPosition.target.latitude,
-            naverMap.cameraPosition.target.longitude
-        )
-
-        marker.width = 100
-        marker.height = 110
-        marker.icon = OverlayImage.fromResource(R.drawable.store_location)
-        marker.map = naverMap
+        for (i in 0 .. histories?.size!! - 1) {
+            val marker = Marker()
+            marker.position = LatLng(
+                histories[i].positionX,
+                histories[i].positionY
+            )
+            marker.width = 100
+            marker.height = 110
+            when(categoryId) {
+                1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_report)
+                2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_report)
+                3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_report)
+                4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_report)
+                5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_report)
+                6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_report)
+                7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_report)
+                8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_report)
+                else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_report)
+            }
+            marker.map = naverMap
+        }
 
     }
 
@@ -113,11 +128,13 @@ class HistoryNaverMapFragment : Fragment(R.layout.fragment_history_naver_map), O
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
 
         private const val ARG_HISTORY_LIST = "history_list"
+        private const val ARG_CATEGORY_ID = "category_id"
 
-        fun newInstance(historyList: List<StoreHistory>?): HistoryNaverMapFragment {
+        fun newInstance(categoryId : Int?, historyList: List<StoreHistory>?): HistoryNaverMapFragment {
             val fragment = HistoryNaverMapFragment()
             val args = Bundle()
             args.putSerializable(ARG_HISTORY_LIST, ArrayList(historyList))
+            args.putSerializable(ARG_CATEGORY_ID, categoryId)
             fragment.arguments = args
             return fragment
         }

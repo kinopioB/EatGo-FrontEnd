@@ -5,6 +5,6 @@ data class StoreHistory(
     val storeId: Integer,
     val openDate: String,
     val address: String,
-    val positionX: Integer,
-    val positionY: Integer
+    val positionX: Double,
+    val positionY: Double
 )

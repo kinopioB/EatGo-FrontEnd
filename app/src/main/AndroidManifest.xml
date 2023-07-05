@@ -50,37 +50,34 @@
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true" >
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-                <data
-                    android:host="oauth"
-                    android:scheme="@string/kakao_key" />
-            </intent-filter>-->
-<!--                <data-->
-<!--                    android:host="oauth"-->
-<!--                    android:scheme="@string/kakao_key" />-->
-<!--            </intent-filter>-->
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+
+                    <data
+                        android:host="oauth"
+                        android:scheme="@string/kakao_key" />
+                </intent-filter>
         </activity>
 
         <activity
             android:name=".presentation.store.StoreDetailActivity"
             android:exported="true"
             android:theme="@style/ToolBar" >
-            <!-- <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
 
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter> -->
         </activity>
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true" >
-            <!--<intent-filter>
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".presentation.store.PopularStoreActivity"
@@ -91,12 +88,6 @@
             android:exported="true"
             android:theme="@style/ToolBar" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
 
         </activity>
         <activity
@@ -110,12 +101,6 @@
             android:name=".presentation.templates.SplashActivity"
             android:exported="true" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presentation.qr.CustomQRScannerActivity"
