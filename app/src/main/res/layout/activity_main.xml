@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -41,6 +40,77 @@
         app:layout_constraintStart_toEndOf="@+id/searchEditText"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/categorySearchButton1"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_skewer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText"></ImageButton>
+
+    <ImageButton
+        android:id="@+id/categorySearchButton2"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_snack"
+        app:layout_constraintStart_toEndOf="@id/categorySearchButton1"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText">
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/categorySearchButton3"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_bung"
+        app:layout_constraintStart_toEndOf="@id/categorySearchButton2"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText">
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/categorySearchButton4"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_taco"
+        app:layout_constraintStart_toEndOf="@id/categorySearchButton3"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText">
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/categorySearchButton5"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_sweetpotato"
+        app:layout_constraintStart_toEndOf="@id/categorySearchButton4"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText">
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/categorySearchButton6"
+        style="@style/CategorySearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cate_toggle_toast"
+        app:layout_constraintStart_toEndOf="@id/categorySearchButton5"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText">
+    </ImageButton>
+
     <FrameLayout
         android:id="@+id/map"
         android:name="com.naver.maps.map.MapFragment"
@@ -71,12 +141,12 @@
         android:layout_height="50dp"
         android:layout_margin="16dp"
         android:background="@drawable/cur_location_button"
-        android:scaleType="fitCenter"
         android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/location_button"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@mipmap/location_button"
-        tools:ignore="SpeakableTextPresentCheck"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <LinearLayout
         android:id="@+id/bottomBar"

@@ -3,6 +3,7 @@ package com.kinopio.eatgo.presentation.store
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.kinopio.eatgo.databinding.ItemBestMenuBinding
 import com.kinopio.eatgo.domain.store.Menu
 
@@ -33,7 +34,13 @@ class BestMenuAdapter(private val menuList: List<Menu>?) :
 
         fun bind(menu: Menu) {
             binding.apply {
+
                 binding.menuName.text = menu.menuName
+                Glide.with(itemView)
+                    .load(menu.thumbnail)
+                    .into(menuImg)
+                binding.menuNameInfo.text = menu.info
+                binding.menuPriceAmount.text = "${menu.amount}개: ${menu.price}"
             }
         }
     }

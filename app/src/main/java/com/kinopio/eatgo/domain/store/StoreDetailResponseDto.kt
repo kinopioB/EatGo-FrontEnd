@@ -8,6 +8,7 @@ data class StoreDetailResponseDto(
     val storeId: Int,
     val storeName: String,
     val address: String,
+    val info: String,
     val positionX: Double,
     val positionY : Double,
     val isOpen : Integer,
