@@ -32,9 +32,9 @@ class KakaoLoginActivity : AppCompatActivity() {
         }
 
 
-        val keyHash = com.kakao.sdk.common.util.Utility.getKeyHash(this)
-        Log.d("Hash", keyHash)
 
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", "${keyHash}")
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
