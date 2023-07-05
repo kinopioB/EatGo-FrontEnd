@@ -67,12 +67,12 @@ class NaverLoginActivity : AppCompatActivity() {
 //            startNaverLogin()
 //
 //        }
-        binding.tvNaverLogout.setOnClickListener {
+        /*binding.tvNaverLogout.setOnClickListener {
             startNaverLogout()
         }
         binding.tvNaverDeleteToken.setOnClickListener {
             startNaverDeleteToken()
-        }
+        }*/
     }
 
     /**
@@ -203,12 +203,12 @@ class NaverLoginActivity : AppCompatActivity() {
     private fun setLayoutState(login: Boolean){
         if(login){
             binding.tvNaverLogin.visibility = View.GONE
-            binding.tvNaverLogout.visibility = View.VISIBLE
-            binding.tvNaverDeleteToken.visibility = View.VISIBLE
+          /*  binding.tvNaverLogout.visibility = View.VISIBLE
+            binding.tvNaverDeleteToken.visibility = View.VISIBLE*/
         }else{
             binding.tvNaverLogin.visibility = View.VISIBLE
-            binding.tvNaverLogout.visibility = View.GONE
-            binding.tvNaverDeleteToken.visibility = View.GONE
+           /* binding.tvNaverLogout.visibility = View.GONE
+            binding.tvNaverDeleteToken.visibility = View.GONE*/
 //            binding.tvResult.text = ""
         }
     }

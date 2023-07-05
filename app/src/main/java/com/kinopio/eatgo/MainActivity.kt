@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             }
             val token = task.result
             Log.d(TAG, "토큰 값 : ${token}")
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         }
 
         val fm = supportFragmentManager
