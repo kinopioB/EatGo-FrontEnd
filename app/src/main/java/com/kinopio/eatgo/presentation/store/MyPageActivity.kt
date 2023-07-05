@@ -110,8 +110,8 @@ class MyPageActivity : AppCompatActivity() {
                         .load(storeMyPageResponseDto.thumbNail)
                         .into(binding.thumbnailId)
                     binding.title.text = storeMyPageResponseDto.storeName
-                    binding.categoryName.text = storeMyPageResponseDto.categoryName
-                    binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
+                    // binding.categoryName.text = storeMyPageResponseDto.categoryName
+                    // binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
                     binding.starRating.text = storeMyPageResponseDto.ratingAverage.toString()
                     binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
                 }
