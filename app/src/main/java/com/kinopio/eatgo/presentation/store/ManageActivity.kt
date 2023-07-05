@@ -3,6 +3,8 @@ package com.kinopio.eatgo.presentation.store
 import android.content.Context
 import android.util.AttributeSet
 import android.content.Intent
+import android.location.Geocoder
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -45,11 +47,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import java.util.Locale
 
 
 class ManageActivity : AppCompatActivity(), OnMapTouchListener {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+    private lateinit var storeModificationResponseDto: StoreModificationResponseDto
+    private var selectedPositionX = 0.0
+    private var selectedPositionY = 0.0
     private val binding : ActivityManageBinding by lazy {
         ActivityManageBinding.inflate(layoutInflater)
     }
@@ -97,7 +103,10 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                         return
                     }
                     Log.d("retrofit", "통신 + ${response?.body()}")
-                    var storeModificationResponseDto = response?.body()
+
+                    response.body()?.let{
+                        storeModificationResponseDto=it
+                    }
                     var days : List<OpenInfo>
                     binding.storeEdittext.text = Editable.Factory.getInstance().newEditable(storeModificationResponseDto?.storeInfo)
                     if(storeModificationResponseDto?.createdType == 1){
@@ -148,16 +157,13 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
 
             Log.d("store start retrofit", "store retrofit2")
 
-            var storeId = 1
-            var address = "대한민국 서울특별시 종로구 대명1길 16-2"
-            var positionX = "37.58296105306665"
-            var positionY = "127.00062394329927"
+            getPosition(binding.manageAddress.text.toString())
 
             var storeHistoryRequestDto: StoreHistoryRequestDto = StoreHistoryRequestDto(
-                address = address,
+                address = binding.manageAddress.text.toString(),
                 storeId = storeId,
-                positionX = positionX,
-                positionY = positionY,
+                positionX = selectedPositionX,
+                positionY = selectedPositionY,
             )
 
             storeService.changeStoreStatusOpen(storeId, storeHistoryRequestDto)
@@ -228,5 +234,16 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
     override fun onTouch() {
         // 스크롤뷰 객체에 requestDisallowInterceptTouchEvent를 true로 설정
         binding.svParent.requestDisallowInterceptTouchEvent(true)
+    }
+
+    private fun getPosition(address : String) {
+        Geocoder(applicationContext, Locale.KOREA).getFromLocationName(address, 1)?.let {
+            Location("").apply {
+                Log.d("geo", "${it[0].latitude}, ${it[0].longitude}")
+                selectedPositionX = it[0].latitude.toDouble()
+                selectedPositionY = it[0].longitude.toDouble()
+
+            }
+        }
     }
 }
