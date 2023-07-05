@@ -1,14 +1,17 @@
 package com.kinopio.eatgo
 
+import com.kinopio.eatgo.R.id
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.UiThread
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.ActivityMainBinding
@@ -24,22 +27,20 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-
-class MainActivity : AppCompatActivity() , OnMapReadyCallback {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
-    private var searchFilter:String = ""
-    private val binding : ActivityMainBinding by lazy {
+    private var searchFilter: String = ""
+    private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private lateinit var markerList : List<StoreLocationDto>;
+    private lateinit var markerList: List<StoreLocationDto>;
     var markers = mutableListOf<Marker>()
     private val retrofit = RetrofitClient.getRetrofit()
     private val storeLocationService = retrofit?.create(StoreLocationService::class.java)
@@ -53,10 +54,39 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
+        // 카테고리 선택 버튼
+        val button1: ImageButton = binding.categorySearchButton1
+        val button2: ImageButton = binding.categorySearchButton2
+        val button3: ImageButton = binding.categorySearchButton3
+        val button4: ImageButton = binding.categorySearchButton4
+        val button5: ImageButton = binding.categorySearchButton5
+        val button6: ImageButton = binding.categorySearchButton6
+
+        val buttonClickListener = View.OnClickListener { v ->
+            val buttonNumber = when (v.id) {
+                com.kinopio.eatgo.R.id.categorySearchButton1 -> 1
+                com.kinopio.eatgo.R.id.categorySearchButton2 -> 2
+                com.kinopio.eatgo.R.id.categorySearchButton3 -> 3
+                com.kinopio.eatgo.R.id.categorySearchButton4 -> 4
+                com.kinopio.eatgo.R.id.categorySearchButton5 -> 5
+                com.kinopio.eatgo.R.id.categorySearchButton6 -> 6
+                else -> 0
+            }
+            handleClick(buttonNumber)
+        }
+        button1.setOnClickListener(buttonClickListener)
+        button2.setOnClickListener(buttonClickListener)
+        button3.setOnClickListener(buttonClickListener)
+        button4.setOnClickListener(buttonClickListener)
+        button5.setOnClickListener(buttonClickListener)
+        button6.setOnClickListener(buttonClickListener)
+
+
         // 스캔 버튼 클릭
         binding.btnCustomScanMain.setOnClickListener {
             Log.d("qr", "커스텀 스캔 클릭1")
-            val intent = Intent( this, ScanQRActivity::class.java )
+            val intent = Intent(this, ScanQRActivity::class.java)
             startActivity(intent)
         }
 
@@ -72,13 +102,13 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()
-        var navigationFragment:NavigationFragment = NavigationFragment()
+        var navigationFragment: NavigationFragment = NavigationFragment()
 
-        transaction.add(R.id.bottomBar, navigationFragment)
+        transaction.add(id.bottomBar, navigationFragment)
         transaction.commit()
-        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+        val mapFragment = fm.findFragmentById(id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.map, it).commit()
+                fm.beginTransaction().add(id.map, it).commit()
             }
 
         mapFragment.getMapAsync(this)
@@ -93,67 +123,83 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
 
-        binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
+        binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchFilter = binding.searchEditText.text.toString()
 
-                    for (i in 0 .. markers.size - 1) {
+                    for (i in 0..markers.size - 1) {
                         markers[i].map = null;
                     }
                     markers = mutableListOf<Marker>()
 
-                    storeLocationService?.getFilterStores(searchFilter)?.enqueue(object : Callback<List<StoreLocationDto>> {
-                        override fun onFailure(call: Call<List<StoreLocationDto>>, t: Throwable) {
-                            Log.d("fail", "실패")
-                            Log.d("fail", "$t")
-                        }
-
-                        override fun onResponse(
-                            call: Call<List<StoreLocationDto>>,
-                            response: Response<List<StoreLocationDto>>
-                        ) {
-                            if(response.isSuccessful.not()){
-                                return
+                    storeLocationService?.getFilterStores(searchFilter)
+                        ?.enqueue(object : Callback<List<StoreLocationDto>> {
+                            override fun onFailure(
+                                call: Call<List<StoreLocationDto>>,
+                                t: Throwable
+                            ) {
+                                Log.d("fail", "실패")
+                                Log.d("fail", "$t")
                             }
-                            response.body()?.let{
-                                markerList = it
 
-                                for (i in 0 .. markerList.size - 1) {
-
-                                    val marker = Marker()
-                                    marker.setOnClickListener {overlay ->
-
-                                        val cameraUpdate = CameraUpdate.scrollTo(LatLng(markerList[i].positionX, markerList[i].positionY))
-                                        naverMap.moveCamera(cameraUpdate)
-
-                                        val transaction = supportFragmentManager.beginTransaction()
-                                        var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
-                                        val prevFrameLayout = supportFragmentManager.findFragmentById(R.id.MainSummaryframeLayout)
-                                        if (prevFrameLayout != null) {
-                                            transaction.remove(prevFrameLayout)
-                                        }
-                                        val storeId = markerList[i].id
-                                        val bundle = Bundle()
-                                        bundle.putInt("storeId", storeId)
-                                        bundle.putDouble("posX", markerList[i].positionX)
-                                        bundle.putDouble("posY", markerList[i].positionY)
-                                        infomationFragment.arguments = bundle
-                                        transaction.add(R.id.MainSummaryframeLayout, infomationFragment)
-                                        transaction.commit()
-                                        true
-                                    }
-                                    marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
-                                    marker.width = 100
-                                    marker.height = 110
-
-                                    setNaverMapMarkerIcon(markerList[i], marker)
-                                    marker.map = naverMap
+                            override fun onResponse(
+                                call: Call<List<StoreLocationDto>>,
+                                response: Response<List<StoreLocationDto>>
+                            ) {
+                                if (response.isSuccessful.not()) {
+                                    return
                                 }
-                                searchFilter = ""
+                                response.body()?.let {
+                                    markerList = it
+
+                                    for (i in 0..markerList.size - 1) {
+
+                                        val marker = Marker()
+                                        marker.setOnClickListener { overlay ->
+
+                                            val cameraUpdate = CameraUpdate.scrollTo(
+                                                LatLng(
+                                                    markerList[i].positionX,
+                                                    markerList[i].positionY
+                                                )
+                                            )
+                                            naverMap.moveCamera(cameraUpdate)
+
+                                            val transaction =
+                                                supportFragmentManager.beginTransaction()
+                                            var infomationFragment: SummaryInfomationFragment =
+                                                SummaryInfomationFragment()
+                                            val prevFrameLayout =
+                                                supportFragmentManager.findFragmentById(id.MainSummaryframeLayout)
+                                            if (prevFrameLayout != null) {
+                                                transaction.remove(prevFrameLayout)
+                                            }
+                                            val storeId = markerList[i].id
+                                            val bundle = Bundle()
+                                            bundle.putInt("storeId", storeId)
+                                            bundle.putDouble("posX", markerList[i].positionX)
+                                            bundle.putDouble("posY", markerList[i].positionY)
+                                            infomationFragment.arguments = bundle
+                                            transaction.add(
+                                                id.MainSummaryframeLayout,
+                                                infomationFragment
+                                            )
+                                            transaction.commit()
+                                            true
+                                        }
+                                        marker.position =
+                                            LatLng(markerList[i].positionX, markerList[i].positionY)
+                                        marker.width = 100
+                                        marker.height = 110
+
+                                        setNaverMapMarkerIcon(markerList[i], marker)
+                                        marker.map = naverMap
+                                    }
+                                    searchFilter = ""
+                                }
                             }
-                        }
-                    })
+                        })
                     // 현재 위치
                     naverMap.locationSource = locationSource
                     // 현재 위치 버튼 기능
@@ -170,11 +216,20 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         })
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
-                grantResults)) {
+    // 카테고리 검색 레트로 핏 호출
+    fun handleClick(buttonNumber: Int) {
+        Log.d("Clicked", "${buttonNumber}")
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode, permissions,
+                grantResults
+            )
+        ) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
@@ -198,30 +253,37 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                 call: Call<List<StoreLocationDto>>,
                 response: Response<List<StoreLocationDto>>
             ) {
-                if(response.isSuccessful.not()){
+                if (response.isSuccessful.not()) {
                     return
                 }
-                response.body()?.let{
+                response.body()?.let {
                     markerList = it
-                    for (i in 0 .. markerList.size - 1) {
+                    for (i in 0..markerList.size - 1) {
                         val marker = Marker()
-                        marker.setOnClickListener {overlay ->
-                            val cameraUpdate = CameraUpdate.scrollTo(LatLng(markerList[i].positionX, markerList[i].positionY))
+                        marker.setOnClickListener { overlay ->
+                            val cameraUpdate = CameraUpdate.scrollTo(
+                                LatLng(
+                                    markerList[i].positionX,
+                                    markerList[i].positionY
+                                )
+                            )
                             naverMap.moveCamera(cameraUpdate)
                             val transaction = supportFragmentManager.beginTransaction()
-                            val prevFrameLayout = supportFragmentManager.findFragmentById(R.id.MainSummaryframeLayout)
+                            val prevFrameLayout =
+                                supportFragmentManager.findFragmentById(id.MainSummaryframeLayout)
                             if (prevFrameLayout != null) {
                                 transaction.remove(prevFrameLayout)
                             }
 
-                            var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
+                            var infomationFragment: SummaryInfomationFragment =
+                                SummaryInfomationFragment()
                             val storeId = markerList[i].id
                             val bundle = Bundle()
                             bundle.putInt("storeId", storeId)
                             bundle.putDouble("posX", markerList[i].positionX)
                             bundle.putDouble("posY", markerList[i].positionY)
                             infomationFragment.arguments = bundle
-                            transaction.add(R.id.MainSummaryframeLayout, infomationFragment)
+                            transaction.add(id.MainSummaryframeLayout, infomationFragment)
                             transaction.commit()
                             true
                         }
