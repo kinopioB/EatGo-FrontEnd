@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-    </style>
-
     <style name="CircularToggleButton" parent="android:Widget.Button.Toggle">
         <item name="android:background">@drawable/btn_toggle</item>
     </style>

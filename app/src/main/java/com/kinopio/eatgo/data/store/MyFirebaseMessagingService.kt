@@ -40,7 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val message = message.data["body"]
         Log.d(TAG, "onMessageReceived : ${title}")
         Log.d(TAG, "message : ${message}")
-         type ?: return
+        type ?: return
         Log.d(TAG, "특정 권한 예외 처리 전!")
 
         // 특정 권한을 요청하고 있는데 사용자가 권한을 거부할 수 있는 상황에서

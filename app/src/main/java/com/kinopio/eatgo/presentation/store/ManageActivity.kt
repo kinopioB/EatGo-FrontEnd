@@ -97,10 +97,10 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                         return
                     }
                     Log.d("retrofit", "통신 + ${response?.body()}")
-                    var storeMyPageResponseDto = response?.body()
+                    var storeModificationResponseDto = response?.body()
                     var days : List<OpenInfo>
-                    binding.storeEdittext.text = Editable.Factory.getInstance().newEditable(storeMyPageResponseDto?.storeName)
-                    if(storeMyPageResponseDto?.createdType == 1){
+                    binding.storeEdittext.text = Editable.Factory.getInstance().newEditable(storeModificationResponseDto?.storeInfo)
+                    if(storeModificationResponseDto?.createdType == 1){
                         binding.foodTruck.isChecked = true
                     } else{
                         binding.snackCart.isChecked = true
@@ -113,9 +113,9 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
 
                     var mapFragment : StoreMangeNaverMapFragment = StoreMangeNaverMapFragment()
 
-                    bundle.putDouble("positionX", storeMyPageResponseDto!!.positionX)
-                    bundle.putDouble("positionY", storeMyPageResponseDto!!.positionY)
-                    binding.manageAddress.text = storeMyPageResponseDto.address.toString()
+                    bundle.putDouble("positionX", storeModificationResponseDto!!.positionX)
+                    bundle.putDouble("positionY", storeModificationResponseDto!!.positionY)
+                    binding.manageAddress.text = storeModificationResponseDto.address.toString()
                     mapFragment.arguments = bundle
 
                     transaction.add(R.id.manageMap, mapFragment)
@@ -123,8 +123,8 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                     // storeMyPageResponseDto?.openInfos?.get(1)?.day
 
 
-                    for (i in 0 .. storeMyPageResponseDto?.openInfos?.size!! - 1) {
-                        when(storeMyPageResponseDto.openInfos[i].day) {
+                    for (i in 0 .. storeModificationResponseDto?.openInfos?.size!! - 1) {
+                        when(storeModificationResponseDto.openInfos[i].day) {
                             "월" -> binding.tbMon.isChecked = true
                             "화" -> binding.tbTue.isChecked = true
                             "수" -> binding.tbWed.isChecked = true
@@ -157,7 +157,7 @@ class ManageActivity : AppCompatActivity(), OnMapTouchListener {
                 address = address,
                 storeId = storeId,
                 positionX = positionX,
-                positionY = positionY
+                positionY = positionY,
             )
 
             storeService.changeStoreStatusOpen(storeId, storeHistoryRequestDto)
