@@ -37,6 +37,8 @@ import java.util.Locale
  * Use the [NaverMapFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+
 class NaverMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap

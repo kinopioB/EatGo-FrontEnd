@@ -16,7 +16,9 @@ import com.kinopio.eatgo.domain.map.StoreLocationDto
 import com.kinopio.eatgo.presentation.qr.ScanQRActivity
 import com.kinopio.eatgo.presentation.store.SummaryInfomationFragment
 import com.kinopio.eatgo.presentation.templates.NavigationFragment
+import com.kinopio.eatgo.util.setNaverMapMarkerIcon
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -84,7 +86,10 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
+
         binding.customCurLocationBtn.setOnClickListener {
+            User.setPositionX(naverMap.cameraPosition.target.latitude)
+            User.setPositionY(naverMap.cameraPosition.target.longitude)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
 
@@ -118,12 +123,23 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
                                     val marker = Marker()
                                     marker.setOnClickListener {overlay ->
+
+                                        val cameraUpdate = CameraUpdate.scrollTo(LatLng(markerList[i].positionX, markerList[i].positionY))
+                                        naverMap.moveCamera(cameraUpdate)
+
+                                        val transaction = supportFragmentManager.beginTransaction()
                                         var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
+                                        val prevFrameLayout = supportFragmentManager.findFragmentById(R.id.MainSummaryframeLayout)
+                                        if (prevFrameLayout != null) {
+                                            transaction.remove(prevFrameLayout)
+                                        }
                                         val storeId = markerList[i].id
                                         val bundle = Bundle()
                                         bundle.putInt("storeId", storeId)
+                                        bundle.putDouble("posX", markerList[i].positionX)
+                                        bundle.putDouble("posY", markerList[i].positionY)
                                         infomationFragment.arguments = bundle
-                                        transaction.add(R.id.frameLayout, infomationFragment)
+                                        transaction.add(R.id.MainSummaryframeLayout, infomationFragment)
                                         transaction.commit()
                                         true
                                     }
@@ -131,17 +147,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                                     marker.width = 100
                                     marker.height = 110
 
-                                    when(markerList[i].categoryId) {
-                                        1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-                                        2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
-                                        3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
-                                        4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
-                                        5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
-                                        6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
-                                        7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
-                                        8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
-                                        else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-                                    }
+                                    setNaverMapMarkerIcon(markerList[i], marker)
                                     marker.map = naverMap
                                 }
                                 searchFilter = ""
@@ -180,9 +186,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-
         val retrofit = RetrofitClient.getRetrofit()
 
         storeLocationService?.getStores()?.enqueue(object : Callback<List<StoreLocationDto>> {
@@ -203,32 +206,30 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                     for (i in 0 .. markerList.size - 1) {
                         val marker = Marker()
                         marker.setOnClickListener {overlay ->
+                            val cameraUpdate = CameraUpdate.scrollTo(LatLng(markerList[i].positionX, markerList[i].positionY))
+                            naverMap.moveCamera(cameraUpdate)
+                            val transaction = supportFragmentManager.beginTransaction()
+                            val prevFrameLayout = supportFragmentManager.findFragmentById(R.id.MainSummaryframeLayout)
+                            if (prevFrameLayout != null) {
+                                transaction.remove(prevFrameLayout)
+                            }
+
                             var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
                             val storeId = markerList[i].id
                             val bundle = Bundle()
-                            Log.d("fragment", "$storeId")
                             bundle.putInt("storeId", storeId)
+                            bundle.putDouble("posX", markerList[i].positionX)
+                            bundle.putDouble("posY", markerList[i].positionY)
                             infomationFragment.arguments = bundle
-                            transaction.add(R.id.frameLayout, infomationFragment)
+                            transaction.add(R.id.MainSummaryframeLayout, infomationFragment)
                             transaction.commit()
                             true
                         }
                         marker.position = LatLng(markerList[i].positionX, markerList[i].positionY)
                         marker.width = 100
                         marker.height = 110
-//            marker.icon = OverlayImage.fromResource(R.mipmap.yakitori)
+                        setNaverMapMarkerIcon(markerList[i], marker)
 
-                        when(markerList[i].categoryId) {
-                            1 -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-                            2 -> marker.icon = OverlayImage.fromResource(R.drawable.snackbar_open)
-                            3 -> marker.icon = OverlayImage.fromResource(R.drawable.fishbread_open)
-                            4 -> marker.icon = OverlayImage.fromResource(R.drawable.sundae_open)
-                            5 -> marker.icon = OverlayImage.fromResource(R.drawable.takoyaki_open)
-                            6 -> marker.icon = OverlayImage.fromResource(R.drawable.toast_open)
-                            7 -> marker.icon = OverlayImage.fromResource(R.drawable.chicken_open)
-                            8 -> marker.icon = OverlayImage.fromResource(R.drawable.hotdog_open)
-                            else -> marker.icon = OverlayImage.fromResource(R.drawable.yakitori_open)
-                        }
                         markers.add(marker)
                         marker.map = naverMap
                     }
@@ -247,7 +248,8 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         naverMap.uiSettings.isLogoClickEnabled = false
         // 위치를 추적하면서 카메라도 따라 움직인다.
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
-
+        User.setPositionX(naverMap.cameraPosition.target.latitude)
+        User.setPositionY(naverMap.cameraPosition.target.longitude)
     }
 
     companion object {
