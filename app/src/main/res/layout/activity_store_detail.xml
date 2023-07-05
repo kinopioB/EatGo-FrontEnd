@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background"
     android:orientation="vertical">
     <include layout="@layout/toolbar"/>
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,6 +14,7 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:weightSum="10"
+        android:layout_marginTop="10dp"
         tools:context=".presentation.store.CreateStoreActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

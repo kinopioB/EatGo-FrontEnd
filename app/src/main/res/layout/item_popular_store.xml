@@ -1,28 +1,65 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
+    style="@style/ItemBoxWithShadow"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_marginRight="10dp"
-    android:padding="5dp">
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:padding="1dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@drawable/truck">
-    </ImageView>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/popular_store_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:padding="5dp"
+            android:src="@drawable/truck"
+            android:background="@drawable/box_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <TextView
+            android:id="@+id/grade"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/medal_icon"
+            android:scaleType="centerCrop"
+            android:drawablePadding="0dp"
+            android:gravity="center"
+            android:textSize="5sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_brown"
+            android:text="1등"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <TextView
         android:id="@+id/popular_store_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="가게 이름"/>
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:text="가게 이름" />
 
     <TextView
         android:id="@+id/popular_store_cate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="붕어빵" />
+        android:gravity="center"
+        android:text="붕어빵"
+        android:textSize="10sp" />
 
 
 </LinearLayout>

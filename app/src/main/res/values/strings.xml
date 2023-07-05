@@ -17,6 +17,7 @@
     <string name="NO_STORE_IMAGE_ERROR"> ⚠️ 가게 사진을 넣어 주세요 ⚠️</string>
     <string name="STORE_IMAGE_UPLOAD_ERROR"> ⚠️ 가게 사진 업로드 에러입니다. 다시 시도해주세요 ⚠️</string>
     <string name="NO_STORE_CATEGORY_ERROR"> ⚠️ 카테고리를 설정해주세요 ⚠️</string>
+    <string name="NO_MENU_REQUIRED_INPUT_ERROR"> ⚠️ 메뉴명, 가격, 수량은 필수 입력란입니다! ⚠️</string>
 
 
     <string name="CREATE_STORE_LOADING_MESSAGE"> 가게를 오픈 중 입니다!:)</string>
