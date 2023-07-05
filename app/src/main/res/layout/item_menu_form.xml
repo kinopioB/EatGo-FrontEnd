@@ -1,6 +1,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ItmeMenuForm"
+    style="@style/ItemBoxWithShadow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -10,31 +10,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/color_yellow"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingLeft="5dp">
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Menu Info"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textColor="@color/color_brown"
             android:padding="5dp"
             android:textSize="17sp">
         </TextView>
 
         <TextView
+            android:id="@+id/isBestTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></TextView>
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/color_yellow"
+            android:textStyle="bold">
+        </TextView>
 
         <ImageButton
             android:id="@+id/btnDelete"
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cancel_white"
+            android:background="@drawable/cancel_brown"
             android:text="삭제" />
 
     </LinearLayout>
@@ -137,10 +142,10 @@
         </LinearLayout>
     </LinearLayout>
     <TextView
+        android:id="@+id/menuFormInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="메뉴 설명">
+        android:padding="10dp">
     </TextView>
 
 

@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -19,17 +19,15 @@ import com.kinopio.eatgo.RetrofitClient
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityMyPageBinding
 import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
-import com.kinopio.eatgo.domain.store.ui_model.Review
 import com.kinopio.eatgo.presentation.qr.CreateQRActivity
 import com.kinopio.eatgo.presentation.qr.CustomQRScannerActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.properties.Delegates
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var reviewAdapter: ReviewAdapter
-    private lateinit var reviewList: List<Review>
+    // private lateinit var reviewList: List<Review>
     private lateinit var storeMyPageResponseDto : StoreMyPageResponseDto
 
     private val barcodeLauncher = registerForActivityResult(
@@ -40,15 +38,7 @@ class MyPageActivity : AppCompatActivity() {
         if (result.contents == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
         }
-        else { // 내용이 있다면
-            // 1. Toast 메시지 출력.
-            // 주석처리
-            /* Toast.makeText(
-                 this,
-                 "Scanned: " + result.contents,
-                 Toast.LENGTH_LONG
-             ).show()*/
-
+        else {
             Log.d("review", result.formatName)
 
             var storeId = result.contents
@@ -60,7 +50,6 @@ class MyPageActivity : AppCompatActivity() {
             intent.putExtra("fragmentToOpen", ReviewFragment::class.java.name)
             startActivity(intent)
             Log.d("review", "프레그먼트 실행 후")
-            //txtResult.text = result.contents.toString()
         }
     }
 
@@ -107,19 +96,23 @@ class MyPageActivity : AppCompatActivity() {
                     Log.d("store start retrofit", "통신 + ${response?.body()}")
                     // isOpen = response.body()!!.isOpen
                     // 리뷰 값 불러오기
-                    response.body()?.let{ storeMyPageResponseDto ->
-                        Log.d("store start retrofit", "리사이클러뷰 진입")
-
-                        reviewList = storeMyPageResponseDto.reviews
-
-                        Log.d("store start retrofit", "${reviewList}")
-                        reviewAdapter = ReviewAdapter(reviewList)
-
-                        binding.myStoreReview.apply {
-                            adapter = reviewAdapter
-                            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                        }
+                    response.body()?.let {
+                        storeMyPageResponseDto = it
                     }
+                    reviewAdapter = ReviewAdapter(storeMyPageResponseDto.reviews)
+                    binding.myStoreReview.apply {
+                        adapter = reviewAdapter
+                        this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    }
+
+                    Glide.with(binding.root)
+                        .load(storeMyPageResponseDto.thumbNail)
+                        .into(binding.thumbnailId)
+                    binding.title.text = storeMyPageResponseDto.storeName
+                    binding.categoryName.text = storeMyPageResponseDto.categoryName
+                    binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
+                    binding.starRating.text = storeMyPageResponseDto.ratingAverage.toString()
+                    binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
                 }
             })
 
@@ -162,10 +155,6 @@ class MyPageActivity : AppCompatActivity() {
             val intent = Intent( this, CreateQRActivity::class.java )
             intent.putExtra("storeId", storeId)
             startActivity(intent)
-        }
-        binding.btnCustomScan.setOnClickListener {
-            Log.d("qr", "커스텀 스캔 클릭")
-            onCustomScanButtonClicked()
         }
 
     }

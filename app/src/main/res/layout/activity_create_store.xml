@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/main_background">
+    android:background="@drawable/main_background">
 
     <include layout="@layout/toolbar"/>
-
-
+    <FrameLayout
+        android:id="@+id/createMapContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </FrameLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +25,7 @@
 
 
         <LinearLayout
+            android:id="@+id/createStoreContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -50,6 +55,7 @@
                 </TextView>
 
                 <Button
+                    android:id="@+id/positionBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_weight="1"
@@ -58,12 +64,13 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/resultAddress"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/box_border"
+                style="@style/ItemBoxWithShadow"
                 android:gravity="center"
-                android:text="상단의 버튼을 눌러 가게 위치를 설정해주세요">
+                android:hint="상단의 버튼을 눌러 가게 위치를 설정해주세요">
 
             </TextView>
 
@@ -154,8 +161,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/box_border"
                     android:hint="가게 이름을 입력해주세요."
+                    android:textColorHint="@color/color_gray1"
+                    android:background="@drawable/gray_square_round_border"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="15sp"
@@ -177,8 +185,9 @@
                     android:id="@+id/store_info_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:textColorHint="@color/color_gray1"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/box_border"
+                    android:background="@drawable/gray_square_round_border"
                     android:hint="가게에 대한 간단한 설명을 작성해주세요."
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -482,7 +491,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:hint="메뉴 이름"
+                        android:hint="메뉴명"
                         android:textSize="15sp"
                         android:inputType="text" />
 
@@ -522,7 +531,7 @@
                     android:id="@+id/menu_info"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:textColorHint="@color/color_brown"
+                    android:textColorHint="@color/color_gray1"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="10dp"
@@ -537,7 +546,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp">
-
 
                     <Button
                         android:id="@+id/button_add_photo"

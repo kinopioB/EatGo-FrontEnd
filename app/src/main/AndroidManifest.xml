@@ -40,7 +40,16 @@
             android:name=".presentation.store.StoreDetailActivity"
             android:theme="@style/ToolBar"
             android:exported="true">
+          
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
         </activity>
+
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
             android:exported="true">
@@ -54,6 +63,13 @@
             android:name=".presentation.store.ManageActivity"
             android:exported="true"
             android:theme="@style/ToolBar">
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
         </activity>
         <activity
             android:name=".presentation.store.ReviewAdapter"
@@ -97,11 +113,11 @@
         <activity
             android:name=".presentation.map.NaverMapActivity"
             android:exported="true">
-<!--                <intent-filter>-->
-<!--                    <action android:name="android.intent.action.MAIN" />-->
+<!--                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
 
-<!--                    <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                </intent-filter>-->
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>-->
         </activity>
 
         <meta-data
@@ -120,11 +136,11 @@
             android:name=".MainActivity"
             android:exported="true">
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -145,6 +161,16 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="bcf7f6fbbc6d13fa2ee8f3a673083550" />
+
+        <service
+            android:name=".data.store.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
+
+
 
 </manifest>

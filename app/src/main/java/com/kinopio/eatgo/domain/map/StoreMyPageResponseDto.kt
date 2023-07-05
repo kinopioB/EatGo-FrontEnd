@@ -12,6 +12,7 @@ data class StoreMyPageResponseDto (
     val categoryId : Int,
     val categoryName : String,
     val isOpen : Int,
+    val reviewNum : Int,
 
     val ratingAverage: Float,
 

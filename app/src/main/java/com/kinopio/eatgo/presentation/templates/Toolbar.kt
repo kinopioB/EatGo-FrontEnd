@@ -1,3 +1,4 @@
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -16,12 +17,17 @@ class ToolbarUtils {
             val titleTextView = toolbar.findViewById<TextView>(R.id.title)
             val iconImageView = toolbar.findViewById<ImageView>(R.id.image)
             val categoryName = "category_$categoryId"
+            Log.d("toolbar", "title : $title")
 
             // TextView 사용
             if(categoryId == null){
                 iconImageView.visibility = View.GONE
                 titleTextView.text = title
-            }else{
+            }else if(title == "마이페이지"){
+                Log.d("toolbar", "tool 마이페이지")
+                titleTextView.text = title
+            }
+            else{
                 titleTextView.visibility = View.GONE
                 iconImageView.setImageDrawable(ContextCompat.getDrawable(toolbar.context, activity.resources.getIdentifier(categoryName, "drawable", activity.packageName)))
             }
