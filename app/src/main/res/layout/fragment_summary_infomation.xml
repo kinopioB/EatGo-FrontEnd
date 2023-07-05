@@ -6,7 +6,8 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:background="@drawable/radius"
-        tools:context=".presentation.store.SummaryInfomationFragment">
+    android:theme="@style/Base.Theme.EatGo"
+    tools:context=".presentation.store.SummaryInfomationFragment">
 
         <TextView
             android:id="@+id/storeNameTv"
