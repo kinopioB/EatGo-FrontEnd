@@ -1,5 +1,6 @@
 package com.kinopio.eatgo
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
         // 스캔 버튼 클릭
         binding.btnCustomScanMain.setOnClickListener {
             Log.d("qr", "커스텀 스캔 클릭1")
@@ -88,9 +90,9 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
 
 
         binding.customCurLocationBtn.setOnClickListener {
-            User.setPositionX(naverMap.cameraPosition.target.latitude)
-            User.setPositionY(naverMap.cameraPosition.target.longitude)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            User.setPositionX(37.5837)
+            User.setPositionY(127.0000)
         }
 
         binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener{
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
                                         var infomationFragment:SummaryInfomationFragment = SummaryInfomationFragment()
                                         val prevFrameLayout = supportFragmentManager.findFragmentById(R.id.MainSummaryframeLayout)
                                         if (prevFrameLayout != null) {
+
                                             transaction.remove(prevFrameLayout)
                                         }
                                         val storeId = markerList[i].id
@@ -248,8 +251,8 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         naverMap.uiSettings.isLogoClickEnabled = false
         // 위치를 추적하면서 카메라도 따라 움직인다.
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
-        User.setPositionX(naverMap.cameraPosition.target.latitude)
-        User.setPositionY(naverMap.cameraPosition.target.longitude)
+        User.setPositionX(37.5837)
+        User.setPositionY(127.0000)
     }
 
     companion object {

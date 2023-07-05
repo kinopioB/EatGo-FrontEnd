@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.store.SummaryInfomationFragment">
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="350dp"
         android:layout_height="200dp"
-        android:background="@drawable/radius">
+        android:background="@drawable/radius"
+        tools:context=".presentation.store.SummaryInfomationFragment">
 
         <TextView
             android:id="@+id/storeNameTv"
@@ -45,7 +42,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="78dp"
-            android:text="#월 화 수"
+            android:text="#월 화 수 목"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/openTimeTv"
@@ -66,17 +63,13 @@
 
 
         <LinearLayout
-            android:layout_width="281dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="80dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.681"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.625">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -118,5 +111,3 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
