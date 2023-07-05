@@ -450,8 +450,8 @@ class CreateStoreActivity : AppCompatActivity() {
             newOpenInfoList.add(
                 OpenInfoRequestDto(
                     openInfoTmp.day,
-                    openInfoTmp.startTime,
-                    openInfoTmp.endTime
+                    openInfoTmp.openTime,
+                    openInfoTmp.closeTime
                 )
             )
         }

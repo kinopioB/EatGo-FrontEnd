@@ -50,11 +50,6 @@ class StoreDetailActivity : AppCompatActivity() {
 
         if (storeId != -1) {
 
-           // val loadingAnimDialog = LoadingDialog(this)
-//            loadingAnimDialog.show()
-//            Handler().postDelayed({
-//                loadingAnimDialog.dismiss()
-//            }, 10000)
 
             val retrofit = RetrofitClient.getRetrofit2()
             val storeService = retrofit.create(StoreService::class.java)
@@ -82,6 +77,16 @@ class StoreDetailActivity : AppCompatActivity() {
                             // 가게 리뷰 평점 세팅
                             binding.reviewAverage.text = data.ratingAverage.toString()
 
+                            // 영업일 정보 세팅
+                            var openDayInfo =""
+                            for (i in 0..data.openInfos.size-1){
+                                openDayInfo += (data.openInfos.get(i).day + " : " + data.openInfos.get(i).openTime +" - " + data.openInfos.get(i).closeTime + "\n")
+                            }
+                            binding.openDay.text = openDayInfo
+
+                            // 영업 위치 세팅
+                            binding.address.text = data.address
+
                             if(data.menus.size !=0){
                                 menuList = data.menus
                                 Log.d("StoreDetail", "메뉴 사이즈 ${data.menus.size}")
@@ -90,7 +95,6 @@ class StoreDetailActivity : AppCompatActivity() {
                                 reviewList = data.reviews
                             }
                             info = data.info
-                            Log.d("info", "${info}")
                             historyList = data.storeHistories
                             var categoryId =data.categoryId
                             binding.pager.adapter = StoreDetailTabAdapter(this@StoreDetailActivity, menuList, reviewList, categoryId, info, historyList)
