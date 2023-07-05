@@ -7,6 +7,7 @@
     android:layout_marginBottom="3dp"
     android:padding="1dp"
     android:gravity="center"
+    android:theme="@style/Base.Theme.EatGo"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

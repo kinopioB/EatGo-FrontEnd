@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
+    android:theme="@style/Base.Theme.EatGo"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="10dp"
+        android:orientation="vertical"
         android:padding="10dp"
         tools:context=".presentation.store.MyPageActivity">
 
@@ -20,17 +21,17 @@
             android:id="@+id/storeCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/myStoreImage"
+                android:layout_marginTop="10dp"
+                style="@style/BigItemBoxWithShadow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top|center"
-                android:orientation="vertical"
                 android:elevation="10dp"
-                style="@style/BigItemBoxWithShadow"
-                >
+                android:gravity="top|center"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -38,7 +39,11 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="10">
-
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/truck">
+                    </ImageView>
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
@@ -48,28 +53,18 @@
                         android:layout_weight="8"
                         android:text="성균관 타코야키"
                         android:textSize="20dp" />
-                    <TextView
-                        android:id="@+id/categoryName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="카테고리 이름"
-                        />
-                    <TextView
-                        android:id="@+id/categoryIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="아이콘"
-                        />
+
+
                     <ImageButton
                         android:id="@+id/qr"
+                        style="@style/QrScanBoxWithShadow"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:textColor="@color/white"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/qr_code_camera"
-                        style="@style/QrScanBoxWithShadow"
                         android:backgroundTint="@color/white"
-                        android:text="QR" />
+                        android:src="@drawable/qr_code_camera"
+                        android:text="QR"
+                        android:textColor="@color/white" />
                     <!--<Button
                         android:id="@+id/btnCustomScan"
                         android:layout_width="40dp"
@@ -80,153 +75,200 @@
                         android:text="스캔" />-->
 
                 </LinearLayout>
+
+
                 <ImageView
                     android:id="@+id/thumbnail_id"
                     android:layout_width="330dp"
                     android:layout_height="200dp"
                     android:layout_margin="10dp"
+                    android:background="@drawable/bottom_border"
                     android:text="">
                 </ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:background="@drawable/button_radius"
+                        android:text="떡볶이">
+                    </TextView>
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-
                 style="@style/ItemBoxWithShadow"
-                android:weightSum="4"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+
                 android:elevation="5dp"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_margin="7dp"
-                    style="@style/MypageBoxWithShadow"
-
+                    android:layout_weight="1"
+                    android:background="@drawable/right_border"
+                    android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:drawableEnd="@drawable/heart_fill"
+                        android:drawablePadding="5dp"
                         android:text="좋아요"
-                        android:textSize="10dp"
-                        >
+                        android:textSize="12sp">
                     </TextView>
+
                     <TextView
                         android:id="@+id/likeImageNum"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="좋아요 갯수"
-                        android:textSize="10dp"
-                        android:drawableLeft="@drawable/heart_fill" />
+                        android:gravity="center"
+                        android:text="30"
+                        android:textColor="@color/black"
+                        android:textSize="17sp">
+                    </TextView>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:background="@drawable/right_border"
                     android:layout_margin="7dp"
-                    style="@style/MypageBoxWithShadow"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:drawableEnd="@drawable/reviews_fill"
+                        android:drawablePadding="5dp"
                         android:text="리뷰"
-                        android:textSize="10dp"
-                        >
+                        android:textSize="12sp">
                     </TextView>
+
                     <TextView
                         android:id="@+id/reviewNum"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="리뷰 갯수"
-                        android:textSize="10dp"
-                        android:drawableLeft="@drawable/reviews_fill" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="7dp"
-                    style="@style/MypageBoxWithShadow"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="리뷰 평점"
-                        android:textSize="10dp"
-                        >
+                        android:gravity="center"
+                        android:text="20"
+                        android:textColor="@color/black"
+                        android:textSize="17sp">
                     </TextView>
-                    <TextView
-                        android:id="@+id/starRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="평점"
-                        android:textSize="10dp"
-                        android:drawableLeft="@drawable/star_icon" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_margin="7dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/right_border"
                     android:gravity="center"
-                    style="@style/MypageBoxWithShadow"
-
                     android:orientation="vertical">
+
                     <TextView
-                        android:id="@+id/status_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="영업 상태"
-                        android:textSize="10dp"
-                        >
+                        android:layout_marginBottom="5dp"
+                        android:drawableEnd="@drawable/star_icon"
+                        android:drawablePadding="5dp"
+                        android:text="리뷰평점"
+                        android:textSize="12sp">
                     </TextView>
+
+                    <TextView
+                        android:id="@+id/starRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="30"
+                        android:textColor="@color/black"
+                        android:textSize="17sp">
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:drawableEnd="@drawable/star_icon"
+                        android:drawablePadding="5dp"
+                        android:text="영업여부"
+                        android:textSize="12sp">
+                    </TextView>
+
                     <Button
                         android:id="@+id/startStatus"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
-                        android:textAlignment="center"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/start_status_border"
+                        android:gravity="center"
                         android:text="영업 중"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="8sp"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
+
                     <Button
                         android:id="@+id/endStatus"
                         android:layout_width="40dp"
                         android:layout_height="20dp"
-                        android:textAlignment="center"
                         android:background="@drawable/stop_status_border"
-                        android:textColor="@color/white"
-                        android:text="영업 종료"
-                        android:textSize="8sp"
                         android:gravity="center"
-                        />
+                        android:text="영업 종료"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:text="리뷰">
+            </TextView>
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/myStoreReview"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp">
-
+                    android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
             </ScrollView>
         </LinearLayout>
