@@ -38,17 +38,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.naverlogin.KakaoLoginActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:name=".presentation.templates.SplashActivity2"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.naverlogin.KakaoLoginActivity"
+            android:exported="true" />
+
         </activity>
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -61,17 +65,14 @@
                     android:scheme="@string/kakao_key" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.store.StoreDetailActivity"
             android:exported="true"
-
-            android:theme="@style/ToolBar">
-
-        </activity>
+            android:theme="@style/ToolBar"></activity>
         <activity
             android:name=".presentation.naverlogin.NaverLoginActivity"
-            android:exported="true">
+            android:exported="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,8 +87,7 @@
         <activity
             android:name=".presentation.store.ManageActivity"
             android:exported="true"
-
-            android:theme="@style/ToolBar"></activity>
+            android:theme="@style/ToolBar" />
         <activity
             android:name=".presentation.store.ReviewAdapter"
             android:exported="false" />
@@ -127,7 +127,7 @@
             android:theme="@style/ToolBar" />
         <activity
             android:name=".presentation.map.NaverMapActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -136,6 +136,7 @@
         <activity
             android:name=".presentation.map.MapTestActivity"
             android:exported="true" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="bcf7f6fbbc6d13fa2ee8f3a673083550" />
@@ -143,11 +144,18 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+                <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+       
         </activity>
         <activity
             android:name=".presentation.store.CreateStoreActivity"
             android:exported="true"
-            android:theme="@style/ToolBar"></activity>
+            android:theme="@style/ToolBar" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
