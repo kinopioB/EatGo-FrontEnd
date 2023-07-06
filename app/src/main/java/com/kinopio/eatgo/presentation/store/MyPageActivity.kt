@@ -30,8 +30,9 @@ import retrofit2.Response
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var reviewAdapter: ReviewAdapter
+
     // private lateinit var reviewList: List<Review>
-    private lateinit var storeMyPageResponseDto : StoreMyPageResponseDto
+    private lateinit var storeMyPageResponseDto: StoreMyPageResponseDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,11 @@ class MyPageActivity : AppCompatActivity() {
                             reviewAdapter = ReviewAdapter(storeMyPageResponseDto.reviews)
                             binding.myStoreReview.apply {
                                 adapter = reviewAdapter
-                                this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                                this.layoutManager = LinearLayoutManager(
+                                    context,
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
                             }
                             Glide.with(binding.root)
                                 .load(storeMyPageResponseDto.thumbNail)
@@ -90,7 +95,8 @@ class MyPageActivity : AppCompatActivity() {
                             binding.title.text = storeMyPageResponseDto.storeName
                             // binding.categoryName.text = storeMyPageResponseDto.categoryName
                             // binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
-                            binding.starRating.text = storeMyPageResponseDto.ratingAverage.toString()
+                            binding.starRating.text =
+                                storeMyPageResponseDto.ratingAverage.toString()
                             binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
                         }
 
@@ -118,16 +124,16 @@ class MyPageActivity : AppCompatActivity() {
 //        }*/
 //
 //
-//        binding.storeCard.setOnClickListener{
-//            val intent = Intent(this, ManageActivity::class.java)
-//            intent.putExtra("storeId", storeMyPageResponseDto.storeId)
-//
-//            startActivity(intent)
-//        }
+        binding.storeCard.setOnClickListener {
+            val intent = Intent(this, ManageActivity::class.java)
+            intent.putExtra("storeId", storeMyPageResponseDto.storeId)
 
-        binding.qr.setOnClickListener{
+            startActivity(intent)
+        }
+
+        binding.qr.setOnClickListener {
             Log.d("QR", "QR코드 생성")
-            val intent = Intent( this, CreateQRActivity::class.java )
+            val intent = Intent(this, CreateQRActivity::class.java)
             intent.putExtra("storeId", storeMyPageResponseDto.storeId)
             startActivity(intent)
         }
