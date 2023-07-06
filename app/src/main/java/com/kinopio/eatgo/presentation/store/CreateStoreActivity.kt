@@ -463,7 +463,7 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
         var storeName = binding.storeEdittext.text.toString()
-        var userId = 1
+        var userId = User.getUserId()?.toInt()!!
         var address = binding.resultAddress.text.toString().trim()
         getPosition(address)
         var info  = binding.storeInfoEdittext.text.toString().trim()

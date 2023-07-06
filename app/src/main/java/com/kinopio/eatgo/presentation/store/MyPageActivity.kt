@@ -127,7 +127,6 @@ class MyPageActivity : AppCompatActivity() {
         binding.storeCard.setOnClickListener {
             val intent = Intent(this, ManageActivity::class.java)
             intent.putExtra("storeId", storeMyPageResponseDto.storeId)
-
             startActivity(intent)
         }
 

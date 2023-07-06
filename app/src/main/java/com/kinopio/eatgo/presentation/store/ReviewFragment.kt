@@ -105,10 +105,11 @@ class ReviewFragment : DialogFragment() {
                         // 2. activity에 그려주기 - mypage에 넘어가는 걸
 
                         //val token = response.body()?.message!!
-                        val token = "cqK-rOdXTFanCBqZCr_l0E:APA91bF6Ty-3A42i6NLaHbbl_SCO91hiGwrgz33McYtLqbUXJigWr_kfXSdKoDgIz19V8QiPFT3fv1aGJWNPJt-_f0z5mSB8qzQCyhoN-Jjv0Od-559MPlvNnXpycDjo-26aeBQ-gqCJ"
                         val tokenReceived = response.body()?.message.toString()
+                        Log.d("reviewFragment", "$tokenReceived")
                         if(tokenReceived!=null){
-                            sendNotificationToPartner(tokenReceived)
+                            Log.d("reviewFragment", "if in")
+                            sendNotificationToPartner(tokenReceived, inputText)
 
                         }
 
@@ -124,12 +125,12 @@ class ReviewFragment : DialogFragment() {
         }
     }
 
-    private fun sendNotificationToPartner(token: String) {
+    private fun sendNotificationToPartner(token: String, sendMessage:String) {
         //token is id , whom you want to send notification ,
         //  val retrofit = FCMRetrofitProvider.getRetrofit()
         Log.d("gather", "${token}")
        // val res: List<String> = listOf(token)
-        val data = PushNotificationData("일반 알림", "EatGo", "새로운 리뷰가 남겨졌어요!")
+        val data = PushNotificationData("일반 알림", "EatGo", sendMessage)
         val requestData = PushNotificationEntity(token, "high", data)
         Log.d("gather","테스팅")
 

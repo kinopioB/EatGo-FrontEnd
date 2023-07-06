@@ -32,7 +32,7 @@ class ScanQRActivity : AppCompatActivity() {
         else {
             Log.d("review", result.formatName)
 
-            var storeId = result.contents
+            var storeId = result.contents.toInt()
             Log.d("QR", "${storeId}")
             Log.d("QR", "${result.contents}")
             var userId = User.getUserId()

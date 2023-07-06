@@ -349,6 +349,7 @@ class NaverLoginActivity : AppCompatActivity() {
 
             }
             val token = task.result
+            Log.d("ttt", "$token")
             Log.d("fire", "토큰 값 : ${token}")
 
             val retrofit = RetrofitClient.getRetrofit2()
