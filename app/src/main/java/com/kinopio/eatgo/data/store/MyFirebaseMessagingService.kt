@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.ktx.remoteMessage
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.presentation.store.MyPageActivity
@@ -28,24 +29,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
     }
 
-    override fun onMessageReceived(message: RemoteMessage) {
-        Log.d(TAG, "From: " + message.from)
-        super.onMessageReceived(message)
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "From: " + remoteMessage.from)
+        super.onMessageReceived(remoteMessage)
 
         createNotificationChannel() // 채널생성함수 호출
 
         // 알림이 어떤 타입인지 구분 - 타입에 따라 메세지 형태가 다름
 
-        var type = message.data["type"]?.let { NotificationType.valueOf(it) }
-        type = NotificationType.NORMAL
-        Log.d(TAG, "onMessageReceived : ${message.data}")
+        var type = NotificationType.NORMAL
+        Log.d(TAG, "onMessageReceived : $remoteMessage.data")
 
 
-        message.data.get("title")
-        val title = message.data.get("title")
-        val message =message.data.get("message")
+
+        val title = remoteMessage.data["title"]
+        val message =remoteMessage.data["message"]
+        Log.d(TAG, "받은 메세지 $title")
         type ?: return
         Log.d(TAG, "특정 권한 예외 처리 전!")
+        Log.d(TAG, "$type")
 
         // 특정 권한을 요청하고 있는데 사용자가 권한을 거부할 수 있는 상황에서
         // 명시적으로 확인 및 예외 처리하는 과정
@@ -63,7 +65,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Notification Builder 진입 후 ")
 
             NotificationManagerCompat.from(this)
-                .notify(type.id, createNotification(type, title, message))
+                .notify(0, createNotification(type, title, message))
         }
     }
 
@@ -86,6 +88,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 파라미터 1. 알림 타입, 2. 제목, 3. 메세지
     private fun createNotification(type: NotificationType?, title:String?, message: String?) : Notification {
 
+        Log.d(TAG," 메세지 생성 ")
         // 알림을 누르면 실행될 수 있게 intent를 만들어 줌
         val intent = Intent(this, MyPageActivity::class.java).apply {
             putExtra(TAG,"${type?.title} 타입")

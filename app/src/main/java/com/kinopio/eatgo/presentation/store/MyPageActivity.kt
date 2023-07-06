@@ -60,7 +60,7 @@ class MyPageActivity : AppCompatActivity() {
 
         var userId = User.getUserId()
 
-        Log.d("store start retrofit", "${userId}")
+        Log.d("store start retrofit", "$userId")
 
         // 분기 처리 - 사용자일 때, 아닐 때
         if (userId != null) {

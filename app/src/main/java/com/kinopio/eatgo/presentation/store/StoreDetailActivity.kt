@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityStoreDetailBinding
 
@@ -142,14 +143,25 @@ class StoreDetailActivity : AppCompatActivity() {
         val fragmentClassName = intent.getStringExtra("fragmentToOpen")
 
         Log.d("review", " review fragment : $fragmentClassName" )
+        val bundle = Bundle()
+        bundle.putInt("storeId", storeId)
+
+        bundle.putInt("userId", User.getUserId()!!)
+
 
         if(fragmentClassName!= null) {
             try {
-                val fragment = Class.forName("com.kinopio.eatgo.presentation.store.ReviewFragment")
-                    .newInstance() as Fragment
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.detailReview, fragment)
-                    .commit()
+                val fragment = ReviewFragment()
+                fragment.arguments = bundle
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.add(R.id.detailReview, fragment)
+                transaction.commit()
+
+//                val fragment = Class.forName("com.kinopio.eatgo.presentation.store.ReviewFragment")
+//                    .newInstance() as Fragment
+//                supportFragmentManager.beginTransaction()
+//                    .add(R.id.detailReview, fragment)
+//                    .commit()
             } catch (e: Exception) {
                 e.printStackTrace()
             }

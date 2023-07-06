@@ -171,6 +171,7 @@ class NaverLoginActivity : AppCompatActivity() {
                                 Log.d("last", "${User.getSocialToken()}")
                                 setFireBaseToken(User.getUserId()!!)
                                 Log.d("last", "kakao token ${User.getFireBaseToken()}")
+
                                 val intent:Intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)
                             }
@@ -338,51 +339,14 @@ class NaverLoginActivity : AppCompatActivity() {
         }
     }
 
-//    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-//        if (error != null) {
-//            when {
-//                error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-//                    Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-//                    Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-//                    Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-//                    Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-//                    Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-//                    Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.ServerError.toString() -> {
-//                    Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
-//                }
-//                error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-//                    Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
-//                }
-//                else -> { // Unknown
-//                    Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//        else if (token != null) {
-//            Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//            finish()
-//        }
-//    }
+
 
     fun setFireBaseToken(userId:Int) {
         // 파이어베이스 디바이스에 부여된 토큰값 알아내기
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.d("fire", "토큰 가져오기 실패", task.exception)
+
             }
             val token = task.result
             Log.d("fire", "토큰 값 : ${token}")
@@ -406,9 +370,7 @@ class NaverLoginActivity : AppCompatActivity() {
                 }
             })
 
-            /*  */
 
-            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         }
     }
 

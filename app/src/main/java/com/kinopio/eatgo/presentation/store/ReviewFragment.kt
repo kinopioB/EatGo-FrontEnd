@@ -1,5 +1,6 @@
 package com.kinopio.eatgo.presentation.store
 
+import FCMRetrofitProvider
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,20 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.google.firebase.messaging.FirebaseMessagingService
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.RetrofitClient
-import com.kinopio.eatgo.NotificationInterface
 import com.kinopio.eatgo.PushNotificationData
 import com.kinopio.eatgo.PushNotificationEntity
 import com.kinopio.eatgo.PushNotificationResponse
 import com.kinopio.eatgo.data.map.ReviewService
+import com.kinopio.eatgo.data.store.NotificationType
 import com.kinopio.eatgo.databinding.FragmentReviewBinding
-import com.kinopio.eatgo.domain.map.RequestNotification
 import com.kinopio.eatgo.domain.map.ReviewRequestDto
 import com.kinopio.eatgo.domain.map.ReviewResponseDto
-import com.kinopio.eatgo.domain.map.SendNotificationModel
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,9 +65,12 @@ class ReviewFragment : DialogFragment() {
             Log.d("review", "editText : $inputText")
             Log.d("review", "ratingStar : $ratingStar")
 
+            val storeId = arguments?.getInt("storeId") !!
+            val userId= arguments?.getInt("userId") !!
+
+
+            Log.d("reviewFragment", "넘겨받은 값 ${storeId}, ${userId}")
             // storeId, userId 넘겨서 주기
-            val storeId: Int = 1
-            val userId: Int = 2
 
             Log.d("reviewFragment", "retrofit1")
 
@@ -104,12 +104,16 @@ class ReviewFragment : DialogFragment() {
                         // 1. 리뷰 데이터 DB에 넣어주기
                         // 2. activity에 그려주기 - mypage에 넘어가는 걸
 
-                        val token = response.body()?.message!!
+                        //val token = response.body()?.message!!
+                        val token = "cqK-rOdXTFanCBqZCr_l0E:APA91bF6Ty-3A42i6NLaHbbl_SCO91hiGwrgz33McYtLqbUXJigWr_kfXSdKoDgIz19V8QiPFT3fv1aGJWNPJt-_f0z5mSB8qzQCyhoN-Jjv0Od-559MPlvNnXpycDjo-26aeBQ-gqCJ"
+                        val tokenReceived = response.body()?.message.toString()
+                        if(tokenReceived!=null){
+                            sendNotificationToPartner(tokenReceived)
 
-                        sendNotificationToPartner(token)
+                        }
 
                         // val firebaseMessagingService: FirebaseMessagingService
-                        // firebaseMessagingService.on
+                   //       firebaseMessagingService.on
                         val intent = Intent(context, MainActivity::class.java)
                         intent.putExtra("storeId", storeId)
                         startActivity(intent)
@@ -124,17 +128,16 @@ class ReviewFragment : DialogFragment() {
         //token is id , whom you want to send notification ,
         //  val retrofit = FCMRetrofitProvider.getRetrofit()
         Log.d("gather", "${token}")
-        val res: List<String> = listOf(token)
-        val data = PushNotificationData("NORMAL", "EatGo", "새로운 리뷰가 남겨졌어요!")
+       // val res: List<String> = listOf(token)
+        val data = PushNotificationData("일반 알림", "EatGo", "새로운 리뷰가 남겨졌어요!")
         val requestData = PushNotificationEntity(token, "high", data)
+        Log.d("gather","테스팅")
 
-        val callPushNotification: Call<PushNotificationResponse> =
-            FCMRetrofitProvider.getRetrofit().sendPushNotification(requestData)
+        val testRetrofit  = FCMRetrofitProvider.getRetrofit()
+        Log.d("gather", "retrofit ${testRetrofit}")
+        val callPushNotification: Call<PushNotificationResponse> = FCMRetrofitProvider.getRetrofit().sendPushNotification(requestData)
         callPushNotification.enqueue(object : Callback<PushNotificationResponse> {
-            override fun onResponse(
-                call: Call<PushNotificationResponse>,
-                response: Response<PushNotificationResponse>
-            ) {
+            override fun onResponse(call: Call<PushNotificationResponse>, response: Response<PushNotificationResponse>) {
                 Log.d("gather", "성공 $call, $response")
             }
 

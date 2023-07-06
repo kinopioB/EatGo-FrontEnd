@@ -2,6 +2,7 @@ package com.kinopio.eatgo
 
 
 import com.google.gson.annotations.SerializedName
+import com.kinopio.eatgo.data.store.NotificationType
 
 
 data class PushNotificationEntity(
