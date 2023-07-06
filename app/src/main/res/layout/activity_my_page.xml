@@ -38,6 +38,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:background="@drawable/bottom_border"
+                    android:padding="5dp"
                     android:weightSum="10">
                     <ImageView
                         android:layout_width="30dp"
@@ -45,22 +47,20 @@
                         android:src="@drawable/truck">
                     </ImageView>
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/store_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:layout_weight="8"
-                        android:text="성균관 타코야키"
                         android:textSize="20dp" />
 
 
                     <ImageButton
                         android:id="@+id/qr"
                         style="@style/QrScanBoxWithShadow"
-                        android:layout_width="40dp"
+                        android:layout_width="50dp"
                         android:layout_height="40dp"
-                        android:layout_marginRight="10dp"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/qr_code_camera"
                         android:text="QR"
@@ -79,6 +79,7 @@
 
                 <ImageView
                     android:id="@+id/thumbnail_id"
+                    android:scaleType="centerCrop"
                     android:layout_width="330dp"
                     android:layout_height="200dp"
                     android:layout_margin="10dp"
@@ -87,17 +88,23 @@
                 </ImageView>
 
                 <LinearLayout
+                    android:id="@+id/linear_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="7dp"
                     android:paddingBottom="7dp">
 
                     <TextView
+                        android:id="@+id/category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="7dp"
-                        android:background="@drawable/button_radius"
-                        android:text="떡볶이">
+                        android:textColor="@color/black"
+                        android:background="@drawable/right_border"
+                        android:paddingRight="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="">
                     </TextView>
 
                 </LinearLayout>
@@ -128,6 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="center_vertical"
                         android:drawableEnd="@drawable/heart_fill"
                         android:drawablePadding="5dp"
                         android:text="좋아요"
@@ -160,6 +168,7 @@
                         android:layout_marginBottom="5dp"
                         android:drawableEnd="@drawable/reviews_fill"
                         android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
                         android:text="리뷰"
                         android:textSize="12sp">
                     </TextView>
@@ -188,6 +197,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="center_vertical"
+
                         android:drawableEnd="@drawable/star_icon"
                         android:drawablePadding="5dp"
                         android:text="리뷰평점"
@@ -219,6 +230,7 @@
                         android:layout_marginBottom="5dp"
                         android:drawableEnd="@drawable/star_icon"
                         android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
                         android:text="영업여부"
                         android:textSize="12sp">
                     </TextView>
@@ -238,7 +250,7 @@
 
                     <Button
                         android:id="@+id/endStatus"
-                        android:layout_width="40dp"
+                        android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:background="@drawable/stop_status_border"
                         android:gravity="center"

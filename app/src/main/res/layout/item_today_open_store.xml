@@ -49,7 +49,7 @@
             android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="#박보검 #양석진 #가만안둬"
+            android:layout_marginTop="5dp"
             android:textSize="15sp"
             android:textStyle="bold"
             android:textColor="@color/color_brown">

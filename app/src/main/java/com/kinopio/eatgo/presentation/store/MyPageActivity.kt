@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -22,8 +23,6 @@ import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityMyPageBinding
 import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.presentation.qr.CreateQRActivity
-import com.kinopio.eatgo.presentation.qr.CustomQRScannerActivity
-import com.naver.maps.map.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -92,12 +91,35 @@ class MyPageActivity : AppCompatActivity() {
                             Glide.with(binding.root)
                                 .load(storeMyPageResponseDto.thumbNail)
                                 .into(binding.thumbnailId)
-                            binding.title.text = storeMyPageResponseDto.storeName
                             // binding.categoryName.text = storeMyPageResponseDto.categoryName
                             // binding.categoryIcon.text = storeMyPageResponseDto.categoryId.toString()
                             binding.starRating.text =
                                 storeMyPageResponseDto.ratingAverage.toString()
                             binding.reviewNum.text = storeMyPageResponseDto.reviewNum.toString()
+                            binding.storeName.text = storeMyPageResponseDto.storeName
+                            binding.category.text = storeMyPageResponseDto.categoryName
+                            val linearContainer = findViewById<LinearLayout>(R.id.linear_container)
+
+                            for (item in storeMyPageResponseDto.tags) {
+                                val textView = TextView(this@MyPageActivity)
+                                textView.layoutParams = LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                )
+                                textView.setPadding(10,10,10,10)
+                                textView.setBackgroundResource(R.drawable.button_radius)
+                                textView.text = item.tagName.toString()
+
+                                linearContainer.addView(textView)
+                            }
+                            if(storeMyPageResponseDto.isOpen==1){
+                                binding.startStatus.visibility = View.VISIBLE
+                            }else{
+                                binding.endStatus.visibility = View.VISIBLE
+                            }
+
+
+
                         }
 
                     }

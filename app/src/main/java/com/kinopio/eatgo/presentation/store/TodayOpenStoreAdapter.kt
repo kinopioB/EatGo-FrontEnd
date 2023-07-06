@@ -45,6 +45,7 @@ class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDt
             binding.apply {
                 binding.storeName.text = store.storeName
                 binding.storeDesc.text = store.info
+                binding.tags.text = store.tags.map { " # " + it.tagName }.joinToString(separator = " ").toString()
 
 
 //                for (tag in store.tags) {
