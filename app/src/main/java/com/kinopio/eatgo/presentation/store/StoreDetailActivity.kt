@@ -144,7 +144,7 @@ class StoreDetailActivity : AppCompatActivity() {
 
         Log.d("review", " review fragment : $fragmentClassName" )
         val bundle = Bundle()
-        bundle.putInt("storeId", storeId)
+        bundle.putInt("storeId", receivedIntent.getIntExtra("storeId", -1))
 
         bundle.putInt("userId", User.getUserId()!!)
 

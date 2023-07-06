@@ -33,6 +33,8 @@ class ScanQRActivity : AppCompatActivity() {
             Log.d("review", result.formatName)
 
             var storeId = result.contents
+            Log.d("QR", "${storeId}")
+            Log.d("QR", "${result.contents}")
             var userId = User.getUserId()
             Log.d("review", "프레그먼트 실행 전")
             // Mypage 로 넘겨주기
