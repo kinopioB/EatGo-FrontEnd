@@ -9,5 +9,5 @@ data class TodayOpenStoreResponseDto(
     val info : String,
     val categoryId : Int,
     val categoryName: String,
-    val tag : List<Tag>
+    val tags : List<Tag>
 )

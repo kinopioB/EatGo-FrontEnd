@@ -220,10 +220,6 @@
 
                     <RadioButton
                         style="@style/StoreRadioButton"
-                        android:text="매장"></RadioButton>
-
-                    <RadioButton
-                        style="@style/StoreRadioButton"
                         android:text="푸드트럭"></RadioButton>
                 </RadioGroup>
 
@@ -526,6 +522,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="10dp"
                     android:text=" * 대표 메뉴로 등록할 경우 체크박스를 체크해주세요 * ">
                 </TextView>
 
@@ -571,6 +569,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
                 android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -592,6 +591,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="* 가게에 태그를 등록해주세요 ( 선택 )  * ">
 
             </TextView>
@@ -613,7 +613,7 @@
 
                 <Button
                     android:id="@+id/tagAddBtn"
-
+                    android:padding="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="right"

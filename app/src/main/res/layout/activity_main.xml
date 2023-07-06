@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/cate_toggle_skewer"
+        android:background="@drawable/cate_toggle_sweetpotato"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchEditText"></ImageButton>
 
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/cate_toggle_snack"
+        android:background="@drawable/cate_toggle_skewer"
         app:layout_constraintStart_toEndOf="@id/categorySearchButton1"
         app:layout_constraintTop_toBottomOf="@id/searchEditText">
     </ImageButton>
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/cate_toggle_bung"
+        android:background="@drawable/cate_toggle_snack"
         app:layout_constraintStart_toEndOf="@id/categorySearchButton2"
         app:layout_constraintTop_toBottomOf="@id/searchEditText">
     </ImageButton>
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/cate_toggle_taco"
+        android:background="@drawable/cate_toggle_bung"
         app:layout_constraintStart_toEndOf="@id/categorySearchButton3"
         app:layout_constraintTop_toBottomOf="@id/searchEditText">
     </ImageButton>
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/cate_toggle_sweetpotato"
+        android:background="@drawable/cate_toggle_taco"
         app:layout_constraintStart_toEndOf="@id/categorySearchButton4"
         app:layout_constraintTop_toBottomOf="@id/searchEditText">
     </ImageButton>
@@ -126,11 +126,11 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="270dp"
         app:layout_constraintBottom_toBottomOf="@+id/map"
-        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/map"
         app:layout_constraintTop_toTopOf="@+id/searchEditText">
 
     </FrameLayout>

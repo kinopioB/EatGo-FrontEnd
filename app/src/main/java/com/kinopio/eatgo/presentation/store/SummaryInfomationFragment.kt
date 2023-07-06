@@ -99,22 +99,24 @@ class SummaryInfomationFragment : Fragment() {
                     
                     
                     
-                    Log.d("summary", "${"#" + it.openInfos.map { it.day }.joinToString(separator = " ").toString()}")
+                    Log.d("summary", "${"@" + it.openInfos.map { it.day }.joinToString(separator = " ").toString()}")
                     binding.storeRatingTv.text = it.ratingAverage.toString()
 
                     if (it.tags.size > 0) {
-                        binding.openDayTv.text = "#" + it.tags.map { it.tagName }.joinToString(separator = " ").toString()
+                        binding.tagInfo.text = it.tags.map { "# " + it.tagName }.joinToString(separator = " ").toString()
                     }
                     else {
-                        binding.openDayTv.text = "미등록"
+                        binding.tagInfo.text = "미등록"
                     }
 
                     binding.openTimeTv.text = "${it.categoryName}"
 
                     if (it.isOpen == 1) {
                         binding.openInfoTv.background = ResourcesCompat.getDrawable(activity!!.resources, R.drawable.summary_border_open, null)
+                        binding.openInfoTv.text ="영업중"
                     } else {
                         binding.openInfoTv.background = ResourcesCompat.getDrawable(activity!!.resources, R.drawable.summary_border_close, null)
+                        binding.openInfoTv.text ="영업종료"
                     }
 
                     binding.storeRatingTv.text = ((it.ratingAverage * 100.0).roundToInt() / 100.0).toString()
