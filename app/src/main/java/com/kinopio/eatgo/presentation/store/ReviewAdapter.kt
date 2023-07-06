@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kinopio.eatgo.databinding.ItemMypageReviewBinding
+import com.kinopio.eatgo.databinding.ItemReviewBinding
 import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.domain.store.ui_model.Review
 
@@ -15,7 +16,7 @@ class ReviewAdapter(private val reviewList: List<Review>?) :
     // ViewHolder 객체를 생성하고 초기화
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemMypageReviewBinding.inflate(inflater, parent, false)
+        val binding = ItemReviewBinding.inflate(inflater, parent, false)
         Log.d("store start retrofit", "onCreateViewHolder 진입")
 
         return Holder(binding)
@@ -36,7 +37,7 @@ class ReviewAdapter(private val reviewList: List<Review>?) :
         return reviewList?.size ?: 0
     }
 
-    inner class Holder(private val binding: ItemMypageReviewBinding) :
+    inner class Holder(private val binding: ItemReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
             binding.apply {

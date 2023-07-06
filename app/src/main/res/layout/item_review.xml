@@ -14,7 +14,7 @@
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:max="5"
         android:numStars="5"
         android:progressTint="#fad482"
@@ -36,6 +36,7 @@
 
     </TextView>
         <TextView
+            android:id="@+id/createdAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
