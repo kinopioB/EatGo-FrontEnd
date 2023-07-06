@@ -1,10 +1,12 @@
+import android.content.res.Resources
 import com.kinopio.eatgo.NotificationInterface
+import com.kinopio.eatgo.R
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object FCMRetrofitProvider {
-    private var token: String = "AAAACHpPMKM:APA91bGZiS3L29ohVlv1qIljbKvG_eVQF4-UF7YcAJVaLdQRGUZbI9UU0MUlSsdNB_hxWIKEk1a9ICZhUWeTVFJ8Lrkqg15dWQ1FqqD0n5cZ_eciVy9GythXBHLa33Q3LSuGCSaZP3Jw"
+    private var token: String = Resources.getSystem().getString(R.string.firebase_key)
     //    R.string.firebase_server_key.toString()
     private const val BASE_URL = "https://fcm.googleapis.com/"
 
