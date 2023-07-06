@@ -3,6 +3,7 @@ package com.kinopio.eatgo.presentation.store
 import ToolbarUtils
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -32,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.kinopio.eatgo.R
 import com.kinopio.eatgo.RetrofitClient
+import com.kinopio.eatgo.User
 import com.kinopio.eatgo.data.store.StoreService
 import com.kinopio.eatgo.databinding.ActivityCreateStoreBinding
 import com.kinopio.eatgo.databinding.OpenInfoTimePickerBinding
@@ -119,6 +122,8 @@ class CreateStoreActivity : AppCompatActivity() {
         binding = ActivityCreateStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToggleButtons()
+
+
 
         // 툴바 세팅
         ToolbarUtils.setupToolbar(
@@ -450,8 +455,8 @@ class CreateStoreActivity : AppCompatActivity() {
             newOpenInfoList.add(
                 OpenInfoRequestDto(
                     openInfoTmp.day,
-                    openInfoTmp.startTime,
-                    openInfoTmp.endTime
+                    openInfoTmp.openTime,
+                    openInfoTmp.closeTime
                 )
             )
         }
@@ -461,6 +466,7 @@ class CreateStoreActivity : AppCompatActivity() {
         var userId = 1
         var address = binding.resultAddress.text.toString().trim()
         getPosition(address)
+        var info  = binding.storeInfoEdittext.text.toString().trim()
         var positionX = selectedPositionX
         var positionY = selectedPositionY
         var categoryId = selectedButtonNumber
@@ -468,12 +474,15 @@ class CreateStoreActivity : AppCompatActivity() {
 
 
 
+        // 가게 이름, 가게 상세, 가게 위치 ( 주소, 좌표) ,장사 요일, 분류, 가게 사진,
+        // 상세 메뉴, 태그 , 영업일 정보 넘어감.
         storeRequestDto = StoreRequestDto(
             storeName = storeName,
             userId = userId,
             address = address,
             positionX = positionX,
             positionY = positionY,
+            info= info,
             categoryId = categoryId,
             thumbnail = storeImgUrl,
             createdType = createdType,

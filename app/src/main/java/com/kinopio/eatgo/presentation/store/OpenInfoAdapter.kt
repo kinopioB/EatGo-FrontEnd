@@ -30,8 +30,8 @@ class OpenInfoAdapter(private val openInfoList: List<OpenInfo>) :
         fun bind(openInfo: OpenInfo) {
             binding.apply {
                  day.text = openInfo.day
-                 startTime.text = openInfo.startTime
-                 endTime.text = openInfo.endTime
+                 startTime.text = openInfo.openTime
+                 endTime.text = openInfo.closeTime
 
             }
         }

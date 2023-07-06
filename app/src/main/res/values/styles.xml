@@ -108,4 +108,9 @@
         <item name="android:elevation">20dp</item>
     </style>
 
+    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextColor">@color/black</item> <!-- 기본 텍스트 색상 -->
+        <item name="tabSelectedTextColor">@color/color_yellow</item> <!-- 눌렸을 때 텍스트 색상 -->
+    </style>
+
 </resources>

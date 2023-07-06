@@ -5,6 +5,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.presentation.store.MyPageActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val TAG = "FirebaseService"
@@ -36,10 +38,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         var type = message.data["type"]?.let { NotificationType.valueOf(it) }
         type = NotificationType.NORMAL
-        val title = message.data["title"]
-        val message = message.data["body"]
-        Log.d(TAG, "onMessageReceived : ${title}")
-        Log.d(TAG, "message : ${message}")
+        Log.d(TAG, "onMessageReceived : ${message.data}")
+
+
+        message.data.get("title")
+        val title = message.data.get("title")
+        val message =message.data.get("message")
         type ?: return
         Log.d(TAG, "특정 권한 예외 처리 전!")
 
@@ -51,11 +55,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             Log.d(TAG, "특정 권한 예외 처리 후!")
-
             return
         }
 
+        Log.d(TAG, "Notification Builder 진입 전 ")
         if (type != null) {
+            Log.d(TAG, "Notification Builder 진입 후 ")
+
             NotificationManagerCompat.from(this)
                 .notify(type.id, createNotification(type, title, message))
         }
@@ -81,14 +87,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun createNotification(type: NotificationType?, title:String?, message: String?) : Notification {
 
         // 알림을 누르면 실행될 수 있게 intent를 만들어 줌
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, MyPageActivity::class.java).apply {
             putExtra(TAG,"${type?.title} 타입")
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) // 이미 해당 액티비티일때 인텐트가 연결되면 1개만 유지함
         }
 
         // 일회용 PendingIntent
         // PendingIntent : Intent의 실행 권한을 외부의 어플리케이션에게 위임
-        val resultPendingIntent = PendingIntent.getActivity(this,type!!.id,intent, FLAG_UPDATE_CURRENT)
+        val resultPendingIntent = PendingIntent.getActivity(this,type!!.id,intent, FLAG_IMMUTABLE )
 
         // 기본 빌더 - 알림에 대한 UI 정보와 작업을 지정
         val builder =  NotificationCompat.Builder(this, CHANNEL_ID)
