@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -164,16 +165,19 @@ class NaverLoginActivity : AppCompatActivity() {
                                     User.setJwt(it.jwt)
                                     User.setLoginType(it.loginType)
                                 }
-                                Log.d("success", "${User.getJwt()}")
-                                Log.d("success", "${User.getUserSocialId()}")
-                                Log.d("success", "${User.getSocialToken()}")
+                                Log.d("last", "${User.getUserId()}")
+                                Log.d("last", "${User.getJwt()}")
+                                Log.d("last", "${User.getUserSocialId()}")
+                                Log.d("last", "${User.getSocialToken()}")
+                                setFireBaseToken(User.getUserId()!!)
+                                Log.d("last", "kakao token ${User.getFireBaseToken()}")
                                 val intent:Intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)
                             }
                         })
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                        finish()
+//                        val intent = Intent(this, MainActivity::class.java)
+//                        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                        finish()
                     }
                 }
 
@@ -236,6 +240,8 @@ class NaverLoginActivity : AppCompatActivity() {
                         Log.d("success", "${User.getJwt()}")
                         Log.d("success", "${User.getUserSocialId()}")
                         Log.d("success", "${User.getSocialToken()}")
+                        setFireBaseToken(User.getUserId()!!)
+                        Log.d("fire", "naver token ${User.getFireBaseToken()}")
                         val intent:Intent = Intent(applicationContext, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -332,45 +338,78 @@ class NaverLoginActivity : AppCompatActivity() {
         }
     }
 
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            when {
-                error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                    Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                    Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                    Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                    Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                    Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                    Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.ServerError.toString() -> {
-                    Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
-                }
-                error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                    Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
-                }
-                else -> { // Unknown
-                    Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
-                }
+//    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+//        if (error != null) {
+//            when {
+//                error.toString() == AuthErrorCause.AccessDenied.toString() -> {
+//                    Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.InvalidClient.toString() -> {
+//                    Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
+//                    Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
+//                    Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.InvalidScope.toString() -> {
+//                    Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.Misconfigured.toString() -> {
+//                    Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.ServerError.toString() -> {
+//                    Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
+//                }
+//                error.toString() == AuthErrorCause.Unauthorized.toString() -> {
+//                    Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
+//                }
+//                else -> { // Unknown
+//                    Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//        else if (token != null) {
+//            Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//            finish()
+//        }
+//    }
+
+    fun setFireBaseToken(userId:Int) {
+        // 파이어베이스 디바이스에 부여된 토큰값 알아내기
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("fire", "토큰 가져오기 실패", task.exception)
             }
-        }
-        else if (token != null) {
-            Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-            finish()
+            val token = task.result
+            Log.d("fire", "토큰 값 : ${token}")
+
+            val retrofit = RetrofitClient.getRetrofit2()
+            val loginService = retrofit.create(LoginService::class.java)
+            val fireBaseToken = mapOf("token" to token)
+            Log.d("fire", "userId ${userId}")
+            loginService.setUserFireBaseToken(userId, token).enqueue(object : Callback<String> {
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.d("fail", "토큰 저장 실패")
+                    Log.d("fail", "$t")
+                }
+
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    response.body()?.let {
+
+                        User.setFireBaseToken(it)
+                        Log.d("fire", "user ${User.getFireBaseToken()}")
+                    }
+                }
+            })
+
+            /*  */
+
+            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         }
     }
-
 
 }

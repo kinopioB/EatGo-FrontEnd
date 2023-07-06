@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
         setContentView(binding.root)
         supportActionBar?.hide()
             // 카테고리 선택 버튼
+
+        Log.d("last", "main ${User.getUserId()}")
+
         val button1: ImageButton = binding.categorySearchButton1
         val button2: ImageButton = binding.categorySearchButton2
         val button3: ImageButton = binding.categorySearchButton3
@@ -90,15 +93,18 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             startActivity(intent)
         }
 
-        // 파이어베이스 디바이스에 부여된 토큰값 알아내기
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d(TAG, "토큰 가져오기 실패", task.exception)
-            }
-            val token = task.result
-            Log.d(TAG, "토큰 값 : ${token}")
-            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
-        }
+//        // 파이어베이스 디바이스에 부여된 토큰값 알아내기
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.d(TAG, "토큰 가져오기 실패", task.exception)
+//            }
+//            val token = task.result
+//            Log.d(TAG, "토큰 값 : ${token}")
+//
+//            /*  */
+//
+//            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+//        }
 
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()

@@ -10,6 +10,7 @@ object User {
     private var loginType : Int? = null
     private var positionX : Double? = null
     private var positionY : Double? = null
+    private var fireBaseToken : String? = null
 
     fun setUserId(userId:Int) {
         this.userId = userId;
@@ -81,6 +82,14 @@ object User {
 
     fun getPositionY() : Double? {
         return this.positionY
+    }
+
+    fun setFireBaseToken(fireBaseToken : String) {
+        this.fireBaseToken = fireBaseToken
+    }
+
+    fun getFireBaseToken() : String? {
+        return this.fireBaseToken
     }
 
 
