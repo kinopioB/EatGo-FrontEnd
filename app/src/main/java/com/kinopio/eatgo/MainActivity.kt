@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
     private val storeLocationService = retrofit?.create(StoreLocationService::class.java)
     private val TAG = "FirebaseService"
 
-  
     // 파이어베이스 디바이스에 부여된 토큰값 알아내기
 
     override fun onCreate(savedInstanceState: Bundle?) {

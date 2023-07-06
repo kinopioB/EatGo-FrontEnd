@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:theme="@style/Base.Theme.EatGo"
     tools:context=".presentation.qr.CreateQRActivity">
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,6 +26,5 @@
         android:text="QR을 찍고 리뷰를 등록해보세요!"
         android:textColor="#8b7535"
         android:textSize="30dp"></TextView>
-
-    <include layout="@layout/toolbar_qr" />
+    <include layout="@layout/toolbar"/>
 </FrameLayout>

@@ -12,6 +12,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import com.kinopio.eatgo.R
+import com.kinopio.eatgo.User
 import com.kinopio.eatgo.databinding.ActivityScanQrBinding
 import com.kinopio.eatgo.presentation.store.StoreDetailActivity
 import com.kinopio.eatgo.presentation.store.ReviewFragment
@@ -32,7 +33,7 @@ class ScanQRActivity : AppCompatActivity() {
             Log.d("review", result.formatName)
 
             var storeId = result.contents
-            var userId = 2
+            var userId = User.getUserId()
             Log.d("review", "프레그먼트 실행 전")
             // Mypage 로 넘겨주기
             val intent = Intent(this, StoreDetailActivity::class.java)
@@ -65,7 +66,7 @@ class ScanQRActivity : AppCompatActivity() {
         // options.setCameraId(1)          // 0 : 후면(default), 1 : 전면,
         options.setBeepEnabled(true)
         // options.setTorchEnabled(true)      // true : 실행되자마자 플래시가 켜진다.
-        options.setPrompt("커스텀 QR 스캐너 창")
+        // options.setPrompt("커스텀 QR 스캐너 창")
         options.setDesiredBarcodeFormats( ScanOptions.QR_CODE )
         options.captureActivity = CustomQRScannerActivity::class.java
         barcodeLauncher.launch(options)

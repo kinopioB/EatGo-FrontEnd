@@ -41,6 +41,6 @@ interface StoreService {
     @GET("api/v1/stores/mypage/modification/{storeId}")
     fun getModificationStore(@Path("storeId") storeId: Int) : Call<StoreModificationResponseDto>
 
-    @GET("api/v1/stores/mypage/{storeId}")
-    fun getReviews(@Path("storeId") storeId: Int) : Call<StoreMyPageResponseDto>
+    @GET("api/v1/stores/mypage/{userId}")
+    fun getMypage(@Path("userId") userId: Int) : Call<StoreMyPageResponseDto>
 }

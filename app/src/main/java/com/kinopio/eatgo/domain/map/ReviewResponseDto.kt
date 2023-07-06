@@ -8,4 +8,5 @@ data class ReviewResponseDto (
     val userName : String,
     val content:String,
     val rating:Int,
+    val message: String
 )
