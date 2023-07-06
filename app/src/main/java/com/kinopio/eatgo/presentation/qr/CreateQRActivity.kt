@@ -43,7 +43,6 @@ class CreateQRActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.d("QR", "$e.printStackTrace()")
         }
-
         Log.d("toolbar", "toolbar2")
     }
 

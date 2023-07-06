@@ -17,27 +17,80 @@ class KakaoLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_login)
-
+        UserApiClient.instance.unlink { error ->
+                    if (error != null) {
+                        Log.d("카카오로그인","회원 탈퇴 실패")
+                    }else {
+                        Log.d("카카오로그인","회원 탈퇴 성공")
+                    }
+                }
         // 로그인 정보 확인
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
-            }
-            else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
-                Log.d("kakao", "$tokenInfo")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
+//        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+//            if (error != null) {
+//                Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
+//            }
+//            else if (tokenInfo != null) {
+//                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+//                Log.d("kakao", "$tokenInfo")
+////                Log.d("kakao","로그인에 성공하였습니다.\n${token.accessToken}")
+//                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+//                    UserApiClient.instance.me { user, error ->
+//                        Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+//                        Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+//                    }
+//                }
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                UserApiClient.instance.logout { error ->
+//                    if (error != null) {
+//                        Log.d("kakao","카카오 로그아웃 실패")
+//                    }else {
+//                        Log.d("kakao","카카오 로그아웃 성공!")
+//                    }
+//                }
+//                UserApiClient.instance.unlink { error ->
+//                    if (error != null) {
+//                        Log.d("카카오로그인","회원 탈퇴 실패")
+//                    }else {
+//                        Log.d("카카오로그인","회원 탈퇴 성공")
+//                    }
+//                }
+//                finish()
+//            }
+//        }
 
 
 
-        val keyHash = Utility.getKeyHash(this)
-        Log.d("Hash", "${keyHash}")
+//        val keyHash = Utility.getKeyHash(this)
+//        Log.d("Hash", "${keyHash}")
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                UserApiClient.instance.me { user, error ->
+                    Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+                }
+            }
+
+            UserApiClient.instance.me { user, error ->
+                Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+                Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+
+                if (user?.kakaoAccount?.email == null) {
+                    UserApiClient.instance.unlink { error ->
+                        if (error != null) {
+                            Log.d("kakao","회원 탈퇴 실패")
+                        }else {
+                            Log.d("kakao","회원 탈퇴 성공")
+                        }
+                    }
+                    Log.d("kakao", "1111111")
+                    Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, KakaoLoginActivity::class.java)
+                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+
+                }
+            }
             if (error != null) {
                 when {
                     error.toString() == AccessDenied.toString() -> {
@@ -69,8 +122,16 @@ class KakaoLoginActivity : AppCompatActivity() {
                     }
                 }
             }
+
             else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("kakao","로그인에 성공하였습니다.\n${token.accessToken}")
+                Log.d("kakao","로그인에 성공하였습니다.\n${token}")
+                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                    UserApiClient.instance.me { user, error ->
+                        Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+                    }
+                }
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
@@ -83,9 +144,79 @@ class KakaoLoginActivity : AppCompatActivity() {
         kakao_login_button.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+//                UserApiClient.instance.me { user, error ->
+//                    Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+//                    Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+//
+//                    if (user?.kakaoAccount?.email == null) {
+//                        UserApiClient.instance.unlink { error ->
+//                            if (error != null) {
+//                                Log.d("카카오로그인","회원 탈퇴 실패")
+//                            }else {
+//                                Log.d("카카오로그인","회원 탈퇴 성공")
+//                            }
+//                        }
+//                        Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+//                        return@me
+//                    }
+//                }
+//                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+//                    UserApiClient.instance.me { user, error ->
+//                        Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+//                        Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+//
+//                        if (user?.kakaoAccount?.email == null) {
+//                            UserApiClient.instance.unlink { error ->
+//                                if (error != null) {
+//                                    Log.d("카카오로그인","회원 탈퇴 실패")
+//                                }else {
+//                                    Log.d("카카오로그인","회원 탈퇴 성공")
+//                                }
+//                            }
+//                            Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+//                            return@me
+//                        }
+//                    }
+//                }
                 
             }else{
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+
+//                UserApiClient.instance.me { user, error ->
+//                    Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+//                    Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+//
+//                    if (user?.kakaoAccount?.email == null) {
+//                        UserApiClient.instance.unlink { error ->
+//                            if (error != null) {
+//                                Log.d("카카오로그인","회원 탈퇴 실패")
+//                            }else {
+//                                Log.d("카카오로그인","회원 탈퇴 성공")
+//                            }
+//                        }
+//                        Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+//                        return@me
+//                    }
+//                }
+
+//                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+//                    UserApiClient.instance.me { user, error ->
+//                        Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+//                        Log.d("kakao", "이메일: ${user?.kakaoAccount?.email}")
+//
+//                        if (user?.kakaoAccount?.email == null) {
+//                            UserApiClient.instance.unlink { error ->
+//                                if (error != null) {
+//                                    Log.d("카카오로그인","회원 탈퇴 실패")
+//                                }else {
+//                                    Log.d("카카오로그인","회원 탈퇴 성공")
+//                                }
+//                            }
+//                            Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+//                            return@me
+//                        }
+//                    }
+//                }
             }
         }
     }

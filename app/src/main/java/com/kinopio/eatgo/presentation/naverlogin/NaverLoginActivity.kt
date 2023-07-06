@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.user.UserApiClient
 import com.kinopio.eatgo.MainActivity
 import com.kinopio.eatgo.databinding.ActivityMainBinding
 import com.kinopio.eatgo.R
@@ -28,7 +32,7 @@ import retrofit2.Response
 
 class NaverLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNaverLoginBinding
-
+    private lateinit var loginInfo:LoginDto
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNaverLoginBinding.inflate(layoutInflater)
@@ -41,7 +45,6 @@ class NaverLoginActivity : AppCompatActivity() {
         NaverIdLoginSDK.initialize(this, naverClientId, naverClientSecret , naverClientName)
 
         setLayoutState(false)
-
         binding.tvNaverLogin.setOnClickListener {
             val radioGroup = binding.loginRadioGroup
 
@@ -62,17 +65,133 @@ class NaverLoginActivity : AppCompatActivity() {
 
         }
 
-//        binding.tvNaverLogin.setOnClickListener {
-//
-//            startNaverLogin()
-//
-//        }
-        /*binding.tvNaverLogout.setOnClickListener {
-            startNaverLogout()
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+
+
+
+            if (error != null) {
+                when {
+                    error.toString() == AuthErrorCause.AccessDenied.toString() -> {
+                        Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.InvalidClient.toString() -> {
+                        Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
+                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
+                        Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.InvalidScope.toString() -> {
+                        Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.Misconfigured.toString() -> {
+                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.ServerError.toString() -> {
+                        Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
+                    }
+                    error.toString() == AuthErrorCause.Unauthorized.toString() -> {
+                        Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> { // Unknown
+                        Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                val intent = Intent(this, NaverLoginActivity::class.java)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                finish()
+            }
+
+            else if (token != null) {
+
+                UserApiClient.instance.me { user, error ->
+
+                    if (user?.kakaoAccount?.email == null) {
+                        UserApiClient.instance.unlink { error ->
+                            if (error != null) {
+                                Log.d("kakao","회원 탈퇴 실패")
+                            }else {
+                                Log.d("kakao","회원 탈퇴 성공")
+                            }
+                        }
+                        Toast.makeText(this, "이메일 동의 필수입니다.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, NaverLoginActivity::class.java)
+                        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        finish()
+                        return@me
+                    }
+                    else {
+                        Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                            UserApiClient.instance.me { user, error ->
+                                Log.d("kakao", "닉네임: ${user?.kakaoAccount?.profile?.nickname}")
+                            }
+                        }
+                        val radioGroup = binding.loginRadioGroup
+                        val checkedId : String = resources.getResourceEntryName(radioGroup.checkedRadioButtonId)
+                        var r = 0
+                        if (checkedId == "boss"){
+                            r = 1
+                        }
+                        else if (checkedId == "normal") {
+                            r = 2
+                        }
+                        loginInfo = LoginDto(
+                            userSocialId = user?.kakaoAccount?.email.toString(),
+                            userName = user?.kakaoAccount?.profile?.nickname.toString(),
+                            loginType = 1,
+                            role = r
+                        )
+                        val retrofit = RetrofitClient.getRetrofit2()
+                        val loginService = retrofit.create(LoginService::class.java)
+                        loginService.login(loginInfo).enqueue(object : Callback<LoginResponseDto> {
+
+                            override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
+                                Log.d("fail", "로그인 실패")
+                                Log.d("fail", "$t")
+                            }
+
+                            override fun onResponse(call: Call<LoginResponseDto>, response: Response<LoginResponseDto>) {
+                                Log.d("success", "로그인 성공")
+                                response.body()?.let {
+                                    User.setUserId(it.userId)
+                                    User.setUserName(it.userName)
+                                    User.setUserSocialId(it.userSocialId)
+                                    User.setRole(it.role)
+                                    User.setSocialToken(token.accessToken.toString())
+                                    User.setJwt(it.jwt)
+                                    User.setLoginType(it.loginType)
+                                }
+                                Log.d("success", "${User.getJwt()}")
+                                Log.d("success", "${User.getUserSocialId()}")
+                                Log.d("success", "${User.getSocialToken()}")
+                                val intent:Intent = Intent(applicationContext, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        })
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        finish()
+                    }
+                }
+
+            }
         }
-        binding.tvNaverDeleteToken.setOnClickListener {
-            startNaverDeleteToken()
-        }*/
+
+
+        val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login) // 로그인 버튼
+
+        kakao_login_button.setOnClickListener {
+            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+
+            }else{
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
+        }
+
     }
 
     /**
@@ -89,7 +208,7 @@ class NaverLoginActivity : AppCompatActivity() {
                 val retrofit = RetrofitClient.getRetrofit2()
                 val loginService = retrofit.create(LoginService::class.java)
 
-                val loginInfo = LoginDto(
+                loginInfo = LoginDto(
                     userSocialId = userId.toString(),
                     userName = userName.toString(),
                     loginType = 2,
@@ -212,4 +331,46 @@ class NaverLoginActivity : AppCompatActivity() {
 //            binding.tvResult.text = ""
         }
     }
+
+    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            when {
+                error.toString() == AuthErrorCause.AccessDenied.toString() -> {
+                    Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.InvalidClient.toString() -> {
+                    Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
+                    Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
+                    Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.InvalidScope.toString() -> {
+                    Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.Misconfigured.toString() -> {
+                    Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.ServerError.toString() -> {
+                    Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
+                }
+                error.toString() == AuthErrorCause.Unauthorized.toString() -> {
+                    Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
+                }
+                else -> { // Unknown
+                    Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        else if (token != null) {
+            Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            finish()
+        }
+    }
+
+
 }
