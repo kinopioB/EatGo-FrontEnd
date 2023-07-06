@@ -2,6 +2,7 @@ package com.kinopio.eatgo.data.store
 
 import com.kinopio.eatgo.domain.map.LoginResponseDto
 import com.kinopio.eatgo.domain.map.StoreHistoryRequestDto
+import com.kinopio.eatgo.domain.map.StoreLocationDto
 import com.kinopio.eatgo.domain.store.CreateStoreResponseDto
 import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.domain.templates.ApiResultDto
@@ -43,4 +44,8 @@ interface StoreService {
 
     @GET("api/v1/stores/mypage/{userId}")
     fun getMypage(@Path("userId") userId: Int) : Call<StoreMyPageResponseDto>
+
+    @GET("api/v1/stores/categories/{categoryId}")
+    fun getFilterCategoryStore(@Path("categoryId") categoryId : Int) : Call<StoreLocationDto>
+
 }

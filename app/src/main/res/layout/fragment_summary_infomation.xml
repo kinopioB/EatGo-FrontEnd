@@ -3,112 +3,112 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/summaryContainer"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:background="@drawable/radius"
     android:theme="@style/Base.Theme.EatGo"
     tools:context=".presentation.store.SummaryInfomationFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3">
+
         <TextView
             android:id="@+id/storeNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginRight="80dp"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.185"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/cancelSummaryBtn"
-            android:layout_width="40dp"
+        <TextView
+            android:id="@+id/openInfoTv"
+            android:layout_width="80dp"
             android:layout_height="40dp"
-            android:layout_marginStart="161dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginBottom="32dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/cancel"
-            app:layout_constraintBottom_toTopOf="@+id/openTimeTv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/storeNameTv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/summary_border_close"
+            android:gravity="center"
+            android:text="영업 중"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/cancelSummaryBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="306dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
 
         <TextView
             android:id="@+id/openDayTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="78dp"
-            android:text="#월 화 수 목"
+            android:layout_marginRight="80dp"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/openTimeTv"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storeNameTv" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/openTimeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
-            android:text="17:00 ~ 20:00"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/openDayTv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="80dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/distance" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/distance" />
 
-            <TextView
-                android:id="@+id/storeDistanceTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp" />
+        <TextView
+            android:id="@+id/storeDistanceTv"
+            android:layout_marginRight="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="50dp"
-                android:src="@drawable/rating_star" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/rating_star" />
 
-            <TextView
-                android:id="@+id/storeRatingTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="0.0점" />
+        <TextView
+            android:id="@+id/storeRatingTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/openInfoTv"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/summary_border"
-                android:gravity="center"
-                android:text="영업 중"
-                android:textSize="17sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
