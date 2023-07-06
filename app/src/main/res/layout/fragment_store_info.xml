@@ -59,13 +59,28 @@
 
             </TextView>
 
-            <FrameLayout
-                android:id="@+id/historyNaverMapContainer"
+<!--            <FrameLayout-->
+<!--                android:id="@+id/historyNaverMapContainer"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="250dp"-->
+<!--                style="@style/ItemBoxWithShadow"-->
+<!--                android:padding="10dp">-->
+<!--            </FrameLayout>-->
+
+
+            <com.kinopio.eatgo.util.ScrollAwareMapView
+                android:id="@+id/testMap"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 style="@style/ItemBoxWithShadow"
-                android:padding="10dp">
-            </FrameLayout>
+                android:padding="10dp" />
+
+<!--            <com.naver.maps.map.MapView-->
+<!--                android:id="@+id/testMap"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="250dp"-->
+<!--                style="@style/ItemBoxWithShadow"-->
+<!--                android:padding="10dp" />-->
 
         </LinearLayout>
 

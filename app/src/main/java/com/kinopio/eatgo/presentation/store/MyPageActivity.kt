@@ -22,6 +22,7 @@ import com.kinopio.eatgo.databinding.ActivityMyPageBinding
 import com.kinopio.eatgo.domain.map.StoreMyPageResponseDto
 import com.kinopio.eatgo.presentation.qr.CreateQRActivity
 import com.kinopio.eatgo.presentation.qr.CustomQRScannerActivity
+import com.naver.maps.map.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
