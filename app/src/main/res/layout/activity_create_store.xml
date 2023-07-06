@@ -8,6 +8,7 @@
     android:background="@drawable/main_background">
 
     <include layout="@layout/toolbar"/>
+
     <FrameLayout
         android:id="@+id/createMapContainer"
         android:layout_width="match_parent"
