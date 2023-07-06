@@ -4,6 +4,7 @@ package com.kinopio.eatgo.presentation.store
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.kinopio.eatgo.databinding.ItemTodayOpenStoreBinding
 import com.kinopio.eatgo.domain.store.PopularStoreResponseDto
 import com.kinopio.eatgo.domain.store.TodayOpenStoreResponseDto
@@ -46,7 +47,9 @@ class TodayOpenStoreAdapter(private val storeList: List<TodayOpenStoreResponseDt
                 binding.storeName.text = store.storeName
                 binding.storeDesc.text = store.info
                 binding.tags.text = store.tags.map { " # " + it.tagName }.joinToString(separator = " ").toString()
-
+                Glide.with(itemView)
+                    .load(store.thumbnail)
+                    .into(storeImg)
 
 //                for (tag in store.tags) {
 //                    val tagButton = Button(requireContext())

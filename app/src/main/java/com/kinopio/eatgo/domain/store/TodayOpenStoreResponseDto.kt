@@ -7,6 +7,7 @@ data class TodayOpenStoreResponseDto(
     val storeId : Int,
     val storeName : String,
     val info : String,
+    val thumbnail : String,
     val categoryId : Int,
     val categoryName: String,
     val tags : List<Tag>

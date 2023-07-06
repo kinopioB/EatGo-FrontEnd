@@ -19,7 +19,6 @@ import com.kinopio.eatgo.data.map.StoreLocationService
 import com.kinopio.eatgo.databinding.FragmentSummaryInfomationBinding
 import com.kinopio.eatgo.domain.store.StoreResponseDto
 import com.kinopio.eatgo.presentation.map.DistanceResponseDto
-import com.kinopio.eatgo.util.calDist
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
