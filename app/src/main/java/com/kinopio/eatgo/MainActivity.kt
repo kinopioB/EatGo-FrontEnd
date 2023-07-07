@@ -93,19 +93,6 @@ class MainActivity : AppCompatActivity() , OnMapReadyCallback {
             startActivity(intent)
         }
 
-//        // 파이어베이스 디바이스에 부여된 토큰값 알아내기
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Log.d(TAG, "토큰 가져오기 실패", task.exception)
-//            }
-//            val token = task.result
-//            Log.d(TAG, "토큰 값 : ${token}")
-//
-//            /*  */
-//
-//            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
-//        }
-
         val fm = supportFragmentManager
         val transaction = fm.beginTransaction()
         var navigationFragment:NavigationFragment = NavigationFragment()
