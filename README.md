@@ -46,7 +46,7 @@
 ```
 git clone https://github.com/kinopioB/EatGo-Frontend.git
 ```
-2. 실행
+2. 실행  
 Android Studio Project Open -> File -> Sync Project with Gradle Files -> Run app
 
 * Back-End (STS 기준)
@@ -54,9 +54,9 @@ Android Studio Project Open -> File -> Sync Project with Gradle Files -> Run app
 ```
 git clone https://github.com/kinopioB/EatGo-Backend.git
 ```
-2. Server Tomcat v9.0 추가
+2. Server Tomcat v9.0 추가  
 Servers -> New -> Server -> Apache -> Tomcat v9.0 Server선택 -> Finish
-3. Maven Update
+3. Maven Update  
 Project -> Maven -> Update Project
 4. Start the server
 
